@@ -340,6 +340,25 @@ const Index = () => {
         </div>
       </section>
 
+      <section className="px-5 py-16 sm:px-8 lg:px-12">
+        <div className="mx-auto max-w-7xl rounded-md border border-border bg-card p-6 sm:p-8">
+          <p className="font-bold text-primary">Fatherhood preparation for every stage</p>
+          <h2 className="mt-3 max-w-4xl text-4xl font-black tracking-normal sm:text-5xl">A practical guide for first-time dads, expecting fathers, and new parents.</h2>
+          <div className="mt-6 grid gap-5 md:grid-cols-3">
+            {[
+              ["Pregnancy guide for dads", "Know how to support your pregnant partner, prepare for appointments, and build routines before birth."],
+              ["Newborn tips for dads", "Get clear weekly actions for sleep support, feeding help, recovery, bonding, and home resets."],
+              ["Fatherhood checklist", "Use readiness scores, stage-based checklists, and weekly missions to know what matters now."],
+            ].map(([title, copy]) => (
+              <article key={title} className="rounded-md border border-border bg-background p-5">
+                <h3 className="text-xl font-black">{title}</h3>
+                <p className="mt-3 leading-7 text-muted-foreground">{copy}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="border-y border-border bg-card px-5 py-14 sm:px-8 lg:px-12">
         <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-3">
           {[
