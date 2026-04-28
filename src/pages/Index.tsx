@@ -100,13 +100,24 @@ const stageMissions: Record<string, { low: string; mid: string; high: string }> 
   },
 };
 
+const proOnboardingSequences: Record<string, string[]> = {
+  just_found_out: ["Your first 24-hour reset", "Partner support script", "Early appointment command center", "Dad readiness baseline"],
+  pregnancy_months: ["Pregnancy stage audit", "Weekly support routine", "Home and money prep", "Birth-readiness roadmap"],
+  newborn: ["Night shift operating plan", "Partner recovery checklist", "Newborn supply station", "First 30-day routine score"],
+  baby_months: ["Family rhythm reset", "Bonding mission plan", "Work-life boundary check", "First-year routine upgrade"],
+};
+
 const Index = () => {
   const [email, setEmail] = useState("");
   const [signupStage, setSignupStage] = useState("");
+  const [proEmail, setProEmail] = useState("");
+  const [proStage, setProStage] = useState("");
+  const [proPreviewStage, setProPreviewStage] = useState("just_found_out");
   const [selectedStage, setSelectedStage] = useState(stages[0].id);
   const [quizStage, setQuizStage] = useState("just_found_out");
   const [quizAnswers, setQuizAnswers] = useState([1, 1, 1, 1]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isProSubmitting, setIsProSubmitting] = useState(false);
 
   const activeStage = useMemo(() => stages.find((stage) => stage.id === selectedStage) ?? stages[0], [selectedStage]);
   const readinessScore = useMemo(() => Math.round((quizAnswers.reduce((total, answer) => total + answer, 0) / (quizAnswers.length * 2)) * 100), [quizAnswers]);
@@ -116,6 +127,8 @@ const Index = () => {
     if (readinessScore < 75) return missions.mid;
     return missions.high;
   }, [quizStage, readinessScore]);
+
+  const activeProSequence = proOnboardingSequences[proPreviewStage];
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -154,6 +167,43 @@ const Index = () => {
     setEmail("");
     setSignupStage("");
     toast.success("You are in. Your stage-based routine preview is saved.");
+  };
+
+  const handleProSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const trimmedEmail = proEmail.trim().toLowerCase();
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail) || trimmedEmail.length > 255) {
+      toast.error("Enter a valid email to join the PRO waitlist.");
+      return;
+    }
+
+    if (!signupStages.some((stage) => stage.value === proStage)) {
+      toast.error("Choose your fatherhood stage first.");
+      return;
+    }
+
+    setIsProSubmitting(true);
+    const { error } = await supabase.from("newsletter_signups").insert({
+      email: trimmedEmail,
+      fatherhood_stage: proStage,
+      source: "pro_preview",
+      pro_interest: true,
+      onboarding_sequence: proOnboardingSequences[proStage],
+    });
+
+    setIsProSubmitting(false);
+
+    if (error && error.code !== "23505") {
+      toast.error("Could not save your PRO waitlist spot. Try again in a moment.");
+      return;
+    }
+
+    setProPreviewStage(proStage);
+    setProEmail("");
+    setProStage("");
+    toast.success(error?.code === "23505" ? "You are already on the list. Preview unlocked." : "PRO waitlist saved. Preview unlocked.");
+    window.setTimeout(() => document.getElementById("pro-onboarding-preview")?.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
   };
 
   return (
