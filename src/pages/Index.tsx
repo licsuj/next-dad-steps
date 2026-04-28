@@ -22,7 +22,7 @@ const stages = [
     id: "pregnancy_1_3",
     label: "Pregnancy months 1–3",
     promise: "Build the early support routine while everything still feels unreal.",
-    sequence: ["Your first trimester step", "What she may need but not ask for", "The no-panic prep checklist"],
+    sequence: ["Your first trimester step", "What she may need but not ask for", "The calm prep checklist"],
     preview: {
       lesson: "Early pregnancy can be invisible but intense; consistency matters more than grand gestures.",
       action: "Create a shared note for appointments, symptoms, questions, and tasks.",
@@ -57,11 +57,11 @@ const stages = [
   {
     id: "birth_week",
     label: "Birth and hospital week",
-    promise: "Stay useful, calm, and ready when the pressure gets real.",
+    promise: "Stay calm, useful, and present during one of the biggest weeks of your life.",
     sequence: ["Your hospital role", "Visitors, boundaries, and recovery", "The ride-home routine"],
     preview: {
       lesson: "Your calm becomes part of the environment; your role is logistics, protection, and presence.",
-      action: "Create a simple hospital command list: documents, contacts, parking, snacks, and boundaries.",
+      action: "Create a simple hospital list: documents, contacts, parking, snacks, and boundaries.",
       partnerMove: "Agree on visitor rules before anyone asks to come over.",
       mistake: "Becoming another person who needs direction during the most intense week.",
     },
@@ -151,7 +151,7 @@ const stageSteps: Record<string, { low: string; mid: string; high: string }> = {
 const proOnboardingSequences: Record<string, string[]> = {
   just_found_out: ["Your first 24-hour reset", "Partner support script", "Early appointment plan", "Dad readiness baseline"],
   pregnancy_months: ["Pregnancy stage audit", "Weekly support routine", "Home and money prep", "Birth-readiness roadmap"],
-  newborn: ["Night shift operating plan", "Partner recovery checklist", "Newborn supply station", "First 30-day routine score"],
+  newborn: ["Night shift support plan", "Partner recovery checklist", "Newborn supply station", "First 30-day routine score"],
   baby_months: ["Family rhythm reset", "Bonding step plan", "Work-life boundary check", "First-year routine upgrade"],
 };
 
@@ -250,7 +250,7 @@ const Index = () => {
     setProPreviewStage(proStage);
     setProEmail("");
     setProStage("");
-    toast.success(error?.code === "23505" ? "You are already on the list. Preview unlocked." : "PRO waitlist saved. Preview unlocked.");
+    toast.success(error?.code === "23505" ? "You are already on the list. Preview is ready." : "PRO waitlist saved. Preview is ready.");
     window.setTimeout(() => document.getElementById("pro-onboarding-preview")?.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
   };
 
