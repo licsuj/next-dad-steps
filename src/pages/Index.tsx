@@ -329,6 +329,70 @@ const Index = () => {
         </div>
       </section>
 
+      <section className="px-5 py-16 sm:px-8 lg:px-12" id="readiness-quiz">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+          <div>
+            <p className="font-bold text-primary">Readiness quiz</p>
+            <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Get a quick score and your next mission.</h2>
+            <p className="mt-5 leading-7 text-muted-foreground">
+              Four answers turn into a stage-specific readiness score, then NextRoutine points dads toward the move that matters now.
+            </p>
+            <select
+              value={quizStage}
+              onChange={(event) => setQuizStage(event.target.value)}
+              className="mt-6 h-12 w-full max-w-md rounded-md border border-input bg-card px-3 py-2 text-sm text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              aria-label="Quiz fatherhood stage"
+            >
+              {signupStages.map((stage) => (
+                <option key={stage.value} value={stage.value}>
+                  {stage.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="rounded-md border border-border bg-card p-5">
+            <div className="grid gap-4">
+              {quizQuestions.map((question, index) => (
+                <div key={question} className="rounded-md border border-border bg-background p-4">
+                  <p className="font-bold leading-6">{question}</p>
+                  <div className="mt-4 grid grid-cols-3 gap-2">
+                    {[0, 1, 2].map((value) => (
+                      <button
+                        key={value}
+                        type="button"
+                        onClick={() => setQuizAnswers((answers) => answers.map((answer, answerIndex) => (answerIndex === index ? value : answer)))}
+                        className={`rounded-md border px-3 py-2 text-sm font-bold transition ${
+                          quizAnswers[index] === value ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card text-muted-foreground hover:border-primary"
+                        }`}
+                      >
+                        {value === 0 ? "Not yet" : value === 1 ? "Somewhat" : "Ready"}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-5 rounded-md border border-primary bg-primary p-5 text-primary-foreground">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-sm font-black uppercase">Readiness score</p>
+                  <p className="text-5xl font-black">{readinessScore}%</p>
+                </div>
+                <div className="h-3 w-full rounded-md bg-background/30 sm:max-w-56">
+                  <div className="h-3 rounded-md bg-background transition-all" style={{ width: `${readinessScore}%` }} />
+                </div>
+              </div>
+              <div className="mt-5 rounded-md bg-background p-4 text-foreground">
+                <p className="text-sm font-black text-primary">Recommended next mission</p>
+                <p className="mt-2 leading-7 text-muted-foreground">{recommendedMission}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="px-5 py-16 sm:px-8 lg:px-12">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
