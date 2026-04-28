@@ -388,6 +388,23 @@ const Index = () => {
                 </div>
               </div>
               <p className="mt-4 leading-7 text-muted-foreground">{activeStage.promise}</p>
+              <div className="mt-6 rounded-md border border-primary/40 bg-background p-5">
+                <p className="text-sm font-black text-primary">What you get this week</p>
+                <h4 className="mt-2 text-2xl font-black">{activeStage.sequence[0]}</h4>
+                <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                  {[
+                    ["Lesson", activeStage.preview.lesson],
+                    ["Action", activeStage.preview.action],
+                    ["Partner move", activeStage.preview.partnerMove],
+                    ["Avoid", activeStage.preview.mistake],
+                  ].map(([label, copy]) => (
+                    <div key={label} className="rounded-md border border-border bg-card p-4">
+                      <p className="text-xs font-black uppercase text-primary">{label}</p>
+                      <p className="mt-2 text-sm leading-6 text-muted-foreground">{copy}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
               <div className="mt-6 space-y-4">
                 {activeStage.sequence.map((step, index) => (
                   <div key={step} className="grid grid-cols-[3rem_1fr] gap-4 rounded-md border border-border bg-background p-4">
