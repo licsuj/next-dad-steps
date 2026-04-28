@@ -63,8 +63,16 @@ const proFeatures = [
   "Trackers for readiness score, sleep support, checklists, and habits",
 ];
 
+const signupStages = [
+  { value: "just_found_out", label: "Just got the news" },
+  { value: "pregnancy_months", label: "Pregnancy months" },
+  { value: "newborn", label: "Newborn" },
+  { value: "baby_months", label: "Baby months" },
+];
+
 const Index = () => {
   const [email, setEmail] = useState("");
+  const [signupStage, setSignupStage] = useState("");
   const [selectedStage, setSelectedStage] = useState(stages[0].id);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -79,10 +87,15 @@ const Index = () => {
       return;
     }
 
+    if (!signupStages.some((stage) => stage.value === signupStage)) {
+      toast.error("Choose your fatherhood stage first.");
+      return;
+    }
+
     setIsSubmitting(true);
     const { error } = await supabase.from("newsletter_signups").insert({
       email: trimmedEmail,
-      fatherhood_stage: selectedStage,
+      fatherhood_stage: signupStage,
       source: "landing_page",
       pro_interest: true,
       onboarding_sequence: activeStage.sequence,
@@ -100,6 +113,7 @@ const Index = () => {
     }
 
     setEmail("");
+    setSignupStage("");
     toast.success("You are in. Your stage-based routine preview is saved.");
   };
 
@@ -131,7 +145,7 @@ const Index = () => {
               NextRoutine gives new and expecting fathers a stage-based weekly plan, practical missions, and a clear routine when everything feels uncertain.
             </p>
 
-            <form onSubmit={handleSubmit} className="mt-8 max-w-2xl rounded-md border border-border bg-card p-3 shadow-2xl shadow-secondary/20 sm:flex sm:gap-3">
+            <form onSubmit={handleSubmit} className="mt-8 grid max-w-3xl gap-3 rounded-md border border-border bg-card p-3 shadow-2xl shadow-secondary/20 sm:grid-cols-[1fr_1fr_auto]">
               <Input
                 type="email"
                 value={email}
@@ -139,8 +153,23 @@ const Index = () => {
                 placeholder="dad@email.com"
                 className="h-12 border-border bg-background text-foreground placeholder:text-muted-foreground"
                 aria-label="Email address"
+                required
               />
-              <Button type="submit" disabled={isSubmitting} className="mt-3 h-12 w-full font-bold sm:mt-0 sm:w-auto">
+              <select
+                value={signupStage}
+                onChange={(event) => setSignupStage(event.target.value)}
+                className="h-12 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                aria-label="Fatherhood stage"
+                required
+              >
+                <option value="">Choose your stage</option>
+                {signupStages.map((stage) => (
+                  <option key={stage.value} value={stage.value}>
+                    {stage.label}
+                  </option>
+                ))}
+              </select>
+              <Button type="submit" disabled={isSubmitting} className="h-12 w-full font-bold sm:w-auto">
                 {isSubmitting ? "Joining" : "Join weekly"}
                 <ArrowRight className="h-4 w-4" />
               </Button>
