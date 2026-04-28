@@ -394,7 +394,7 @@ const Index = () => {
                   type="button"
                   onClick={() => setSelectedStage(stage.id)}
                   className={`rounded-2xl border p-4 text-left transition ${
-                    selectedStage === stage.id ? "border-primary/80 bg-primary text-primary-foreground" : "border-border bg-card/90 text-foreground hover:border-primary/80"
+                    selectedStage === stage.id ? "border-primary/80 bg-primary text-primary-foreground" : "border-border/80 bg-card/90 text-foreground hover:border-primary/80"
                   }`}
                 >
                   <span className="font-bold">{stage.label}</span>
@@ -412,7 +412,7 @@ const Index = () => {
                 </div>
               </div>
               <p className="mt-4 leading-7 text-muted-foreground">{activeStage.promise}</p>
-              <div className="mt-6 rounded-2xl border border-primary/80/40 bg-background p-5">
+              <div className="mt-6 rounded-2xl border border-primary/30 bg-background p-5">
                 <p className="text-sm font-extrabold text-primary">What you get this week</p>
                 <h4 className="mt-2 text-2xl font-bold">{activeStage.sequence[0]}</h4>
                 <div className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -432,7 +432,7 @@ const Index = () => {
               <div className="mt-6 space-y-4">
                 {activeStage.sequence.map((step, index) => (
                   <div key={step} className="grid grid-cols-[3rem_1fr] gap-4 rounded-2xl border border-border/80 bg-background p-4">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-secondary font-extrabold text-secondary-foreground">{index + 1}</div>
+                    <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-secondary font-bold text-secondary-foreground">{index + 1}</div>
                     <div>
                       <p className="font-bold">Email {index + 1}</p>
                       <p className="mt-1 text-muted-foreground">{step}</p>
@@ -502,7 +502,7 @@ const Index = () => {
                         type="button"
                         onClick={() => setQuizAnswers((answers) => answers.map((answer, answerIndex) => (answerIndex === index ? value : answer)))}
                         className={`rounded-2xl border px-3 py-2 text-sm font-bold transition ${
-                          quizAnswers[index] === value ? "border-primary/80 bg-primary text-primary-foreground" : "border-border bg-card/90 text-muted-foreground hover:border-primary/80"
+                          quizAnswers[index] === value ? "border-primary/80 bg-primary text-primary-foreground" : "border-border/80 bg-card/90 text-muted-foreground hover:border-primary/80"
                         }`}
                       >
                         {value === 0 ? "Not yet" : value === 1 ? "Somewhat" : "Ready"}
@@ -513,7 +513,7 @@ const Index = () => {
               ))}
             </div>
 
-            <div className="mt-5 rounded-2xl border border-primary/80/80 bg-primary p-5 text-primary-foreground">
+            <div className="mt-5 rounded-2xl border border-primary/80 bg-primary p-5 text-primary-foreground">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <p className="text-sm font-bold uppercase">Readiness score</p>
@@ -566,11 +566,11 @@ const Index = () => {
               <p className="text-sm font-extrabold text-muted-foreground">FREE</p>
               <h3 className="mt-2 text-3xl font-bold">Weekly Dad Brief</h3>
               <p className="mt-4 leading-7 text-muted-foreground">One stage-based fatherhood lesson, one practical action, one partner-support move, and one mistake to avoid each week.</p>
-              <Button asChild variant="outline" className="mt-6 w-full border-border bg-card/90 text-foreground hover:bg-muted">
+              <Button asChild variant="outline" className="mt-6 w-full border-border/80 bg-card/90 text-foreground hover:bg-muted">
                 <a href="#stage-preview">Preview newsletter</a>
               </Button>
             </div>
-            <div className="rounded-2xl border border-primary/80/80 bg-primary p-6 text-primary-foreground">
+            <div className="rounded-2xl border border-primary/80 bg-primary p-6 text-primary-foreground">
               <p className="text-sm font-extrabold">PRO</p>
               <h3 className="mt-2 text-3xl font-bold">Personal Fatherhood Plan</h3>
               <p className="mt-4 leading-7">Personalized weekly guidance, readiness score, premium guides, trackers, and gentle step-by-step support by fatherhood stage.</p>
@@ -598,7 +598,7 @@ const Index = () => {
                     </option>
                   ))}
                 </select>
-                <Button type="submit" variant="secondary" disabled={isProSubmitting} className="h-12 w-full rounded-xl bg-background text-foreground hover:bg-card/90">
+                <Button type="submit" variant="secondary" disabled={isProSubmitting} className="h-12 w-full rounded-xl bg-background text-foreground hover:bg-muted">
                   {isProSubmitting ? "Saving" : "Join PRO waitlist"}
                   <ArrowRight className="h-4 w-4" />
                 </Button>
@@ -623,7 +623,7 @@ const Index = () => {
                   type="button"
                   onClick={() => setProPreviewStage(stage.value)}
                   className={`rounded-2xl border px-4 py-3 text-left text-sm font-bold transition ${
-                    proPreviewStage === stage.value ? "border-primary/80 bg-primary text-primary-foreground" : "border-border bg-card/90 text-foreground hover:border-primary/80"
+                    proPreviewStage === stage.value ? "border-primary/80 bg-primary text-primary-foreground" : "border-border/80 bg-card/90 text-foreground hover:border-primary/80"
                   }`}
                 >
                   {stage.label}
@@ -637,12 +637,12 @@ const Index = () => {
                 <p className="text-sm font-bold text-primary">Sequence preview</p>
                 <h3 className="text-3xl font-bold">{signupStages.find((stage) => stage.value === proPreviewStage)?.label}</h3>
               </div>
-              <div className="rounded-2xl bg-secondary px-3 py-2 text-sm font-extrabold text-secondary-foreground">PRO</div>
+              <div className="rounded-2xl bg-secondary px-3 py-2 text-sm font-bold text-secondary-foreground">PRO</div>
             </div>
             <div className="mt-6 space-y-4">
               {activeProSequence.map((step, index) => (
                 <div key={step} className="grid grid-cols-[3rem_1fr] gap-4 rounded-2xl border border-border/80 bg-background p-4">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary font-extrabold text-primary-foreground">{index + 1}</div>
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary font-bold text-primary-foreground">{index + 1}</div>
                   <div>
                     <p className="font-bold">PRO step {index + 1}</p>
                     <p className="mt-1 leading-6 text-muted-foreground">{step}</p>
