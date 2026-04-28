@@ -485,9 +485,81 @@ const Index = () => {
               <p className="text-sm font-black">PRO</p>
               <h3 className="mt-2 text-3xl font-black">Personal Dad Operating System</h3>
               <p className="mt-4 leading-7">Personalized weekly plan, readiness score, premium guides, trackers, and guided challenges by exact fatherhood stage.</p>
-              <Button asChild variant="secondary" className="mt-6 w-full bg-background text-foreground hover:bg-card">
-                <a href="#stage-preview">Join early access</a>
-              </Button>
+              <form onSubmit={handleProSubmit} className="mt-6 grid gap-3">
+                <Input
+                  type="email"
+                  value={proEmail}
+                  onChange={(event) => setProEmail(event.target.value)}
+                  placeholder="dad@email.com"
+                  className="h-12 border-background/30 bg-background text-foreground placeholder:text-muted-foreground"
+                  aria-label="PRO waitlist email address"
+                  required
+                />
+                <select
+                  value={proStage}
+                  onChange={(event) => setProStage(event.target.value)}
+                  className="h-12 w-full rounded-md border border-background/30 bg-background px-3 py-2 text-sm text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  aria-label="PRO waitlist fatherhood stage"
+                  required
+                >
+                  <option value="">Choose your stage</option>
+                  {signupStages.map((stage) => (
+                    <option key={stage.value} value={stage.value}>
+                      {stage.label}
+                    </option>
+                  ))}
+                </select>
+                <Button type="submit" variant="secondary" disabled={isProSubmitting} className="h-12 w-full bg-background text-foreground hover:bg-card">
+                  {isProSubmitting ? "Saving" : "Join PRO waitlist"}
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 py-16 sm:px-8 lg:px-12" id="pro-onboarding-preview">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.85fr_1.15fr]">
+          <div>
+            <p className="font-bold text-primary">PRO onboarding preview</p>
+            <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Your paid plan starts with the right sequence.</h2>
+            <p className="mt-5 leading-7 text-muted-foreground">
+              When a dad joins PRO, his first onboarding sequence changes based on his stage, so the product feels personal from day one.
+            </p>
+            <div className="mt-6 grid gap-2 sm:grid-cols-2">
+              {signupStages.map((stage) => (
+                <button
+                  key={stage.value}
+                  type="button"
+                  onClick={() => setProPreviewStage(stage.value)}
+                  className={`rounded-md border px-4 py-3 text-left text-sm font-bold transition ${
+                    proPreviewStage === stage.value ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card text-foreground hover:border-primary"
+                  }`}
+                >
+                  {stage.label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="rounded-md border border-border bg-card p-6">
+            <div className="flex items-center justify-between gap-4 border-b border-border pb-4">
+              <div>
+                <p className="text-sm font-bold text-primary">Sequence preview</p>
+                <h3 className="text-3xl font-black">{signupStages.find((stage) => stage.value === proPreviewStage)?.label}</h3>
+              </div>
+              <div className="rounded-md bg-secondary px-3 py-2 text-sm font-black text-secondary-foreground">PRO</div>
+            </div>
+            <div className="mt-6 space-y-4">
+              {activeProSequence.map((step, index) => (
+                <div key={step} className="grid grid-cols-[3rem_1fr] gap-4 rounded-md border border-border bg-background p-4">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary font-black text-primary-foreground">{index + 1}</div>
+                  <div>
+                    <p className="font-bold">PRO step {index + 1}</p>
+                    <p className="mt-1 leading-6 text-muted-foreground">{step}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
