@@ -11,48 +11,96 @@ const stages = [
     label: "Just got the news",
     promise: "Get grounded, know your role, and make the first 7 days count.",
     sequence: ["The first 24-hour dad reset", "How to support without taking over", "Money, calendar, and doctor visit basics"],
+    preview: {
+      lesson: "Your job is not to have every answer today; it is to become steady, curious, and useful.",
+      action: "Write down the first three practical things you can own this week.",
+      partnerMove: "Ask: What would make this week feel 10% lighter for you?",
+      mistake: "Jumping straight into fixing instead of listening first.",
+    },
   },
   {
     id: "pregnancy_1_3",
     label: "Pregnancy months 1–3",
     promise: "Build the early support routine while everything still feels unreal.",
     sequence: ["Your first trimester mission", "What she may need but not ask for", "The no-panic prep checklist"],
+    preview: {
+      lesson: "Early pregnancy can be invisible but intense; consistency matters more than grand gestures.",
+      action: "Create a shared note for appointments, symptoms, questions, and tasks.",
+      partnerMove: "Take one recurring household task fully off her list.",
+      mistake: "Treating the first trimester like nothing has changed because the baby is not showing yet.",
+    },
   },
   {
     id: "pregnancy_4_6",
     label: "Pregnancy months 4–6",
     promise: "Move from reaction mode into planning mode with weekly action steps.",
     sequence: ["Home systems before baby arrives", "Partner check-in scripts", "Dad readiness score: mid-pregnancy"],
+    preview: {
+      lesson: "This is the window to turn vague intention into systems before the pressure rises.",
+      action: "Pick one home system to simplify: meals, laundry, money, or appointments.",
+      partnerMove: "Schedule a 20-minute weekly check-in with no phone in hand.",
+      mistake: "Waiting until the third trimester to start preparing your routines.",
+    },
   },
   {
     id: "pregnancy_7_9",
     label: "Pregnancy months 7–9",
     promise: "Prepare for birth, hospital week, and the first nights at home.",
     sequence: ["Birth week command center", "Hospital bag: dad edition", "The first 72 hours plan"],
+    preview: {
+      lesson: "Late pregnancy is about reducing decisions before everyone is tired and emotional.",
+      action: "Build the first 72-hour plan for food, sleep shifts, visitors, and supplies.",
+      partnerMove: "Ask what kind of support she wants during labor, recovery, and visitors.",
+      mistake: "Only packing a bag and calling that being prepared.",
+    },
   },
   {
     id: "birth_week",
     label: "Birth and hospital week",
     promise: "Stay useful, calm, and ready when the pressure gets real.",
     sequence: ["Your hospital role", "Visitors, boundaries, and recovery", "The ride-home routine"],
+    preview: {
+      lesson: "Your calm becomes part of the environment; your role is logistics, protection, and presence.",
+      action: "Create a simple hospital command list: documents, contacts, parking, snacks, and boundaries.",
+      partnerMove: "Agree on visitor rules before anyone asks to come over.",
+      mistake: "Becoming another person who needs direction during the most intense week.",
+    },
   },
   {
     id: "newborn_0_3",
     label: "Newborn months 0–3",
     promise: "Survive the fog with simple routines for sleep, feeding support, and teamwork.",
     sequence: ["Night shift system", "Partner recovery support", "Newborn bonding without overthinking"],
+    preview: {
+      lesson: "The newborn stage rewards small repeatable systems, not perfect parenting theories.",
+      action: "Own one daily reset: bottles, laundry, meals, or the sleep station.",
+      partnerMove: "Protect one recovery block where she does not need to manage anything.",
+      mistake: "Waiting to be asked instead of noticing what keeps repeating.",
+    },
   },
   {
     id: "baby_3_6",
     label: "Baby months 3–6",
     promise: "Turn chaos into rhythm as your baby becomes more alert and interactive.",
     sequence: ["Weekend reset ritual", "Play and bonding missions", "Work-life protection plan"],
+    preview: {
+      lesson: "Your baby is starting to respond; routine and bonding now become easier to practice.",
+      action: "Choose one recurring dad-baby ritual you can repeat three times this week.",
+      partnerMove: "Ask where she feels most alone in the current routine.",
+      mistake: "Assuming bonding only happens naturally instead of building repeated moments.",
+    },
   },
   {
     id: "baby_6_12",
     label: "Baby months 6–12",
     promise: "Keep growing as a dad while routines, mobility, and identity shift again.",
     sequence: ["First-year routine planner", "Confidence through repetition", "Relationship maintenance mode"],
+    preview: {
+      lesson: "The first year keeps changing; your routines need review, not autopilot.",
+      action: "Run a 15-minute routine audit: sleep, meals, play, work, relationship, and recovery.",
+      partnerMove: "Plan one protected couple check-in that is not about logistics only.",
+      mistake: "Letting survival mode become the permanent family operating system.",
+    },
   },
 ];
 
@@ -340,6 +388,23 @@ const Index = () => {
                 </div>
               </div>
               <p className="mt-4 leading-7 text-muted-foreground">{activeStage.promise}</p>
+              <div className="mt-6 rounded-md border border-primary/40 bg-background p-5">
+                <p className="text-sm font-black text-primary">What you get this week</p>
+                <h4 className="mt-2 text-2xl font-black">{activeStage.sequence[0]}</h4>
+                <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                  {[
+                    ["Lesson", activeStage.preview.lesson],
+                    ["Action", activeStage.preview.action],
+                    ["Partner move", activeStage.preview.partnerMove],
+                    ["Avoid", activeStage.preview.mistake],
+                  ].map(([label, copy]) => (
+                    <div key={label} className="rounded-md border border-border bg-card p-4">
+                      <p className="text-xs font-black uppercase text-primary">{label}</p>
+                      <p className="mt-2 text-sm leading-6 text-muted-foreground">{copy}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
               <div className="mt-6 space-y-4">
                 {activeStage.sequence.map((step, index) => (
                   <div key={step} className="grid grid-cols-[3rem_1fr] gap-4 rounded-md border border-border bg-background p-4">
