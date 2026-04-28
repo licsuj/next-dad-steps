@@ -257,9 +257,9 @@ const Index = () => {
   return (
     <main className="min-h-screen overflow-hidden bg-background text-foreground">
       <section className="relative px-5 py-6 sm:px-8 lg:px-12">
-        <div className="mx-auto flex max-w-7xl items-center justify-between border-b border-border pb-5">
+        <div className="mx-auto flex max-w-7xl items-center justify-between border-b border-border/70 pb-5">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary text-primary-foreground">
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
               <Target className="h-5 w-5" />
             </div>
             <span className="text-lg font-bold tracking-normal">NextRoutine</span>
@@ -271,11 +271,11 @@ const Index = () => {
 
         <div className="mx-auto grid max-w-7xl gap-12 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">
           <div className="flex flex-col justify-center">
-            <div className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm text-muted-foreground">
+            <div className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-border/70 bg-card px-4 py-2 text-sm text-muted-foreground">
               <Crosshair className="h-4 w-4 text-primary" />
               For expecting dads, new dads, and the first year
             </div>
-            <h1 className="max-w-4xl text-5xl font-black leading-tight tracking-normal sm:text-6xl lg:text-7xl">
+            <h1 className="max-w-4xl text-5xl font-extrabold leading-tight tracking-normal sm:text-6xl lg:text-7xl">
               You do not need to know everything. Just your next step.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
@@ -283,13 +283,13 @@ const Index = () => {
             </p>
             <div className="mt-6 grid max-w-2xl gap-3 sm:grid-cols-3">
               {["One calm step", "One weekly routine", "One way to show up"].map((item) => (
-                <div key={item} className="rounded-md border border-border bg-card px-4 py-3 text-sm font-bold text-foreground">
+                <div key={item} className="rounded-2xl border border-border/70 bg-card px-4 py-3 text-sm font-bold text-foreground">
                   {item}
                 </div>
               ))}
             </div>
 
-            <form onSubmit={handleSubmit} className="mt-8 grid max-w-3xl gap-3 rounded-md border border-border bg-card p-3 shadow-2xl shadow-secondary/20 sm:grid-cols-[1fr_1fr_auto]">
+            <form onSubmit={handleSubmit} className="mt-8 grid max-w-3xl gap-3 rounded-2xl border border-border/70 bg-card p-3 shadow-xl shadow-secondary/10 sm:grid-cols-[1fr_1fr_auto]">
               <Input
                 type="email"
                 value={email}
@@ -302,7 +302,7 @@ const Index = () => {
               <select
                 value={signupStage}
                 onChange={(event) => setSignupStage(event.target.value)}
-                className="h-12 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                className="h-12 w-full rounded-2xl border border-input bg-background px-3 py-2 text-sm text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 aria-label="Fatherhood stage"
                 required
               >
@@ -322,22 +322,22 @@ const Index = () => {
           </div>
 
           <div className="relative">
-            <div className="rounded-2xl border border-border bg-card p-5 shadow-2xl shadow-primary/10">
-              <div className="border-b border-border pb-4">
+            <div className="rounded-2xl border border-border/70 bg-card p-5 shadow-xl shadow-primary/5">
+              <div className="border-b border-border/70 pb-4">
                 <p className="text-sm font-semibold text-primary">A preview of your week</p>
-                <h2 className="mt-1 text-2xl font-black">Small moves that make dad life feel clearer</h2>
+                <h2 className="mt-1 text-2xl font-extrabold">Small moves that make dad life feel clearer</h2>
                 <p className="mt-3 text-sm leading-6 text-muted-foreground">No pressure to be perfect. Just a few useful things to understand, do, and talk about this week.</p>
               </div>
               <div className="mt-5 space-y-3">
                 {["Understand what stage you are in", "Ask one better question at home", "Choose one routine that lowers stress"].map((item) => (
-                  <div key={item} className="flex items-start gap-3 rounded-xl border border-border bg-background p-4">
+                  <div key={item} className="flex items-start gap-3 rounded-xl border border-border/70 bg-background p-4">
                     <Check className="mt-0.5 h-5 w-5 text-primary" />
                     <span className="text-sm leading-6 text-muted-foreground">{item}</span>
                   </div>
                 ))}
               </div>
               <div className="mt-5 rounded-xl bg-primary p-4 text-primary-foreground">
-                <p className="text-sm font-black uppercase">Your next step</p>
+                <p className="text-sm font-extrabold uppercase">Your next step</p>
                 <p className="mt-1 text-lg font-bold">Get the weekly routine for your stage</p>
               </div>
             </div>
@@ -346,17 +346,17 @@ const Index = () => {
       </section>
 
       <section className="px-5 py-16 sm:px-8 lg:px-12">
-        <div className="mx-auto max-w-7xl rounded-md border border-border bg-card p-6 sm:p-8">
+        <div className="mx-auto max-w-7xl rounded-2xl border border-border/70 bg-card p-6 sm:p-8">
           <p className="font-bold text-primary">Fatherhood preparation for every stage</p>
-          <h2 className="mt-3 max-w-4xl text-4xl font-black tracking-normal sm:text-5xl">A practical, reassuring guide for first-time dads, expecting fathers, and new parents.</h2>
+          <h2 className="mt-3 max-w-4xl text-4xl font-extrabold tracking-normal sm:text-5xl">A practical, reassuring guide for first-time dads, expecting fathers, and new parents.</h2>
           <div className="mt-6 grid gap-5 md:grid-cols-3">
             {[
               ["Pregnancy guide for dads", "Know how to support your pregnant partner, prepare for appointments, and build routines before birth."],
               ["Newborn tips for dads", "Get clear weekly actions for sleep support, feeding help, recovery, bonding, and home resets."],
               ["Fatherhood checklist", "Use readiness scores, stage-based checklists, and weekly steps to know what matters now."],
             ].map(([title, copy]) => (
-              <article key={title} className="rounded-md border border-border bg-background p-5">
-                <h3 className="text-xl font-black">{title}</h3>
+              <article key={title} className="rounded-2xl border border-border/70 bg-background p-5">
+                <h3 className="text-xl font-extrabold">{title}</h3>
                 <p className="mt-3 leading-7 text-muted-foreground">{copy}</p>
               </article>
             ))}
@@ -364,15 +364,15 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="border-y border-border bg-card px-5 py-14 sm:px-8 lg:px-12">
+      <section className="border-y border-border/70 bg-card px-5 py-14 sm:px-8 lg:px-12">
         <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-3">
           {[
             ["Lost", "Most content speaks around dads, not directly to them."],
             ["Useful", "Every email gives one practical move, not a flood of advice."],
             ["Ready", "PRO turns the journey into a guided plan with checklists, routines, and helpful tools."],
           ].map(([title, copy]) => (
-            <div key={title} className="border-l-4 border-primary pl-5">
-              <h2 className="text-3xl font-black">{title}</h2>
+            <div key={title} className="border-l-4 border-primary/80 pl-5">
+              <h2 className="text-3xl font-extrabold">{title}</h2>
               <p className="mt-3 leading-7 text-muted-foreground">{copy}</p>
             </div>
           ))}
@@ -383,7 +383,7 @@ const Index = () => {
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl">
             <p className="font-bold text-primary">Stage-based onboarding preview</p>
-            <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Stage-based guidance for expecting dads, newborn dads, and the first year.</h2>
+            <h2 className="mt-3 text-4xl font-extrabold tracking-normal sm:text-5xl">Stage-based guidance for expecting dads, newborn dads, and the first year.</h2>
           </div>
 
           <div className="mt-10 grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
@@ -393,8 +393,8 @@ const Index = () => {
                   key={stage.id}
                   type="button"
                   onClick={() => setSelectedStage(stage.id)}
-                  className={`rounded-md border p-4 text-left transition ${
-                    selectedStage === stage.id ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card text-foreground hover:border-primary"
+                  className={`rounded-2xl border p-4 text-left transition ${
+                    selectedStage === stage.id ? "border-primary/80 bg-primary text-primary-foreground" : "border-border bg-card text-foreground hover:border-primary/80"
                   }`}
                 >
                   <span className="font-bold">{stage.label}</span>
@@ -403,18 +403,18 @@ const Index = () => {
               ))}
             </div>
 
-            <div className="rounded-md border border-border bg-card p-6">
+            <div className="rounded-2xl border border-border/70 bg-card p-6">
               <div className="flex items-center gap-3">
                 <Mail className="h-6 w-6 text-primary" />
                 <div>
                   <p className="text-sm font-bold text-primary">Your first weekly preview</p>
-                  <h3 className="text-3xl font-black">{activeStage.label}</h3>
+                  <h3 className="text-3xl font-extrabold">{activeStage.label}</h3>
                 </div>
               </div>
               <p className="mt-4 leading-7 text-muted-foreground">{activeStage.promise}</p>
-              <div className="mt-6 rounded-md border border-primary/40 bg-background p-5">
-                <p className="text-sm font-black text-primary">What you get this week</p>
-                <h4 className="mt-2 text-2xl font-black">{activeStage.sequence[0]}</h4>
+              <div className="mt-6 rounded-2xl border border-primary/80/40 bg-background p-5">
+                <p className="text-sm font-extrabold text-primary">What you get this week</p>
+                <h4 className="mt-2 text-2xl font-extrabold">{activeStage.sequence[0]}</h4>
                 <div className="mt-5 grid gap-3 sm:grid-cols-2">
                   {[
                     ["Lesson", activeStage.preview.lesson],
@@ -422,8 +422,8 @@ const Index = () => {
                     ["Partner move", activeStage.preview.partnerMove],
                     ["Avoid", activeStage.preview.mistake],
                   ].map(([label, copy]) => (
-                    <div key={label} className="rounded-md border border-border bg-card p-4">
-                      <p className="text-xs font-black uppercase text-primary">{label}</p>
+                    <div key={label} className="rounded-2xl border border-border/70 bg-card p-4">
+                      <p className="text-xs font-extrabold uppercase text-primary">{label}</p>
                       <p className="mt-2 text-sm leading-6 text-muted-foreground">{copy}</p>
                     </div>
                   ))}
@@ -431,8 +431,8 @@ const Index = () => {
               </div>
               <div className="mt-6 space-y-4">
                 {activeStage.sequence.map((step, index) => (
-                  <div key={step} className="grid grid-cols-[3rem_1fr] gap-4 rounded-md border border-border bg-background p-4">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-md bg-secondary font-black text-secondary-foreground">{index + 1}</div>
+                  <div key={step} className="grid grid-cols-[3rem_1fr] gap-4 rounded-2xl border border-border/70 bg-background p-4">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-secondary font-extrabold text-secondary-foreground">{index + 1}</div>
                     <div>
                       <p className="font-bold">Email {index + 1}</p>
                       <p className="mt-1 text-muted-foreground">{step}</p>
@@ -449,13 +449,13 @@ const Index = () => {
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.85fr_1.15fr]">
           <div>
             <p className="font-bold text-primary">NextRoutine PRO</p>
-            <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Turn weekly advice into a personal fatherhood support plan.</h2>
+            <h2 className="mt-3 text-4xl font-extrabold tracking-normal sm:text-5xl">Turn weekly advice into a personal fatherhood support plan.</h2>
             <p className="mt-5 leading-7 text-muted-foreground">The newsletter gives dads a helpful weekly rhythm. PRO adds a more personal plan with checklists, readiness scores, and tools based on each dad’s stage.</p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             {proFeatures.map((feature, index) => (
-              <div key={feature} className="rounded-md border border-border bg-background p-5">
-                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-md bg-secondary text-secondary-foreground">
+              <div key={feature} className="rounded-2xl border border-border/70 bg-background p-5">
+                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-secondary text-secondary-foreground">
                   {index === 0 && <Sparkles className="h-5 w-5" />}
                   {index === 1 && <Trophy className="h-5 w-5" />}
                   {index === 2 && <Shield className="h-5 w-5" />}
@@ -472,14 +472,14 @@ const Index = () => {
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.95fr_1.05fr]">
           <div>
             <p className="font-bold text-primary">Readiness quiz</p>
-            <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Take the dad readiness quiz and get a reassuring next step.</h2>
+            <h2 className="mt-3 text-4xl font-extrabold tracking-normal sm:text-5xl">Take the dad readiness quiz and get a reassuring next step.</h2>
             <p className="mt-5 leading-7 text-muted-foreground">
               Answer four quick questions to calculate a stage-specific dad readiness score and get a practical next step based on pregnancy stage, newborn life, or baby age.
             </p>
             <select
               value={quizStage}
               onChange={(event) => setQuizStage(event.target.value)}
-              className="mt-6 h-12 w-full max-w-md rounded-md border border-input bg-card px-3 py-2 text-sm text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="mt-6 h-12 w-full max-w-md rounded-2xl border border-input bg-card px-3 py-2 text-sm text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               aria-label="Quiz fatherhood stage"
             >
               {signupStages.map((stage) => (
@@ -490,10 +490,10 @@ const Index = () => {
             </select>
           </div>
 
-          <div className="rounded-md border border-border bg-card p-5">
+          <div className="rounded-2xl border border-border/70 bg-card p-5">
             <div className="grid gap-4">
               {quizQuestions.map((question, index) => (
-                <div key={question} className="rounded-md border border-border bg-background p-4">
+                <div key={question} className="rounded-2xl border border-border/70 bg-background p-4">
                   <p className="font-bold leading-6">{question}</p>
                   <div className="mt-4 grid grid-cols-3 gap-2">
                     {[0, 1, 2].map((value) => (
@@ -501,8 +501,8 @@ const Index = () => {
                         key={value}
                         type="button"
                         onClick={() => setQuizAnswers((answers) => answers.map((answer, answerIndex) => (answerIndex === index ? value : answer)))}
-                        className={`rounded-md border px-3 py-2 text-sm font-bold transition ${
-                          quizAnswers[index] === value ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card text-muted-foreground hover:border-primary"
+                        className={`rounded-2xl border px-3 py-2 text-sm font-bold transition ${
+                          quizAnswers[index] === value ? "border-primary/80 bg-primary text-primary-foreground" : "border-border bg-card text-muted-foreground hover:border-primary/80"
                         }`}
                       >
                         {value === 0 ? "Not yet" : value === 1 ? "Somewhat" : "Ready"}
@@ -513,18 +513,18 @@ const Index = () => {
               ))}
             </div>
 
-            <div className="mt-5 rounded-md border border-primary bg-primary p-5 text-primary-foreground">
+            <div className="mt-5 rounded-2xl border border-primary/80/80 bg-primary p-5 text-primary-foreground">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <p className="text-sm font-black uppercase">Readiness score</p>
-                  <p className="text-5xl font-black">{readinessScore}%</p>
+                  <p className="text-sm font-extrabold uppercase">Readiness score</p>
+                  <p className="text-5xl font-extrabold">{readinessScore}%</p>
                 </div>
-                <div className="h-3 w-full rounded-md bg-background/30 sm:max-w-56">
-                  <div className="h-3 rounded-md bg-background transition-all" style={{ width: `${readinessScore}%` }} />
+                <div className="h-3 w-full rounded-2xl bg-background/30 sm:max-w-56">
+                  <div className="h-3 rounded-2xl bg-background transition-all" style={{ width: `${readinessScore}%` }} />
                 </div>
               </div>
-              <div className="mt-5 rounded-md bg-background p-4 text-foreground">
-                <p className="text-sm font-black text-primary">Recommended next step</p>
+              <div className="mt-5 rounded-2xl bg-background p-4 text-foreground">
+                <p className="text-sm font-extrabold text-primary">Recommended next step</p>
                 <p className="mt-2 leading-7 text-muted-foreground">{recommendedStep}</p>
               </div>
             </div>
@@ -537,16 +537,16 @@ const Index = () => {
           <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
             <div>
               <p className="font-bold text-primary">Dad Readiness Plan</p>
-              <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Six weeks to feel calmer, more useful, and more prepared.</h2>
+              <h2 className="mt-3 text-4xl font-extrabold tracking-normal sm:text-5xl">Six weeks to feel calmer, more useful, and more prepared.</h2>
               <p className="mt-5 leading-7 text-muted-foreground">
                 The plan turns fatherhood prep into small weekly steps: understand what matters now, support your partner, and build routines that make home feel steadier.
               </p>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               {["Know your role", "Build the support routine", "Money and home prep", "Partner check-in system", "Birth plan basics", "Newborn survival routine"].map((step, index) => (
-                <div key={step} className="rounded-md border border-border bg-card p-5">
-                  <p className="text-sm font-black text-primary">Week {index + 1}</p>
-                  <h3 className="mt-2 text-xl font-black">{step}</h3>
+                <div key={step} className="rounded-2xl border border-border/70 bg-card p-5">
+                  <p className="text-sm font-extrabold text-primary">Week {index + 1}</p>
+                  <h3 className="mt-2 text-xl font-extrabold">{step}</h3>
                   <p className="mt-3 text-sm leading-6 text-muted-foreground">One step, one checklist, one conversation, one routine to put into action.</p>
                 </div>
               ))}
@@ -555,24 +555,24 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="border-y border-border bg-card px-5 py-16 sm:px-8 lg:px-12">
+      <section className="border-y border-border/70 bg-card px-5 py-16 sm:px-8 lg:px-12">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl">
             <p className="font-bold text-primary">Monetization path</p>
-            <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Start with a free new dad newsletter. Upgrade when you want more personal guidance.</h2>
+            <h2 className="mt-3 text-4xl font-extrabold tracking-normal sm:text-5xl">Start with a free new dad newsletter. Upgrade when you want more personal guidance.</h2>
           </div>
           <div className="mt-10 grid gap-5 lg:grid-cols-2">
-            <div className="rounded-md border border-border bg-background p-6">
-              <p className="text-sm font-black text-muted-foreground">FREE</p>
-              <h3 className="mt-2 text-3xl font-black">Weekly Dad Brief</h3>
+            <div className="rounded-2xl border border-border/70 bg-background p-6">
+              <p className="text-sm font-extrabold text-muted-foreground">FREE</p>
+              <h3 className="mt-2 text-3xl font-extrabold">Weekly Dad Brief</h3>
               <p className="mt-4 leading-7 text-muted-foreground">One stage-based fatherhood lesson, one practical action, one partner-support move, and one mistake to avoid each week.</p>
               <Button asChild variant="outline" className="mt-6 w-full border-border bg-card text-foreground hover:bg-muted">
                 <a href="#stage-preview">Preview newsletter</a>
               </Button>
             </div>
-            <div className="rounded-md border border-primary bg-primary p-6 text-primary-foreground">
-              <p className="text-sm font-black">PRO</p>
-              <h3 className="mt-2 text-3xl font-black">Personal Fatherhood Plan</h3>
+            <div className="rounded-2xl border border-primary/80/80 bg-primary p-6 text-primary-foreground">
+              <p className="text-sm font-extrabold">PRO</p>
+              <h3 className="mt-2 text-3xl font-extrabold">Personal Fatherhood Plan</h3>
               <p className="mt-4 leading-7">Personalized weekly guidance, readiness score, premium guides, trackers, and gentle step-by-step support by fatherhood stage.</p>
               <form onSubmit={handleProSubmit} className="mt-6 grid gap-3">
                 <Input
@@ -587,7 +587,7 @@ const Index = () => {
                 <select
                   value={proStage}
                   onChange={(event) => setProStage(event.target.value)}
-                  className="h-12 w-full rounded-md border border-background/30 bg-background px-3 py-2 text-sm text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  className="h-12 w-full rounded-2xl border border-background/30 bg-background px-3 py-2 text-sm text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                   aria-label="PRO waitlist fatherhood stage"
                   required
                 >
@@ -612,7 +612,7 @@ const Index = () => {
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.85fr_1.15fr]">
           <div>
             <p className="font-bold text-primary">PRO plan preview</p>
-            <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Your PRO plan starts with the right first steps.</h2>
+            <h2 className="mt-3 text-4xl font-extrabold tracking-normal sm:text-5xl">Your PRO plan starts with the right first steps.</h2>
             <p className="mt-5 leading-7 text-muted-foreground">
               When a dad joins PRO, the first steps match his stage, so the guidance feels relevant from day one.
             </p>
@@ -622,8 +622,8 @@ const Index = () => {
                   key={stage.value}
                   type="button"
                   onClick={() => setProPreviewStage(stage.value)}
-                  className={`rounded-md border px-4 py-3 text-left text-sm font-bold transition ${
-                    proPreviewStage === stage.value ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card text-foreground hover:border-primary"
+                  className={`rounded-2xl border px-4 py-3 text-left text-sm font-bold transition ${
+                    proPreviewStage === stage.value ? "border-primary/80 bg-primary text-primary-foreground" : "border-border bg-card text-foreground hover:border-primary/80"
                   }`}
                 >
                   {stage.label}
@@ -631,18 +631,18 @@ const Index = () => {
               ))}
             </div>
           </div>
-          <div className="rounded-md border border-border bg-card p-6">
-            <div className="flex items-center justify-between gap-4 border-b border-border pb-4">
+          <div className="rounded-2xl border border-border/70 bg-card p-6">
+            <div className="flex items-center justify-between gap-4 border-b border-border/70 pb-4">
               <div>
                 <p className="text-sm font-bold text-primary">Sequence preview</p>
-                <h3 className="text-3xl font-black">{signupStages.find((stage) => stage.value === proPreviewStage)?.label}</h3>
+                <h3 className="text-3xl font-extrabold">{signupStages.find((stage) => stage.value === proPreviewStage)?.label}</h3>
               </div>
-              <div className="rounded-md bg-secondary px-3 py-2 text-sm font-black text-secondary-foreground">PRO</div>
+              <div className="rounded-2xl bg-secondary px-3 py-2 text-sm font-extrabold text-secondary-foreground">PRO</div>
             </div>
             <div className="mt-6 space-y-4">
               {activeProSequence.map((step, index) => (
-                <div key={step} className="grid grid-cols-[3rem_1fr] gap-4 rounded-md border border-border bg-background p-4">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary font-black text-primary-foreground">{index + 1}</div>
+                <div key={step} className="grid grid-cols-[3rem_1fr] gap-4 rounded-2xl border border-border/70 bg-background p-4">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary font-extrabold text-primary-foreground">{index + 1}</div>
                   <div>
                     <p className="font-bold">PRO step {index + 1}</p>
                     <p className="mt-1 leading-6 text-muted-foreground">{step}</p>
@@ -658,7 +658,7 @@ const Index = () => {
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
             <p className="font-bold text-primary">FAQ</p>
-            <h2 className="mt-3 text-4xl font-black tracking-normal">Built for dads who want to feel a little more ready.</h2>
+            <h2 className="mt-3 text-4xl font-extrabold tracking-normal">Built for dads who want to feel a little more ready.</h2>
           </div>
           <div className="grid gap-4">
             {[
@@ -667,8 +667,8 @@ const Index = () => {
               ["What will PRO include?", "A personalized weekly plan, Dad Readiness Plan, premium guides, readiness score, and practical trackers."],
               ["Is this medical advice?", "No. NextRoutine is educational guidance and practical planning support, not medical advice."],
             ].map(([question, answer]) => (
-              <div key={question} className="rounded-md border border-border bg-card p-5">
-                <h3 className="text-lg font-black">{question}</h3>
+              <div key={question} className="rounded-2xl border border-border/70 bg-card p-5">
+                <h3 className="text-lg font-extrabold">{question}</h3>
                 <p className="mt-2 leading-7 text-muted-foreground">{answer}</p>
               </div>
             ))}
@@ -677,9 +677,9 @@ const Index = () => {
       </section>
 
       <section className="px-5 pb-20 sm:px-8 lg:px-12">
-        <div className="mx-auto max-w-7xl rounded-md border border-border bg-card p-8 text-center sm:p-12">
+        <div className="mx-auto max-w-7xl rounded-2xl border border-border/70 bg-card p-8 text-center sm:p-12">
           <p className="font-bold text-primary">NextRoutine</p>
-          <h2 className="mx-auto mt-3 max-w-4xl text-4xl font-black tracking-normal sm:text-6xl">You do not need to know everything. Just start with the next step.</h2>
+          <h2 className="mx-auto mt-3 max-w-4xl text-4xl font-extrabold tracking-normal sm:text-6xl">You do not need to know everything. Just start with the next step.</h2>
           <p className="mx-auto mt-5 max-w-2xl leading-7 text-muted-foreground">Join the weekly dad routine and get calm, practical guidance for the stage you are in now.</p>
           <Button asChild className="mt-7 h-12 px-8 font-bold">
             <a href="#stage-preview">Choose your stage</a>
