@@ -260,6 +260,89 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      <section className="px-5 py-16 sm:px-8 lg:px-12">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+            <div>
+              <p className="font-bold text-primary">Dad Readiness Challenge</p>
+              <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Six weeks to stop guessing and start leading.</h2>
+              <p className="mt-5 leading-7 text-muted-foreground">
+                The challenge turns fatherhood prep into weekly missions: learn the role, build the routine, protect the relationship, and prepare for the next stage.
+              </p>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {["Know your role", "Build the support routine", "Money and home prep", "Partner check-in system", "Birth plan basics", "Newborn survival routine"].map((mission, index) => (
+                <div key={mission} className="rounded-md border border-border bg-card p-5">
+                  <p className="text-sm font-black text-primary">Week {index + 1}</p>
+                  <h3 className="mt-2 text-xl font-black">{mission}</h3>
+                  <p className="mt-3 text-sm leading-6 text-muted-foreground">One mission, one checklist, one conversation, one routine to put into action.</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-border bg-card px-5 py-16 sm:px-8 lg:px-12">
+        <div className="mx-auto max-w-7xl">
+          <div className="max-w-3xl">
+            <p className="font-bold text-primary">Monetization path</p>
+            <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Start free. Upgrade when dads want a plan built for them.</h2>
+          </div>
+          <div className="mt-10 grid gap-5 lg:grid-cols-2">
+            <div className="rounded-md border border-border bg-background p-6">
+              <p className="text-sm font-black text-muted-foreground">FREE</p>
+              <h3 className="mt-2 text-3xl font-black">Weekly Dad Brief</h3>
+              <p className="mt-4 leading-7 text-muted-foreground">One stage-based lesson, one action, one partner-support move, and one mistake to avoid.</p>
+              <Button asChild variant="outline" className="mt-6 w-full border-border bg-card text-foreground hover:bg-muted">
+                <a href="#stage-preview">Preview newsletter</a>
+              </Button>
+            </div>
+            <div className="rounded-md border border-primary bg-primary p-6 text-primary-foreground">
+              <p className="text-sm font-black">PRO</p>
+              <h3 className="mt-2 text-3xl font-black">Personal Dad Operating System</h3>
+              <p className="mt-4 leading-7">Personalized weekly plan, readiness score, premium guides, trackers, and guided challenges by exact fatherhood stage.</p>
+              <Button asChild variant="secondary" className="mt-6 w-full bg-background text-foreground hover:bg-card">
+                <a href="#stage-preview">Join early access</a>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 py-16 sm:px-8 lg:px-12">
+        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <p className="font-bold text-primary">FAQ</p>
+            <h2 className="mt-3 text-4xl font-black tracking-normal">Built for dads who need the next move.</h2>
+          </div>
+          <div className="grid gap-4">
+            {[
+              ["Is this only for expecting dads?", "No. NextRoutine supports the full path from getting the news through the baby’s first year."],
+              ["How is this different from a parenting blog?", "It is organized as stage-based action: what to learn, prepare, say, and do this week."],
+              ["What will PRO include?", "A personalized weekly plan, Dad Readiness Challenge, premium guides, readiness score, and practical trackers."],
+              ["Is this medical advice?", "No. NextRoutine is educational guidance and practical planning support, not medical advice."],
+            ].map(([question, answer]) => (
+              <div key={question} className="rounded-md border border-border bg-card p-5">
+                <h3 className="text-lg font-black">{question}</h3>
+                <p className="mt-2 leading-7 text-muted-foreground">{answer}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 pb-20 sm:px-8 lg:px-12">
+        <div className="mx-auto max-w-7xl rounded-md border border-border bg-card p-8 text-center sm:p-12">
+          <p className="font-bold text-primary">NextRoutine</p>
+          <h2 className="mx-auto mt-3 max-w-4xl text-4xl font-black tracking-normal sm:text-6xl">Stop guessing. Start becoming ready.</h2>
+          <p className="mx-auto mt-5 max-w-2xl leading-7 text-muted-foreground">Join the weekly dad routine and be first in line for the PRO plan when it opens.</p>
+          <Button asChild className="mt-7 h-12 px-8 font-bold">
+            <a href="#stage-preview">Choose your stage</a>
+          </Button>
+        </div>
+      </section>
     </main>
   );
 };
