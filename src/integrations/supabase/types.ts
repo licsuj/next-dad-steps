@@ -14,7 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      newsletter_signups: {
+        Row: {
+          created_at: string
+          email: string
+          fatherhood_stage: string
+          id: string
+          onboarding_sequence: string[]
+          pro_interest: boolean
+          source: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          fatherhood_stage?: string
+          id?: string
+          onboarding_sequence?: string[]
+          pro_interest?: boolean
+          source?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          fatherhood_stage?: string
+          id?: string
+          onboarding_sequence?: string[]
+          pro_interest?: boolean
+          source?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
