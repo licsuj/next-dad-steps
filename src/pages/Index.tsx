@@ -22,7 +22,7 @@ const stages = [
     id: "pregnancy_1_3",
     label: "Pregnancy months 1–3",
     promise: "Build the early support routine while everything still feels unreal.",
-    sequence: ["Your first trimester mission", "What she may need but not ask for", "The no-panic prep checklist"],
+    sequence: ["Your first trimester step", "What she may need but not ask for", "The no-panic prep checklist"],
     preview: {
       lesson: "Early pregnancy can be invisible but intense; consistency matters more than grand gestures.",
       action: "Create a shared note for appointments, symptoms, questions, and tasks.",
@@ -46,7 +46,7 @@ const stages = [
     id: "pregnancy_7_9",
     label: "Pregnancy months 7–9",
     promise: "Prepare for birth, hospital week, and the first nights at home.",
-    sequence: ["Birth week command center", "Hospital bag: dad edition", "The first 72 hours plan"],
+    sequence: ["Birth week simple plan", "Hospital bag: dad edition", "The first 72 hours plan"],
     preview: {
       lesson: "Late pregnancy is about reducing decisions before everyone is tired and emotional.",
       action: "Build the first 72-hour plan for food, sleep shifts, visitors, and supplies.",
@@ -82,7 +82,7 @@ const stages = [
     id: "baby_3_6",
     label: "Baby months 3–6",
     promise: "Turn chaos into rhythm as your baby becomes more alert and interactive.",
-    sequence: ["Weekend reset ritual", "Play and bonding missions", "Work-life protection plan"],
+    sequence: ["Weekend reset ritual", "Play and bonding steps", "Work-life protection plan"],
     preview: {
       lesson: "Your baby is starting to respond; routine and bonding now become easier to practice.",
       action: "Choose one recurring dad-baby ritual you can repeat three times this week.",
@@ -99,14 +99,14 @@ const stages = [
       lesson: "The first year keeps changing; your routines need review, not autopilot.",
       action: "Run a 15-minute routine audit: sleep, meals, play, work, relationship, and recovery.",
       partnerMove: "Plan one protected couple check-in that is not about logistics only.",
-      mistake: "Letting survival mode become the permanent family operating system.",
+      mistake: "Letting survival mode become the permanent family support plan.",
     },
   },
 ];
 
 const proFeatures = [
   "Personalized weekly plan by pregnancy month or baby age",
-  "Dad Readiness Challenge with missions and progress prompts",
+  "Dad Readiness Plan with steps and progress prompts",
   "Premium guides for partner support, birth prep, and first-year routines",
   "Trackers for readiness score, sleep support, checklists, and habits",
 ];
@@ -125,11 +125,11 @@ const quizQuestions = [
   "I feel clear on my role as a dad right now.",
 ];
 
-const stageMissions: Record<string, { low: string; mid: string; high: string }> = {
+const stageSteps: Record<string, { low: string; mid: string; high: string }> = {
   just_found_out: {
     low: "Do the 24-hour dad reset: write down what changed, what matters, and the one conversation to have tonight.",
     mid: "Create your first support routine: one daily check-in and one task you own without being asked.",
-    high: "Build the early command center: appointments, budget notes, questions, and next-week prep in one place.",
+    high: "Build one shared place for appointments, budget notes, questions, and next-week prep.",
   },
   pregnancy_months: {
     low: "Run the pregnancy stage audit: what month are you in, what appointments are coming, and what does your partner need most?",
@@ -143,16 +143,16 @@ const stageMissions: Record<string, { low: string; mid: string; high: string }> 
   },
   baby_months: {
     low: "Reset the family rhythm: identify the messiest part of the week and build one repeatable routine around it.",
-    mid: "Plan one bonding mission: a simple recurring activity that belongs to you and your baby.",
+    mid: "Plan one bonding step: a simple recurring activity that belongs to you and your baby.",
     high: "Upgrade your first-year system: routines, relationship check-ins, and work-life boundaries for the next month.",
   },
 };
 
 const proOnboardingSequences: Record<string, string[]> = {
-  just_found_out: ["Your first 24-hour reset", "Partner support script", "Early appointment command center", "Dad readiness baseline"],
+  just_found_out: ["Your first 24-hour reset", "Partner support script", "Early appointment plan", "Dad readiness baseline"],
   pregnancy_months: ["Pregnancy stage audit", "Weekly support routine", "Home and money prep", "Birth-readiness roadmap"],
   newborn: ["Night shift operating plan", "Partner recovery checklist", "Newborn supply station", "First 30-day routine score"],
-  baby_months: ["Family rhythm reset", "Bonding mission plan", "Work-life boundary check", "First-year routine upgrade"],
+  baby_months: ["Family rhythm reset", "Bonding step plan", "Work-life boundary check", "First-year routine upgrade"],
 };
 
 const Index = () => {
@@ -169,11 +169,11 @@ const Index = () => {
 
   const activeStage = useMemo(() => stages.find((stage) => stage.id === selectedStage) ?? stages[0], [selectedStage]);
   const readinessScore = useMemo(() => Math.round((quizAnswers.reduce((total, answer) => total + answer, 0) / (quizAnswers.length * 2)) * 100), [quizAnswers]);
-  const recommendedMission = useMemo(() => {
-    const missions = stageMissions[quizStage];
-    if (readinessScore < 45) return missions.low;
-    if (readinessScore < 75) return missions.mid;
-    return missions.high;
+  const recommendedStep = useMemo(() => {
+    const steps = stageSteps[quizStage];
+    if (readinessScore < 45) return steps.low;
+    if (readinessScore < 75) return steps.mid;
+    return steps.high;
   }, [quizStage, readinessScore]);
 
   const activeProSequence = proOnboardingSequences[proPreviewStage];
@@ -183,7 +183,7 @@ const Index = () => {
     const trimmedEmail = email.trim().toLowerCase();
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail) || trimmedEmail.length > 255) {
-      toast.error("Enter a valid email to join the mission.");
+      toast.error("Enter a valid email to join the step.");
       return;
     }
 
@@ -273,13 +273,13 @@ const Index = () => {
           <div className="flex flex-col justify-center">
             <div className="mb-6 inline-flex w-fit items-center gap-2 rounded-md border border-border bg-card px-3 py-2 text-sm text-muted-foreground">
               <Crosshair className="h-4 w-4 text-primary" />
-              Pregnancy guide for dads, newborn routines, and first-year fatherhood prep
+              Pregnancy guidance, newborn routines, and first-year support for dads
             </div>
             <h1 className="max-w-4xl text-5xl font-black leading-none tracking-normal sm:text-6xl lg:text-7xl">
-              New dad advice that tells you what to do next.
+              Practical new dad advice, one calm step at a time.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
-              NextRoutine gives expecting fathers and new dads stage-based guidance, fatherhood checklists, readiness scores, and weekly routines from pregnancy news through the baby’s first year.
+              NextRoutine helps expecting fathers and new dads feel less lost with stage-based guidance, simple checklists, readiness scores, and weekly routines from pregnancy news through the baby’s first year.
             </p>
 
             <form onSubmit={handleSubmit} className="mt-8 grid max-w-3xl gap-3 rounded-md border border-border bg-card p-3 shadow-2xl shadow-secondary/20 sm:grid-cols-[1fr_1fr_auto]">
@@ -318,13 +318,13 @@ const Index = () => {
             <div className="rounded-md border border-border bg-card p-5 shadow-2xl shadow-primary/10">
               <div className="flex items-center justify-between border-b border-border pb-4">
                 <div>
-                  <p className="text-sm font-semibold text-primary">This week’s dad mission</p>
-                  <h2 className="mt-1 text-2xl font-black">Build your command center</h2>
+                  <p className="text-sm font-semibold text-primary">This week’s next step</p>
+                  <h2 className="mt-1 text-2xl font-black">Make this week feel more manageable</h2>
                 </div>
                 <div className="rounded-md bg-secondary px-3 py-2 text-sm font-bold">Score 72%</div>
               </div>
               <div className="mt-5 space-y-3">
-                {["Know what stage you are in", "Take one pressure off your partner", "Prepare one system before it becomes urgent"].map((item) => (
+                {["Understand where you are right now", "Take one small pressure off your partner", "Prepare one routine before it becomes stressful"].map((item) => (
                   <div key={item} className="flex items-start gap-3 rounded-md border border-border bg-background p-4">
                     <Check className="mt-0.5 h-5 w-5 text-primary" />
                     <span className="text-sm leading-6 text-muted-foreground">{item}</span>
@@ -332,8 +332,8 @@ const Index = () => {
                 ))}
               </div>
               <div className="mt-5 rounded-md bg-primary p-4 text-primary-foreground">
-                <p className="text-sm font-black uppercase">Next unlock</p>
-                <p className="mt-1 text-lg font-bold">Your personalized Dad Readiness Plan</p>
+                <p className="text-sm font-black uppercase">Coming next</p>
+                <p className="mt-1 text-lg font-bold">Your personalized fatherhood plan</p>
               </div>
             </div>
           </div>
@@ -343,12 +343,12 @@ const Index = () => {
       <section className="px-5 py-16 sm:px-8 lg:px-12">
         <div className="mx-auto max-w-7xl rounded-md border border-border bg-card p-6 sm:p-8">
           <p className="font-bold text-primary">Fatherhood preparation for every stage</p>
-          <h2 className="mt-3 max-w-4xl text-4xl font-black tracking-normal sm:text-5xl">A practical guide for first-time dads, expecting fathers, and new parents.</h2>
+          <h2 className="mt-3 max-w-4xl text-4xl font-black tracking-normal sm:text-5xl">A practical, reassuring guide for first-time dads, expecting fathers, and new parents.</h2>
           <div className="mt-6 grid gap-5 md:grid-cols-3">
             {[
               ["Pregnancy guide for dads", "Know how to support your pregnant partner, prepare for appointments, and build routines before birth."],
               ["Newborn tips for dads", "Get clear weekly actions for sleep support, feeding help, recovery, bonding, and home resets."],
-              ["Fatherhood checklist", "Use readiness scores, stage-based checklists, and weekly missions to know what matters now."],
+              ["Fatherhood checklist", "Use readiness scores, stage-based checklists, and weekly steps to know what matters now."],
             ].map(([title, copy]) => (
               <article key={title} className="rounded-md border border-border bg-background p-5">
                 <h3 className="text-xl font-black">{title}</h3>
@@ -364,7 +364,7 @@ const Index = () => {
           {[
             ["Lost", "Most content speaks around dads, not directly to them."],
             ["Useful", "Every email gives one practical move, not a flood of advice."],
-            ["Ready", "PRO turns the journey into a guided plan with tools and trackers."],
+            ["Ready", "PRO turns the journey into a guided plan with checklists, routines, and helpful tools."],
           ].map(([title, copy]) => (
             <div key={title} className="border-l-4 border-primary pl-5">
               <h2 className="text-3xl font-black">{title}</h2>
@@ -378,7 +378,7 @@ const Index = () => {
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl">
             <p className="font-bold text-primary">Stage-based onboarding preview</p>
-            <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Stage-based fatherhood content for expecting dads, newborn dads, and the first year.</h2>
+            <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Stage-based guidance for expecting dads, newborn dads, and the first year.</h2>
           </div>
 
           <div className="mt-10 grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
@@ -402,7 +402,7 @@ const Index = () => {
               <div className="flex items-center gap-3">
                 <Mail className="h-6 w-6 text-primary" />
                 <div>
-                  <p className="text-sm font-bold text-primary">Your first onboarding sequence</p>
+                  <p className="text-sm font-bold text-primary">Your first weekly preview</p>
                   <h3 className="text-3xl font-black">{activeStage.label}</h3>
                 </div>
               </div>
@@ -444,8 +444,8 @@ const Index = () => {
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.85fr_1.15fr]">
           <div>
             <p className="font-bold text-primary">NextRoutine PRO</p>
-            <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Turn weekly advice into a personal fatherhood operating system.</h2>
-            <p className="mt-5 leading-7 text-muted-foreground">The newsletter builds trust. PRO becomes the paid guided coach: plans, missions, scorecards, and tools based on each dad’s exact stage.</p>
+            <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Turn weekly advice into a personal fatherhood support plan.</h2>
+            <p className="mt-5 leading-7 text-muted-foreground">The newsletter gives dads a helpful weekly rhythm. PRO adds a more personal plan with checklists, readiness scores, and tools based on each dad’s stage.</p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             {proFeatures.map((feature, index) => (
@@ -467,7 +467,7 @@ const Index = () => {
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.95fr_1.05fr]">
           <div>
             <p className="font-bold text-primary">Readiness quiz</p>
-            <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Take the dad readiness quiz and get your next mission.</h2>
+            <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Take the dad readiness quiz and get a reassuring next step.</h2>
             <p className="mt-5 leading-7 text-muted-foreground">
               Answer four quick questions to calculate a stage-specific dad readiness score and get a practical next step based on pregnancy stage, newborn life, or baby age.
             </p>
@@ -519,8 +519,8 @@ const Index = () => {
                 </div>
               </div>
               <div className="mt-5 rounded-md bg-background p-4 text-foreground">
-                <p className="text-sm font-black text-primary">Recommended next mission</p>
-                <p className="mt-2 leading-7 text-muted-foreground">{recommendedMission}</p>
+                <p className="text-sm font-black text-primary">Recommended next step</p>
+                <p className="mt-2 leading-7 text-muted-foreground">{recommendedStep}</p>
               </div>
             </div>
           </div>
@@ -531,18 +531,18 @@ const Index = () => {
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
             <div>
-              <p className="font-bold text-primary">Dad Readiness Challenge</p>
-              <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Six weeks to stop guessing and start leading.</h2>
+              <p className="font-bold text-primary">Dad Readiness Plan</p>
+              <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Six weeks to feel calmer, more useful, and more prepared.</h2>
               <p className="mt-5 leading-7 text-muted-foreground">
-                The challenge turns fatherhood prep into weekly missions: learn the role, build the routine, protect the relationship, and prepare for the next stage.
+                The plan turns fatherhood prep into small weekly steps: understand what matters now, support your partner, and build routines that make home feel steadier.
               </p>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
-              {["Know your role", "Build the support routine", "Money and home prep", "Partner check-in system", "Birth plan basics", "Newborn survival routine"].map((mission, index) => (
-                <div key={mission} className="rounded-md border border-border bg-card p-5">
+              {["Know your role", "Build the support routine", "Money and home prep", "Partner check-in system", "Birth plan basics", "Newborn survival routine"].map((step, index) => (
+                <div key={step} className="rounded-md border border-border bg-card p-5">
                   <p className="text-sm font-black text-primary">Week {index + 1}</p>
-                  <h3 className="mt-2 text-xl font-black">{mission}</h3>
-                  <p className="mt-3 text-sm leading-6 text-muted-foreground">One mission, one checklist, one conversation, one routine to put into action.</p>
+                  <h3 className="mt-2 text-xl font-black">{step}</h3>
+                  <p className="mt-3 text-sm leading-6 text-muted-foreground">One step, one checklist, one conversation, one routine to put into action.</p>
                 </div>
               ))}
             </div>
@@ -554,7 +554,7 @@ const Index = () => {
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl">
             <p className="font-bold text-primary">Monetization path</p>
-            <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Start with a free new dad newsletter. Upgrade when you want a personal fatherhood plan.</h2>
+            <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Start with a free new dad newsletter. Upgrade when you want more personal guidance.</h2>
           </div>
           <div className="mt-10 grid gap-5 lg:grid-cols-2">
             <div className="rounded-md border border-border bg-background p-6">
@@ -567,8 +567,8 @@ const Index = () => {
             </div>
             <div className="rounded-md border border-primary bg-primary p-6 text-primary-foreground">
               <p className="text-sm font-black">PRO</p>
-              <h3 className="mt-2 text-3xl font-black">Personal Dad Operating System</h3>
-              <p className="mt-4 leading-7">Personalized weekly plan, readiness score, premium guides, trackers, and guided challenges by exact fatherhood stage.</p>
+              <h3 className="mt-2 text-3xl font-black">Personal Fatherhood Plan</h3>
+              <p className="mt-4 leading-7">Personalized weekly guidance, readiness score, premium guides, trackers, and gentle step-by-step support by fatherhood stage.</p>
               <form onSubmit={handleProSubmit} className="mt-6 grid gap-3">
                 <Input
                   type="email"
@@ -606,10 +606,10 @@ const Index = () => {
       <section className="px-5 py-16 sm:px-8 lg:px-12" id="pro-onboarding-preview">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.85fr_1.15fr]">
           <div>
-            <p className="font-bold text-primary">PRO onboarding preview</p>
-            <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Your paid plan starts with the right sequence.</h2>
+            <p className="font-bold text-primary">PRO plan preview</p>
+            <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Your PRO plan starts with the right first steps.</h2>
             <p className="mt-5 leading-7 text-muted-foreground">
-              When a dad joins PRO, his first onboarding sequence changes based on his stage, so the product feels personal from day one.
+              When a dad joins PRO, the first steps match his stage, so the guidance feels relevant from day one.
             </p>
             <div className="mt-6 grid gap-2 sm:grid-cols-2">
               {signupStages.map((stage) => (
@@ -653,13 +653,13 @@ const Index = () => {
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
             <p className="font-bold text-primary">FAQ</p>
-            <h2 className="mt-3 text-4xl font-black tracking-normal">Built for dads who need the next move.</h2>
+            <h2 className="mt-3 text-4xl font-black tracking-normal">Built for dads who want to feel a little more ready.</h2>
           </div>
           <div className="grid gap-4">
             {[
               ["Is this only for expecting dads?", "No. NextRoutine supports the full path from getting the news through the baby’s first year."],
               ["How is this different from a parenting blog?", "It is organized as stage-based action: what to learn, prepare, say, and do this week."],
-              ["What will PRO include?", "A personalized weekly plan, Dad Readiness Challenge, premium guides, readiness score, and practical trackers."],
+              ["What will PRO include?", "A personalized weekly plan, Dad Readiness Plan, premium guides, readiness score, and practical trackers."],
               ["Is this medical advice?", "No. NextRoutine is educational guidance and practical planning support, not medical advice."],
             ].map(([question, answer]) => (
               <div key={question} className="rounded-md border border-border bg-card p-5">
@@ -674,8 +674,8 @@ const Index = () => {
       <section className="px-5 pb-20 sm:px-8 lg:px-12">
         <div className="mx-auto max-w-7xl rounded-md border border-border bg-card p-8 text-center sm:p-12">
           <p className="font-bold text-primary">NextRoutine</p>
-          <h2 className="mx-auto mt-3 max-w-4xl text-4xl font-black tracking-normal sm:text-6xl">Stop guessing. Start becoming ready.</h2>
-          <p className="mx-auto mt-5 max-w-2xl leading-7 text-muted-foreground">Join the weekly dad routine and be first in line for the PRO plan when it opens.</p>
+          <h2 className="mx-auto mt-3 max-w-4xl text-4xl font-black tracking-normal sm:text-6xl">You do not need to know everything. Just start with the next step.</h2>
+          <p className="mx-auto mt-5 max-w-2xl leading-7 text-muted-foreground">Join the weekly dad routine and get calm, practical guidance for the stage you are in now.</p>
           <Button asChild className="mt-7 h-12 px-8 font-bold">
             <a href="#stage-preview">Choose your stage</a>
           </Button>
