@@ -70,13 +70,52 @@ const signupStages = [
   { value: "baby_months", label: "Baby months" },
 ];
 
+const quizQuestions = [
+  "I know what my partner needs from me this week.",
+  "I have one routine that lowers stress at home.",
+  "I know the next practical thing I should prepare.",
+  "I feel clear on my role as a dad right now.",
+];
+
+const stageMissions: Record<string, { low: string; mid: string; high: string }> = {
+  just_found_out: {
+    low: "Do the 24-hour dad reset: write down what changed, what matters, and the one conversation to have tonight.",
+    mid: "Create your first support routine: one daily check-in and one task you own without being asked.",
+    high: "Build the early command center: appointments, budget notes, questions, and next-week prep in one place.",
+  },
+  pregnancy_months: {
+    low: "Run the pregnancy stage audit: what month are you in, what appointments are coming, and what does your partner need most?",
+    mid: "Set the weekly partner check-in: energy, worries, practical help, and one decision to remove from her plate.",
+    high: "Start birth-readiness prep: hospital logistics, home systems, and the first 72-hour plan.",
+  },
+  newborn: {
+    low: "Protect the next sleep block: choose one shift, one reset task, and one way to reduce decision fatigue today.",
+    mid: "Build the newborn night system: supplies, handoffs, feeding support, and recovery time for your partner.",
+    high: "Create the weekly newborn rhythm: sleep support, chores, bonding, and visitor boundaries.",
+  },
+  baby_months: {
+    low: "Reset the family rhythm: identify the messiest part of the week and build one repeatable routine around it.",
+    mid: "Plan one bonding mission: a simple recurring activity that belongs to you and your baby.",
+    high: "Upgrade your first-year system: routines, relationship check-ins, and work-life boundaries for the next month.",
+  },
+};
+
 const Index = () => {
   const [email, setEmail] = useState("");
   const [signupStage, setSignupStage] = useState("");
   const [selectedStage, setSelectedStage] = useState(stages[0].id);
+  const [quizStage, setQuizStage] = useState("just_found_out");
+  const [quizAnswers, setQuizAnswers] = useState([1, 1, 1, 1]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const activeStage = useMemo(() => stages.find((stage) => stage.id === selectedStage) ?? stages[0], [selectedStage]);
+  const readinessScore = useMemo(() => Math.round((quizAnswers.reduce((total, answer) => total + answer, 0) / (quizAnswers.length * 2)) * 100), [quizAnswers]);
+  const recommendedMission = useMemo(() => {
+    const missions = stageMissions[quizStage];
+    if (readinessScore < 45) return missions.low;
+    if (readinessScore < 75) return missions.mid;
+    return missions.high;
+  }, [quizStage, readinessScore]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -286,6 +325,70 @@ const Index = () => {
                 <p className="font-bold leading-7">{feature}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 py-16 sm:px-8 lg:px-12" id="readiness-quiz">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+          <div>
+            <p className="font-bold text-primary">Readiness quiz</p>
+            <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Get a quick score and your next mission.</h2>
+            <p className="mt-5 leading-7 text-muted-foreground">
+              Four answers turn into a stage-specific readiness score, then NextRoutine points dads toward the move that matters now.
+            </p>
+            <select
+              value={quizStage}
+              onChange={(event) => setQuizStage(event.target.value)}
+              className="mt-6 h-12 w-full max-w-md rounded-md border border-input bg-card px-3 py-2 text-sm text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              aria-label="Quiz fatherhood stage"
+            >
+              {signupStages.map((stage) => (
+                <option key={stage.value} value={stage.value}>
+                  {stage.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="rounded-md border border-border bg-card p-5">
+            <div className="grid gap-4">
+              {quizQuestions.map((question, index) => (
+                <div key={question} className="rounded-md border border-border bg-background p-4">
+                  <p className="font-bold leading-6">{question}</p>
+                  <div className="mt-4 grid grid-cols-3 gap-2">
+                    {[0, 1, 2].map((value) => (
+                      <button
+                        key={value}
+                        type="button"
+                        onClick={() => setQuizAnswers((answers) => answers.map((answer, answerIndex) => (answerIndex === index ? value : answer)))}
+                        className={`rounded-md border px-3 py-2 text-sm font-bold transition ${
+                          quizAnswers[index] === value ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card text-muted-foreground hover:border-primary"
+                        }`}
+                      >
+                        {value === 0 ? "Not yet" : value === 1 ? "Somewhat" : "Ready"}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-5 rounded-md border border-primary bg-primary p-5 text-primary-foreground">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-sm font-black uppercase">Readiness score</p>
+                  <p className="text-5xl font-black">{readinessScore}%</p>
+                </div>
+                <div className="h-3 w-full rounded-md bg-background/30 sm:max-w-56">
+                  <div className="h-3 rounded-md bg-background transition-all" style={{ width: `${readinessScore}%` }} />
+                </div>
+              </div>
+              <div className="mt-5 rounded-md bg-background p-4 text-foreground">
+                <p className="text-sm font-black text-primary">Recommended next mission</p>
+                <p className="mt-2 leading-7 text-muted-foreground">{recommendedMission}</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
