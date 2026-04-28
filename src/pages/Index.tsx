@@ -271,16 +271,23 @@ const Index = () => {
 
         <div className="mx-auto grid max-w-7xl gap-12 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">
           <div className="flex flex-col justify-center">
-            <div className="mb-6 inline-flex w-fit items-center gap-2 rounded-md border border-border bg-card px-3 py-2 text-sm text-muted-foreground">
+            <div className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm text-muted-foreground">
               <Crosshair className="h-4 w-4 text-primary" />
-              Pregnancy guidance, newborn routines, and first-year support for dads
+              For expecting dads, new dads, and the first year
             </div>
-            <h1 className="max-w-4xl text-5xl font-black leading-none tracking-normal sm:text-6xl lg:text-7xl">
-              Practical new dad advice, one calm step at a time.
+            <h1 className="max-w-4xl text-5xl font-black leading-tight tracking-normal sm:text-6xl lg:text-7xl">
+              You do not need to know everything. Just your next step.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
-              NextRoutine helps expecting fathers and new dads feel less lost with stage-based guidance, simple checklists, readiness scores, and weekly routines from pregnancy news through the baby’s first year.
+              NextRoutine helps first-time dads feel a little less lost with small weekly moves, simple checklists, and stage-based guidance from pregnancy news through the baby’s first year.
             </p>
+            <div className="mt-6 grid max-w-2xl gap-3 sm:grid-cols-3">
+              {["One calm step", "One weekly routine", "One way to show up"].map((item) => (
+                <div key={item} className="rounded-md border border-border bg-card px-4 py-3 text-sm font-bold text-foreground">
+                  {item}
+                </div>
+              ))}
+            </div>
 
             <form onSubmit={handleSubmit} className="mt-8 grid max-w-3xl gap-3 rounded-md border border-border bg-card p-3 shadow-2xl shadow-secondary/20 sm:grid-cols-[1fr_1fr_auto]">
               <Input
@@ -315,25 +322,23 @@ const Index = () => {
           </div>
 
           <div className="relative">
-            <div className="rounded-md border border-border bg-card p-5 shadow-2xl shadow-primary/10">
-              <div className="flex items-center justify-between border-b border-border pb-4">
-                <div>
-                  <p className="text-sm font-semibold text-primary">This week’s next step</p>
-                  <h2 className="mt-1 text-2xl font-black">Make this week feel more manageable</h2>
-                </div>
-                <div className="rounded-md bg-secondary px-3 py-2 text-sm font-bold">Score 72%</div>
+            <div className="rounded-2xl border border-border bg-card p-5 shadow-2xl shadow-primary/10">
+              <div className="border-b border-border pb-4">
+                <p className="text-sm font-semibold text-primary">A preview of your week</p>
+                <h2 className="mt-1 text-2xl font-black">Small moves that make dad life feel clearer</h2>
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">No pressure to be perfect. Just a few useful things to understand, do, and talk about this week.</p>
               </div>
               <div className="mt-5 space-y-3">
-                {["Understand where you are right now", "Take one small pressure off your partner", "Prepare one routine before it becomes stressful"].map((item) => (
-                  <div key={item} className="flex items-start gap-3 rounded-md border border-border bg-background p-4">
+                {["Understand what stage you are in", "Ask one better question at home", "Choose one routine that lowers stress"].map((item) => (
+                  <div key={item} className="flex items-start gap-3 rounded-xl border border-border bg-background p-4">
                     <Check className="mt-0.5 h-5 w-5 text-primary" />
                     <span className="text-sm leading-6 text-muted-foreground">{item}</span>
                   </div>
                 ))}
               </div>
-              <div className="mt-5 rounded-md bg-primary p-4 text-primary-foreground">
-                <p className="text-sm font-black uppercase">Coming next</p>
-                <p className="mt-1 text-lg font-bold">Your personalized fatherhood plan</p>
+              <div className="mt-5 rounded-xl bg-primary p-4 text-primary-foreground">
+                <p className="text-sm font-black uppercase">Your next step</p>
+                <p className="mt-1 text-lg font-bold">Get the weekly routine for your stage</p>
               </div>
             </div>
           </div>
