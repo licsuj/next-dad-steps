@@ -273,13 +273,13 @@ const Index = () => {
           <div className="flex flex-col justify-center">
             <div className="mb-6 inline-flex w-fit items-center gap-2 rounded-md border border-border bg-card px-3 py-2 text-sm text-muted-foreground">
               <Crosshair className="h-4 w-4 text-primary" />
-              Weekly dad guidance from pregnancy news to year one
+              Pregnancy guide for dads, newborn routines, and first-year fatherhood prep
             </div>
             <h1 className="max-w-4xl text-5xl font-black leading-none tracking-normal sm:text-6xl lg:text-7xl">
-              Fatherhood does not come with a manual. Get the next move.
+              New dad advice that tells you what to do next.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
-              NextRoutine gives new and expecting fathers a stage-based weekly plan, practical missions, and a clear routine when everything feels uncertain.
+              NextRoutine gives expecting fathers and new dads stage-based guidance, fatherhood checklists, readiness scores, and weekly routines from pregnancy news through the baby’s first year.
             </p>
 
             <form onSubmit={handleSubmit} className="mt-8 grid max-w-3xl gap-3 rounded-md border border-border bg-card p-3 shadow-2xl shadow-secondary/20 sm:grid-cols-[1fr_1fr_auto]">
@@ -359,7 +359,7 @@ const Index = () => {
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl">
             <p className="font-bold text-primary">Stage-based onboarding preview</p>
-            <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">A dad in month three needs a different routine than a dad in week one.</h2>
+            <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Stage-based fatherhood content for expecting dads, newborn dads, and the first year.</h2>
           </div>
 
           <div className="mt-10 grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
@@ -448,9 +448,9 @@ const Index = () => {
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.95fr_1.05fr]">
           <div>
             <p className="font-bold text-primary">Readiness quiz</p>
-            <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Get a quick score and your next mission.</h2>
+            <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Take the dad readiness quiz and get your next mission.</h2>
             <p className="mt-5 leading-7 text-muted-foreground">
-              Four answers turn into a stage-specific readiness score, then NextRoutine points dads toward the move that matters now.
+              Answer four quick questions to calculate a stage-specific dad readiness score and get a practical next step based on pregnancy stage, newborn life, or baby age.
             </p>
             <select
               value={quizStage}
@@ -535,13 +535,13 @@ const Index = () => {
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl">
             <p className="font-bold text-primary">Monetization path</p>
-            <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Start free. Upgrade when dads want a plan built for them.</h2>
+            <h2 className="mt-3 text-4xl font-black tracking-normal sm:text-5xl">Start with a free new dad newsletter. Upgrade when you want a personal fatherhood plan.</h2>
           </div>
           <div className="mt-10 grid gap-5 lg:grid-cols-2">
             <div className="rounded-md border border-border bg-background p-6">
               <p className="text-sm font-black text-muted-foreground">FREE</p>
               <h3 className="mt-2 text-3xl font-black">Weekly Dad Brief</h3>
-              <p className="mt-4 leading-7 text-muted-foreground">One stage-based lesson, one action, one partner-support move, and one mistake to avoid.</p>
+              <p className="mt-4 leading-7 text-muted-foreground">One stage-based fatherhood lesson, one practical action, one partner-support move, and one mistake to avoid each week.</p>
               <Button asChild variant="outline" className="mt-6 w-full border-border bg-card text-foreground hover:bg-muted">
                 <a href="#stage-preview">Preview newsletter</a>
               </Button>
