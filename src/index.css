@@ -8,35 +8,35 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 222 42% 8%;
-    --foreground: 42 33% 96%;
+    --background: 220 38% 9%;
+    --foreground: 42 30% 95%;
 
-    --card: 220 35% 11%;
-    --card-foreground: 42 33% 96%;
+    --card: 220 30% 13%;
+    --card-foreground: 42 30% 95%;
 
-    --popover: 220 35% 11%;
-    --popover-foreground: 42 33% 96%;
+    --popover: 220 30% 13%;
+    --popover-foreground: 42 30% 95%;
 
-    --primary: 39 96% 56%;
+    --primary: 38 88% 62%;
     --primary-foreground: 222 42% 8%;
 
-    --secondary: 213 63% 22%;
+    --secondary: 213 38% 24%;
     --secondary-foreground: 42 33% 96%;
 
-    --muted: 220 28% 16%;
-    --muted-foreground: 216 18% 72%;
+    --muted: 220 22% 18%;
+    --muted-foreground: 216 16% 76%;
 
-    --accent: 187 72% 43%;
+    --accent: 186 52% 48%;
     --accent-foreground: 222 42% 8%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 218 24% 23%;
-    --input: 218 24% 23%;
+    --border: 218 18% 27%;
+    --input: 218 18% 27%;
     --ring: 39 96% 56%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +100,7 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
