@@ -70,13 +70,52 @@ const signupStages = [
   { value: "baby_months", label: "Baby months" },
 ];
 
+const quizQuestions = [
+  "I know what my partner needs from me this week.",
+  "I have one routine that lowers stress at home.",
+  "I know the next practical thing I should prepare.",
+  "I feel clear on my role as a dad right now.",
+];
+
+const stageMissions: Record<string, { low: string; mid: string; high: string }> = {
+  just_found_out: {
+    low: "Do the 24-hour dad reset: write down what changed, what matters, and the one conversation to have tonight.",
+    mid: "Create your first support routine: one daily check-in and one task you own without being asked.",
+    high: "Build the early command center: appointments, budget notes, questions, and next-week prep in one place.",
+  },
+  pregnancy_months: {
+    low: "Run the pregnancy stage audit: what month are you in, what appointments are coming, and what does your partner need most?",
+    mid: "Set the weekly partner check-in: energy, worries, practical help, and one decision to remove from her plate.",
+    high: "Start birth-readiness prep: hospital logistics, home systems, and the first 72-hour plan.",
+  },
+  newborn: {
+    low: "Protect the next sleep block: choose one shift, one reset task, and one way to reduce decision fatigue today.",
+    mid: "Build the newborn night system: supplies, handoffs, feeding support, and recovery time for your partner.",
+    high: "Create the weekly newborn rhythm: sleep support, chores, bonding, and visitor boundaries.",
+  },
+  baby_months: {
+    low: "Reset the family rhythm: identify the messiest part of the week and build one repeatable routine around it.",
+    mid: "Plan one bonding mission: a simple recurring activity that belongs to you and your baby.",
+    high: "Upgrade your first-year system: routines, relationship check-ins, and work-life boundaries for the next month.",
+  },
+};
+
 const Index = () => {
   const [email, setEmail] = useState("");
   const [signupStage, setSignupStage] = useState("");
   const [selectedStage, setSelectedStage] = useState(stages[0].id);
+  const [quizStage, setQuizStage] = useState("just_found_out");
+  const [quizAnswers, setQuizAnswers] = useState([1, 1, 1, 1]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const activeStage = useMemo(() => stages.find((stage) => stage.id === selectedStage) ?? stages[0], [selectedStage]);
+  const readinessScore = useMemo(() => Math.round((quizAnswers.reduce((total, answer) => total + answer, 0) / (quizAnswers.length * 2)) * 100), [quizAnswers]);
+  const recommendedMission = useMemo(() => {
+    const missions = stageMissions[quizStage];
+    if (readinessScore < 45) return missions.low;
+    if (readinessScore < 75) return missions.mid;
+    return missions.high;
+  }, [quizStage, readinessScore]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
