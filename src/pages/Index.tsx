@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
+import { SeoClusterLinks } from "./SeoCluster";
 
 const stages = [
   {
@@ -444,6 +445,8 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      <SeoClusterLinks />
 
       <section className="bg-card/90 px-5 py-20 sm:px-8 lg:px-12" id="pro">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.85fr_1.15fr]">
