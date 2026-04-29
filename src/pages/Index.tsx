@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 
 const signupStages = [
+  { value: "thinking_about_it", label: "Thinking about becoming a dad" },
   { value: "just_found_out", label: "Just got the news" },
   { value: "pregnancy_months", label: "Pregnancy months" },
   { value: "newborn", label: "Newborn" },
@@ -14,6 +15,7 @@ const signupStages = [
 ];
 
 const stageSequences: Record<string, string[]> = {
+  thinking_about_it: ["Money and leave checklist", "Career and support planning", "Home routine prep"],
   just_found_out: ["Your first 24-hour reset", "Partner support script", "Early appointment plan"],
   pregnancy_months: ["Pregnancy stage check-in", "Weekly support routine", "Birth-readiness basics"],
   newborn: ["Night support plan", "Partner recovery checklist", "Newborn home reset"],
