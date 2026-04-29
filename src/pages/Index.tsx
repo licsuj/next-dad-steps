@@ -43,6 +43,13 @@ const quickQuizStages = [
   { value: "baby_months", label: "Baby months", path: "/blog/baby-months-2-3-dad-rhythm", preview: "First-year rhythm preview" },
 ];
 
+const routinePreviews = [
+  { stage: "Thinking about it", routine: "Money, leave, and career prep without spiraling", accent: "bg-sage text-sage-foreground" },
+  { stage: "Pregnancy months", routine: "Weekly partner support, appointments, and home setup", accent: "bg-sky text-sky-foreground" },
+  { stage: "Newborn", routine: "Night support, recovery help, and tiny home resets", accent: "bg-coral text-coral-foreground" },
+  { stage: "Baby months", routine: "Family rhythm, bonding, and work-life boundaries", accent: "bg-primary text-primary-foreground" },
+];
+
 const proFeatures = [
   "Personalized prep plan",
   "Money, leave, health, and home checklists",
@@ -189,6 +196,26 @@ const Index = () => {
                 <Link to={selectedQuickQuizStage.path}>Start preview <ArrowRight className="h-4 w-4" /></Link>
               </Button>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 py-10 sm:px-8 lg:px-12">
+        <div className="mx-auto max-w-6xl">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="font-black text-amber">NEXT ROUTINE PREVIEW</p>
+              <h2 className="mt-2 text-3xl font-black tracking-normal sm:text-4xl">See your next routine for...</h2>
+            </div>
+            <p className="max-w-md leading-7 text-muted-foreground">The plan changes based on the stage you choose, so the next step feels useful right away.</p>
+          </div>
+          <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {routinePreviews.map((item) => (
+              <article key={item.stage} className="rounded-3xl border border-border bg-gradient-card p-4 shadow-lg shadow-background/25">
+                <div className={`inline-flex rounded-full px-3 py-1 text-xs font-black ${item.accent}`}>{item.stage}</div>
+                <p className="mt-5 min-h-20 text-lg font-black leading-7 text-foreground">{item.routine}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>
