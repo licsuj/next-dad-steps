@@ -21,7 +21,7 @@ const CheckoutSuccess = () => {
   useEffect(() => {
     let isMounted = true;
     let attempts = 0;
-    let interval: ReturnType<typeof window.setInterval> | undefined;
+    let interval: number | undefined;
 
     const checkSubscription = async (currentUser: User | null) => {
       if (!currentUser) {
