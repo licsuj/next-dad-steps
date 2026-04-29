@@ -202,6 +202,11 @@ export const FatherReadinessQuizHub = () => {
             <h1 className="mt-3 text-5xl font-bold leading-tight tracking-tight sm:text-6xl">How ready do you feel for your next step as a dad?</h1>
             <p className="mt-6 text-lg leading-8 text-muted-foreground">Take a short readiness quiz, get a stage-specific score, then explore practical guides for first-time dads, expecting fathers, and newborn routines.</p>
             <div className="mt-8 grid gap-3 sm:grid-cols-2">
+              {topicPages.map((page) => (
+                <Link key={page.slug} to={page.path} className="rounded-2xl border border-border/80 bg-card/90 p-4 font-bold hover:border-primary/80">
+                  {page.eyebrow}
+                </Link>
+              ))}
               {articles.map((article) => (
                 <Link key={article.slug} to={`/guides/${article.slug}`} className="rounded-2xl border border-border/80 bg-card/90 p-4 font-bold hover:border-primary/80">
                   {article.eyebrow}
