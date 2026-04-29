@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import Pro from "./pages/Pro.tsx";
 import { BlogPost, BlogRolloutHub, FatherReadinessQuizHub, GuideArticle, TopicPage } from "./pages/SeoCluster.tsx";
 
 const queryClient = new QueryClient();
@@ -17,6 +18,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/pro" element={<Pro />} />
           <Route path="/father-readiness-quiz" element={<FatherReadinessQuizHub />} />
           <Route path="/first-time-dad" element={<TopicPage slug="first-time-dad" />} />
           <Route path="/pregnancy-month-by-month" element={<TopicPage slug="pregnancy-month-by-month" />} />
