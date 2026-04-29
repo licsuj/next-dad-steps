@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import Pricing from "./pages/Pricing.tsx";
 import Pro from "./pages/Pro.tsx";
 import PreFatherhood from "./pages/PreFatherhood.tsx";
 import { BlogPost, BlogRolloutHub, FatherReadinessQuizHub, GuideArticle, TopicPage } from "./pages/SeoCluster.tsx";
@@ -19,6 +20,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/pricing" element={<Pricing />} />
           <Route path="/pro" element={<Pro />} />
           <Route path="/pre-fatherhood" element={<PreFatherhood />} />
           <Route path="/father-readiness-quiz" element={<FatherReadinessQuizHub />} />
