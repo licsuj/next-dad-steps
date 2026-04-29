@@ -350,8 +350,8 @@ const Index = () => {
 
       <section className="px-5 py-20 sm:px-8 lg:px-12">
         <div className="mx-auto max-w-7xl rounded-2xl border border-border/80 bg-card/90 p-6 sm:p-8">
-          <p className="font-bold text-primary">Fatherhood preparation for every stage</p>
-          <h2 className="mt-3 max-w-4xl text-4xl font-bold tracking-tight sm:text-5xl">A practical, reassuring guide for first-time dads, expecting fathers, and new parents.</h2>
+          <p className="font-bold text-primary">What NextRoutine offers</p>
+          <h2 className="mt-3 max-w-4xl text-4xl font-bold tracking-tight sm:text-5xl">Clear fatherhood preparation from pregnancy through the first year.</h2>
           <div className="mt-6 grid gap-5 md:grid-cols-3">
             {[
               ["FREE weekly newsletter", "A short stage-based dad brief with one lesson, one action, and one partner-support prompt."],
@@ -455,7 +455,7 @@ const Index = () => {
           <div>
             <p className="font-bold text-primary">NextRoutine PRO</p>
             <h2 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">Turn weekly advice into a personal fatherhood support plan.</h2>
-            <p className="mt-5 leading-7 text-muted-foreground">The newsletter gives dads a helpful weekly rhythm. PRO adds a more personal plan with checklists, readiness scores, and tools based on each dad’s stage.</p>
+            <p className="mt-5 leading-7 text-muted-foreground">FREE gives you one helpful dad brief each week. PRO adds a personalized plan, progress prompts, premium checklists, and trackers for your pregnancy month or baby age.</p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             {proFeatures.map((feature, index) => (
@@ -572,7 +572,7 @@ const Index = () => {
               <h3 className="mt-2 text-3xl font-bold">Weekly Dad Brief</h3>
               <p className="mt-4 leading-7 text-muted-foreground">Best for quick weekly support: one stage-based lesson, one practical action, one partner-support prompt, and one mistake to avoid.</p>
               <Button asChild variant="outline" className="mt-6 w-full border-border/80 bg-card/90 text-foreground hover:bg-muted">
-                <a href="#stage-preview">Preview newsletter</a>
+                <a href="#newsletter-signup">Join free</a>
               </Button>
             </div>
             <div className="rounded-2xl border border-primary/80 bg-primary p-6 text-primary-foreground">
@@ -616,8 +616,8 @@ const Index = () => {
       <section className="px-5 py-20 sm:px-8 lg:px-12" id="pro-onboarding-preview">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.85fr_1.15fr]">
           <div>
-            <p className="font-bold text-primary">PRO plan preview</p>
-            <h2 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">Your PRO plan starts with the right first steps.</h2>
+            <p className="font-bold text-primary">PRO preview</p>
+            <h2 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">See how PRO adapts to your fatherhood stage.</h2>
             <p className="mt-5 leading-7 text-muted-foreground">
               Choose a stage to preview the first steps, checklists, and routines a PRO plan can organize for you.
             </p>
@@ -687,7 +687,7 @@ const Index = () => {
           <h2 className="mx-auto mt-3 max-w-4xl text-4xl font-bold tracking-tight sm:text-6xl">Start with the free weekly dad newsletter.</h2>
           <p className="mx-auto mt-5 max-w-2xl leading-7 text-muted-foreground">Get practical fatherhood guidance for pregnancy, birth, newborn life, and the first year—then upgrade to PRO when you want a personal plan.</p>
           <Button asChild className="mt-7 h-12 px-8 font-bold">
-            <a href="#stage-preview">Choose your stage</a>
+            <a href="#newsletter-signup">Join free</a>
           </Button>
         </div>
       </section>
