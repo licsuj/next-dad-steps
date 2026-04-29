@@ -4,6 +4,7 @@ import { ArrowRight, Check, Lock, Shield, Sparkles, Target, Trophy } from "lucid
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useProAccess } from "@/hooks/use-pro-access";
 import { supabase } from "@/integrations/supabase/client";
 
 const signupStages = [
@@ -31,12 +32,21 @@ const proOnboardingSequences: Record<string, string[]> = {
 
 const readinessPlan = ["Know your role", "Build the support routine", "Money and home prep", "Partner check-in system", "Birth plan basics", "Newborn survival routine"];
 
+const proNewsletters = ["Money + leave reset", "Partner support script", "Stage-matched weekly checklist"];
+
 const Pro = () => {
   const [proEmail, setProEmail] = useState("");
   const [proStage, setProStage] = useState("");
   const [proPreviewStage, setProPreviewStage] = useState("just_found_out");
   const [isProSubmitting, setIsProSubmitting] = useState(false);
+  const { isLoading, user, isPro } = useProAccess();
   const activeProSequence = useMemo(() => proOnboardingSequences[proPreviewStage], [proPreviewStage]);
+
+  const handleGoogleSignIn = async () => {
+    const { lovable } = await import("@/integrations/lovable");
+    const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.href });
+    if (result.error) toast.error("Could not start Google sign in. Try again in a moment.");
+  };
 
   const handleProSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -181,17 +191,37 @@ const Pro = () => {
               </div>
               <div className="rounded-2xl bg-secondary px-3 py-2 text-sm font-bold text-secondary-foreground">PRO</div>
             </div>
-            <div className="mt-6 space-y-4">
-              {activeProSequence.map((step, index) => (
-                <div key={step} className="grid grid-cols-[3rem_1fr] gap-4 rounded-2xl border border-border/80 bg-background p-4">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary font-bold text-primary-foreground">{index + 1}</div>
-                  <div>
-                    <p className="font-bold">PRO step {index + 1}</p>
-                    <p className="mt-1 leading-6 text-muted-foreground">{step}</p>
+            {isLoading ? (
+              <div className="mt-6 rounded-2xl border border-border/80 bg-background p-5 font-bold text-muted-foreground">Checking PRO access...</div>
+            ) : isPro ? (
+              <div className="mt-6 space-y-4">
+                {activeProSequence.map((step, index) => (
+                  <div key={step} className="grid grid-cols-[3rem_1fr] gap-4 rounded-2xl border border-border/80 bg-background p-4">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary font-bold text-primary-foreground">{index + 1}</div>
+                    <div>
+                      <p className="font-bold">PRO routine {index + 1}</p>
+                      <p className="mt-1 leading-6 text-muted-foreground">{step}</p>
+                    </div>
                   </div>
+                ))}
+                <div className="rounded-2xl border border-primary/30 bg-primary/10 p-4">
+                  <p className="font-bold text-primary">Your PRO newsletters</p>
+                  <ul className="mt-3 space-y-2">
+                    {proNewsletters.map((item) => <li key={item} className="flex gap-2 text-sm font-bold text-muted-foreground"><Check className="h-4 w-4 text-primary" />{item}</li>)}
+                  </ul>
                 </div>
-              ))}
-            </div>
+              </div>
+            ) : (
+              <div className="mt-6 rounded-2xl border border-primary/30 bg-background p-5">
+                <Lock className="h-8 w-8 text-primary" />
+                <h4 className="mt-4 text-2xl font-bold">PRO routines are locked.</h4>
+                <p className="mt-3 leading-7 text-muted-foreground">{user ? "Upgrade to unlock stage-matched routines and PRO newsletters." : "Sign in, then upgrade to unlock stage-matched routines and PRO newsletters."}</p>
+                <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                  {!user && <Button type="button" onClick={handleGoogleSignIn} variant="outline" className="rounded-xl font-bold">Sign in with Google</Button>}
+                  <Button asChild className="rounded-xl font-bold"><Link to="/pricing">View pricing<ArrowRight className="h-4 w-4" /></Link></Button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
