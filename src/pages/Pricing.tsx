@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Check, Mail, Sparkles, Target, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useProAccess } from "@/hooks/use-pro-access";
 
 const freeDetails = [
   "Weekly Dad Brief tuned to your stage",
@@ -18,6 +19,10 @@ const proDetails = [
 ];
 
 const Pricing = () => {
+  const { isLoading, user, isPro } = useProAccess();
+  const proCta = isLoading ? "Checking account" : isPro ? "Open PRO" : user ? "Start PRO" : "Sign in to start PRO";
+  const proPath = isPro ? "/pro" : user ? "/pro#pro-waitlist" : "/auth?redirect=/pricing";
+
   return (
     <main className="dark min-h-screen bg-background text-foreground">
       <section className="relative px-5 py-6 sm:px-8 lg:px-12">
@@ -77,7 +82,7 @@ const Pricing = () => {
             </div>
             <p className="mt-5 text-sm font-black uppercase text-card-foreground/75">Go personal</p>
             <h2 className="mt-2 text-3xl font-black">Personal Fatherhood Plan</h2>
-            <p className="mt-3 inline-flex rounded-full bg-background px-4 py-2 text-base font-black text-foreground">Pricing coming soon</p>
+            <p className="mt-3 inline-flex rounded-full bg-background px-4 py-2 text-base font-black text-foreground">PRO access unlocks after checkout</p>
             <p className="mt-4 leading-7 text-card-foreground/85">Best when you want the money, leave, health, relationship, and home prep mapped into a weekly routine.</p>
             <ul className="mt-6 space-y-3">
               {proDetails.map((item) => (
@@ -87,8 +92,8 @@ const Pricing = () => {
                 </li>
               ))}
             </ul>
-            <Button asChild className="mt-6 w-full rounded-full bg-primary font-black text-primary-foreground hover:bg-coral hover:text-coral-foreground">
-              <Link to="/pro">See PRO preview <ArrowRight className="h-4 w-4" /></Link>
+            <Button asChild disabled={isLoading} className="mt-6 w-full rounded-full bg-primary font-black text-primary-foreground hover:bg-coral hover:text-coral-foreground">
+              <Link to={proPath}>{proCta} <ArrowRight className="h-4 w-4" /></Link>
             </Button>
           </article>
         </div>
