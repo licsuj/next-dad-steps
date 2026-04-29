@@ -32,6 +32,7 @@ const Pricing = () => {
           <nav className="flex items-center gap-2 text-sm font-bold">
             <Link to="/father-readiness-quiz" className="rounded-full bg-sky px-3 py-1.5 text-sky-foreground transition hover:bg-accent hover:text-accent-foreground">Quiz</Link>
             <Link to="/#newsletter-signup" className="rounded-full bg-sage px-3 py-1.5 text-sage-foreground transition hover:bg-primary hover:text-primary-foreground">FREE</Link>
+            <Link to="/account" className="rounded-full bg-card px-3 py-1.5 text-foreground transition hover:bg-primary hover:text-primary-foreground">Account</Link>
           </nav>
         </div>
 
