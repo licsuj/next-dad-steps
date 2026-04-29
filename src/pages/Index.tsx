@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Check, Mail, Sparkles, Target, Trophy, Zap } from "lucide-react";
 import { toast } from "sonner";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
@@ -21,6 +22,13 @@ const stageSequences: Record<string, string[]> = {
   newborn: ["Night support plan", "Partner recovery checklist", "Newborn home reset"],
   baby_months: ["Family rhythm reset", "Bonding routine", "First-year support check"],
 };
+
+const newsletterSignupSchema = z.object({
+  email: z.string().trim().toLowerCase().email("Enter a valid email to join free.").max(255, "Email must be less than 255 characters."),
+  fatherhoodStage: z.enum(["thinking_about_it", "just_found_out", "pregnancy_months", "newborn", "baby_months"], {
+    errorMap: () => ({ message: "Choose your fatherhood stage first." }),
+  }),
+});
 
 const offerBullets = [
   "One quick dad move each week",
@@ -69,35 +77,35 @@ const Index = () => {
   const [signupStage, setSignupStage] = useState("");
   const [quickQuizStage, setQuickQuizStage] = useState(quickQuizStages[0].value);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [signupConfirmation, setSignupConfirmation] = useState("");
   const selectedQuickQuizStage = quickQuizStages.find((stage) => stage.value === quickQuizStage) ?? quickQuizStages[0];
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const trimmedEmail = email.trim().toLowerCase();
+    setSignupConfirmation("");
+    const parsedSignup = newsletterSignupSchema.safeParse({ email, fatherhoodStage: signupStage });
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail) || trimmedEmail.length > 255) {
-      toast.error("Enter a valid email to join free.");
+    if (!parsedSignup.success) {
+      toast.error(parsedSignup.error.issues[0]?.message ?? "Check your signup details and try again.");
       return;
     }
 
-    if (!signupStages.some((stage) => stage.value === signupStage)) {
-      toast.error("Choose your fatherhood stage first.");
-      return;
-    }
+    const { email: validatedEmail, fatherhoodStage } = parsedSignup.data;
 
     setIsSubmitting(true);
     const { error } = await supabase.from("newsletter_signups").insert({
-      email: trimmedEmail,
-      fatherhood_stage: signupStage,
+      email: validatedEmail,
+      fatherhood_stage: fatherhoodStage,
       source: "landing_page",
       pro_interest: false,
-      onboarding_sequence: stageSequences[signupStage],
+      onboarding_sequence: stageSequences[fatherhoodStage],
     });
 
     setIsSubmitting(false);
 
     if (error) {
       if (error.code === "23505") {
+        setSignupConfirmation("You are already on the weekly brief list. We will keep sending stage-based dad prompts.");
         toast.success("You are already on the NextRoutine list.");
         return;
       }
@@ -107,6 +115,7 @@ const Index = () => {
 
     setEmail("");
     setSignupStage("");
+    setSignupConfirmation("You are in. Your free weekly dad brief is saved and tuned to your stage.");
     toast.success("You are in. Your free weekly dad brief is saved.");
   };
 
@@ -314,6 +323,11 @@ const Index = () => {
                 {isSubmitting ? "Joining" : "Join free"}
                 <ArrowRight className="h-4 w-4" />
               </Button>
+              {signupConfirmation && (
+                <p className="rounded-2xl border border-sage/50 bg-sage/15 p-3 text-sm font-bold leading-6 text-sage sm:col-span-3" role="status" aria-live="polite">
+                  {signupConfirmation}
+                </p>
+              )}
             </form>
           </div>
         </div>
