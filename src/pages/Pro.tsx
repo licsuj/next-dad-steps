@@ -39,8 +39,10 @@ const Pro = () => {
   const [proStage, setProStage] = useState("");
   const [proPreviewStage, setProPreviewStage] = useState("just_found_out");
   const [isProSubmitting, setIsProSubmitting] = useState(false);
-  const { isLoading, user, isPro } = useProAccess();
-  const activeProSequence = useMemo(() => proOnboardingSequences[proPreviewStage], [proPreviewStage]);
+  const { isLoading, user, isPro, profile } = useProAccess();
+  const savedStage = profile?.current_fatherhood_stage ?? "thinking_about_it";
+  const displayStage = isPro ? savedStage : proPreviewStage;
+  const activeProSequence = useMemo(() => proOnboardingSequences[displayStage], [displayStage]);
 
   const handleGoogleSignIn = async () => {
     const { lovable } = await import("@/integrations/lovable");
@@ -186,8 +188,8 @@ const Pro = () => {
           <div className="rounded-2xl border border-border/80 bg-card/90 p-6">
             <div className="flex items-center justify-between gap-4 border-b border-border/80 pb-4">
               <div>
-                <p className="text-sm font-bold text-primary">Sequence preview</p>
-                <h3 className="text-3xl font-bold">{signupStages.find((stage) => stage.value === proPreviewStage)?.label}</h3>
+                <p className="text-sm font-bold text-primary">{isPro ? "Your saved stage" : "Sequence preview"}</p>
+                <h3 className="text-3xl font-bold">{signupStages.find((stage) => stage.value === displayStage)?.label}</h3>
               </div>
               <div className="rounded-2xl bg-secondary px-3 py-2 text-sm font-bold text-secondary-foreground">PRO</div>
             </div>
