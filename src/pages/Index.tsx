@@ -667,9 +667,9 @@ const Index = () => {
           </div>
           <div className="grid gap-4">
             {[
-              ["Is this only for expecting dads?", "No. NextRoutine supports the full path from getting the news through the baby’s first year."],
-              ["How is this different from a parenting blog?", "It is organized around stage-based action: what to learn, prepare, ask, and do this week."],
-              ["What is free and what is PRO?", "FREE is the weekly dad newsletter and readiness quiz. PRO adds a personalized plan, premium guides, checklists, readiness score, and trackers."],
+              ["Is this only for expecting dads?", "No. NextRoutine supports first-time dads from pregnancy through birth, newborn life, and the baby’s first year."],
+              ["How is this different from a parenting blog?", "It turns new dad advice into stage-based action: what to learn, prepare, ask, and do this week."],
+              ["What is free and what is PRO?", "FREE includes the weekly dad newsletter and readiness quiz. PRO adds a personalized fatherhood plan, premium guides, checklists, readiness score, and trackers."],
               ["Is this medical advice?", "No. NextRoutine is educational guidance and practical planning support, not medical advice."],
             ].map(([question, answer]) => (
               <div key={question} className="rounded-2xl border border-border/80 bg-card/90 p-5">
