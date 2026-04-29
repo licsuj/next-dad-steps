@@ -8,23 +8,23 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 42 64% 96%;
-    --foreground: 207 42% 17%;
+    --background: 222 39% 8%;
+    --foreground: 42 64% 96%;
 
-    --card: 40 70% 98%;
-    --card-foreground: 207 42% 17%;
+    --card: 220 29% 13%;
+    --card-foreground: 42 64% 96%;
 
-    --popover: 40 70% 98%;
-    --popover-foreground: 207 42% 17%;
+    --popover: 220 29% 13%;
+    --popover-foreground: 42 64% 96%;
 
-    --primary: 38 82% 57%;
-    --primary-foreground: 42 64% 96%;
+    --primary: 38 86% 62%;
+    --primary-foreground: 222 39% 8%;
 
     --secondary: 142 28% 82%;
     --secondary-foreground: 147 34% 20%;
 
-    --muted: 39 46% 91%;
-    --muted-foreground: 207 18% 42%;
+    --muted: 220 24% 18%;
+    --muted-foreground: 42 24% 77%;
 
     --accent: 12 70% 76%;
     --accent-foreground: 207 42% 17%;
@@ -32,8 +32,8 @@ All colors MUST be HSL.
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 35 36% 82%;
-    --input: 35 36% 82%;
+    --border: 220 18% 24%;
+    --input: 220 18% 24%;
     --ring: 38 82% 57%;
 
     --sage: 142 28% 82%;
@@ -44,9 +44,9 @@ All colors MUST be HSL.
     --coral-foreground: 207 42% 17%;
     --sky: 203 72% 82%;
     --sky-foreground: 207 42% 17%;
-    --gradient-hero: linear-gradient(135deg, hsl(42 64% 96%) 0%, hsl(203 72% 92%) 38%, hsl(12 70% 92%) 72%, hsl(38 82% 88%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(40 70% 99%) 0%, hsl(42 64% 96%) 58%, hsl(142 28% 91%) 100%);
-    --gradient-warm: linear-gradient(135deg, hsl(38 82% 90%) 0%, hsl(12 70% 90%) 52%, hsl(203 72% 91%) 100%);
+    --gradient-hero: radial-gradient(circle at 18% 18%, hsl(203 72% 48% / 0.28), transparent 28%), radial-gradient(circle at 78% 8%, hsl(12 70% 62% / 0.26), transparent 30%), linear-gradient(145deg, hsl(222 39% 8%) 0%, hsl(220 32% 12%) 56%, hsl(218 31% 17%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(220 29% 15% / 0.96) 0%, hsl(222 33% 11% / 0.94) 58%, hsl(203 72% 28% / 0.32) 100%);
+    --gradient-warm: linear-gradient(135deg, hsl(38 86% 62%) 0%, hsl(12 70% 70%) 52%, hsl(203 72% 72%) 100%);
 
     --radius: 1rem;
 
