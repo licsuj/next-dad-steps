@@ -42,6 +42,13 @@ const proFeatures = [
   "Deeper support for big transitions",
 ];
 
+const proSubscriptionBenefits = [
+  "Weekly plan updates matched to your stage",
+  "Adapts around money, career, leave, health, and relationship priorities",
+  "Clear next steps, checklists, and partner-support prompts",
+  "Progress nudges when your timeline or priorities shift",
+];
+
 const Index = () => {
   const [email, setEmail] = useState("");
   const [signupStage, setSignupStage] = useState("");
@@ -183,6 +190,20 @@ const Index = () => {
                   <li key={feature} className="flex items-start gap-3 rounded-2xl bg-background/70 p-3 text-sm font-bold leading-6 text-foreground"><Check className="mt-0.5 h-4 w-4 text-primary" />{feature}</li>
                 ))}
               </ul>
+              <div className="mt-5 rounded-2xl border border-background/40 bg-background/80 p-4 text-foreground">
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="text-sm font-black uppercase text-muted-foreground">Subscription includes</p>
+                  <p className="rounded-full bg-primary px-3 py-1 text-sm font-black text-primary-foreground">Pricing coming soon</p>
+                </div>
+                <ul className="mt-4 space-y-2">
+                  {proSubscriptionBenefits.map((benefit) => (
+                    <li key={benefit} className="flex items-start gap-2 text-sm font-bold leading-6 text-muted-foreground">
+                      <Check className="mt-1 h-4 w-4 shrink-0 text-amber" />
+                      <span>{benefit}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
               <Button asChild className="mt-6 w-full rounded-full bg-primary font-black text-primary-foreground hover:bg-coral hover:text-coral-foreground">
                 <Link to="/pro">See PRO</Link>
               </Button>
