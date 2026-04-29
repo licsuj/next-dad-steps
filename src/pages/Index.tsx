@@ -132,7 +132,7 @@ const Index = () => {
           </Link>
           <nav className="flex items-center gap-2 text-sm font-bold">
             <Link to="/father-readiness-quiz" className="rounded-full bg-sky px-3 py-1.5 text-sky-foreground transition hover:bg-accent hover:text-accent-foreground">Quiz</Link>
-            <Link to="/pro" className="rounded-full bg-primary px-3 py-1.5 text-primary-foreground transition hover:bg-coral hover:text-coral-foreground">PRO</Link>
+            <Link to="/pricing" className="rounded-full bg-primary px-3 py-1.5 text-primary-foreground transition hover:bg-coral hover:text-coral-foreground">PRO</Link>
           </nav>
         </div>
 
@@ -282,7 +282,7 @@ const Index = () => {
                 </ul>
               </div>
               <Button asChild className="mt-6 w-full rounded-full bg-primary font-black text-primary-foreground hover:bg-coral hover:text-coral-foreground">
-                <Link to="/pro">See PRO</Link>
+                <Link to="/pricing">See pricing</Link>
               </Button>
             </article>
           </div>
