@@ -1,6 +1,58 @@
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Briefcase, CalendarDays, Check, ClipboardList, HeartHandshake, Home, PiggyBank, ShieldCheck, Target, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+
+const challengePriorities = [
+  {
+    id: "money",
+    label: "Money",
+    weekOne: "Build a 30-minute money snapshot: income, bills, debt, savings, insurance costs, and one baby expense you need to understand.",
+    weekTwo: "Create a simple baby buffer target and choose one budget adjustment you can make without making life miserable.",
+  },
+  {
+    id: "career",
+    label: "Career",
+    weekOne: "Map your next 3–6 months at work: busy seasons, deadlines, travel, commute stress, and where flexibility may matter.",
+    weekTwo: "Write a low-pressure work plan: what you may need, who covers what, and which conversations should happen before pregnancy or birth pressure rises.",
+  },
+  {
+    id: "leave",
+    label: "Leave",
+    weekOne: "Find your actual time-off options: PTO, sick days, unpaid leave, parental leave, notice rules, and whether leave can be split.",
+    weekTwo: "Draft a paternity leave plan with dates, income impact, handoff needs, and questions for HR or your manager.",
+  },
+  {
+    id: "health",
+    label: "Health",
+    weekOne: "Review health insurance basics: coverage, deductibles, co-pays, provider access, and how a baby gets added after birth.",
+    weekTwo: "Create a shared health admin note with provider contacts, documents, appointment questions, and paperwork deadlines.",
+  },
+  {
+    id: "relationship",
+    label: "Relationship",
+    weekOne: "Have one calm check-in: what feels exciting, what feels scary, what support means, and what each of you may need more of.",
+    weekTwo: "Choose one recurring relationship rhythm: a weekly check-in, chore handoff, money talk, or protected time without logistics.",
+  },
+];
+
+const baseChallenge = [
+  ["Day 1", "Choose your top preparation priorities and write down why they matter right now."],
+  ["Day 2", "Create one shared note for questions, decisions, dates, and next steps."],
+  ["Day 3", "Handle the first task from your top priority."],
+  ["Day 4", "Have a 15-minute conversation about what would lower future stress."],
+  ["Day 5", "Handle the first task from your second priority, or deepen the first one."],
+  ["Day 6", "Pick one home routine you can own without reminders."],
+  ["Day 7", "Review the week and choose what needs a follow-up."],
+  ["Day 8", "Turn one loose question into a real answer: policy, cost, contact, or deadline."],
+  ["Day 9", "Handle the second task from your top priority."],
+  ["Day 10", "Map who can help later and what kind of help would actually be useful."],
+  ["Day 11", "Handle the second task from your second priority, or refine your plan."],
+  ["Day 12", "Simplify one future stress point before it becomes urgent."],
+  ["Day 13", "Share the plan, ask what feels missing, and adjust together."],
+  ["Day 14", "Choose the next two-week focus and one recurring routine to keep."],
+];
 
 const preparationAreas = [
   {
@@ -82,7 +134,24 @@ const preparationAreas = [
   },
 ];
 
-const PreFatherhood = () => (
+const PreFatherhood = () => {
+  const [selectedPriorities, setSelectedPriorities] = useState(["money", "leave"]);
+  const selectedPriorityPlans = useMemo(() => challengePriorities.filter((priority) => selectedPriorities.includes(priority.id)), [selectedPriorities]);
+  const adaptedChallenge = useMemo(() => baseChallenge.map(([day, task], index) => {
+    const priority = selectedPriorityPlans[index % Math.max(selectedPriorityPlans.length, 1)];
+    const priorityTask = priority ? (index < 7 ? priority.weekOne : priority.weekTwo) : task;
+    if ([2, 4, 8, 10].includes(index)) return [day, priorityTask];
+    return [day, task];
+  }), [selectedPriorityPlans]);
+
+  const togglePriority = (priorityId: string) => {
+    setSelectedPriorities((current) => {
+      if (current.includes(priorityId)) return current.length === 1 ? current : current.filter((id) => id !== priorityId);
+      return [...current, priorityId];
+    });
+  };
+
+  return (
   <main className="min-h-screen bg-background text-foreground">
     <header className="border-b border-border/80 px-5 py-6 sm:px-8 lg:px-12">
       <div className="mx-auto flex max-w-7xl items-center justify-between">
@@ -126,6 +195,33 @@ const PreFatherhood = () => (
       </div>
     </section>
 
+    <section className="px-5 pb-20 sm:px-8 lg:px-12" id="challenge">
+      <div className="mx-auto max-w-7xl rounded-2xl border border-border/80 bg-card/90 p-6 shadow-lg shadow-foreground/5 sm:p-8">
+        <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <p className="font-bold text-primary">2-week challenge</p>
+            <h2 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">Pick your priorities. Get a calmer preparation plan.</h2>
+            <p className="mt-5 leading-7 text-muted-foreground">Choose what matters most right now. The 14-day plan adapts around your selected priorities so you can make progress without trying to solve everything at once.</p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              {challengePriorities.map((priority) => (
+                <button key={priority.id} type="button" onClick={() => togglePriority(priority.id)} className={`rounded-full border px-4 py-2 text-sm font-bold transition ${selectedPriorities.includes(priority.id) ? "border-primary/80 bg-primary text-primary-foreground" : "border-border/80 bg-background text-muted-foreground hover:border-primary/80"}`}>
+                  {priority.label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="grid gap-3 md:grid-cols-2">
+            {adaptedChallenge.map(([day, task]) => (
+              <div key={day} className="rounded-2xl border border-border/80 bg-background p-4">
+                <p className="text-sm font-bold text-primary">{day}</p>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">{task}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section className="px-5 pb-20 sm:px-8 lg:px-12">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -148,6 +244,7 @@ const PreFatherhood = () => (
       </div>
     </section>
   </main>
-);
+  );
+};
 
 export default PreFatherhood;
