@@ -35,6 +35,14 @@ const freeFeatures = [
   "Free readiness quiz access",
 ];
 
+const quickQuizStages = [
+  { value: "thinking_about_it", label: "Thinking about becoming a dad", path: "/pre-fatherhood", preview: "Pre-fatherhood planning preview" },
+  { value: "just_found_out", label: "Just got the news", path: "/father-readiness-quiz", preview: "First readiness score preview" },
+  { value: "pregnancy_months", label: "Pregnancy months", path: "/pregnancy-month-by-month", preview: "Pregnancy routine preview" },
+  { value: "newborn", label: "Newborn", path: "/newborn-readiness", preview: "Newborn routine preview" },
+  { value: "baby_months", label: "Baby months", path: "/blog/baby-months-2-3-dad-rhythm", preview: "First-year rhythm preview" },
+];
+
 const proFeatures = [
   "Personalized prep plan",
   "Money, leave, health, and home checklists",
@@ -52,7 +60,9 @@ const proSubscriptionBenefits = [
 const Index = () => {
   const [email, setEmail] = useState("");
   const [signupStage, setSignupStage] = useState("");
+  const [quickQuizStage, setQuickQuizStage] = useState(quickQuizStages[0].value);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const selectedQuickQuizStage = quickQuizStages.find((stage) => stage.value === quickQuizStage) ?? quickQuizStages[0];
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -147,6 +157,37 @@ const Index = () => {
                   <span className="font-bold text-muted-foreground">{item}</span>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 py-10 sm:px-8 lg:px-12">
+        <div className="mx-auto max-w-6xl rounded-3xl border border-sky/40 bg-card p-5 shadow-xl shadow-background/30 sm:p-6">
+          <div className="grid gap-5 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+            <div>
+              <p className="font-black text-sky">QUICK QUIZ</p>
+              <h2 className="mt-2 text-3xl font-black tracking-normal sm:text-4xl">Find your next dad routine.</h2>
+              <p className="mt-3 leading-7 text-muted-foreground">Pick your stage and jump straight into the preview that fits where you are now.</p>
+            </div>
+            <div className="grid gap-3 rounded-2xl bg-background/70 p-4 sm:grid-cols-[1fr_auto] sm:items-end">
+              <div>
+                <label className="text-sm font-black text-muted-foreground" htmlFor="quick-quiz-stage">Your stage</label>
+                <select
+                  id="quick-quiz-stage"
+                  value={quickQuizStage}
+                  onChange={(event) => setQuickQuizStage(event.target.value)}
+                  className="mt-2 h-12 w-full rounded-2xl border border-input bg-background px-3 py-2 text-sm font-bold text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                >
+                  {quickQuizStages.map((stage) => (
+                    <option key={stage.value} value={stage.value}>{stage.label}</option>
+                  ))}
+                </select>
+                <p className="mt-2 text-sm font-bold text-muted-foreground">{selectedQuickQuizStage.preview}</p>
+              </div>
+              <Button asChild className="h-12 rounded-2xl bg-sky px-6 font-black text-sky-foreground hover:bg-primary hover:text-primary-foreground">
+                <Link to={selectedQuickQuizStage.path}>Start preview <ArrowRight className="h-4 w-4" /></Link>
+              </Button>
             </div>
           </div>
         </div>
