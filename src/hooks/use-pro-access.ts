@@ -6,17 +6,22 @@ type ProAccessState = {
   isLoading: boolean;
   user: User | null;
   isPro: boolean;
+  subscription: {
+    plan: string;
+    status: string;
+    current_period_end: string | null;
+  } | null;
 };
 
 export const useProAccess = (): ProAccessState => {
-  const [state, setState] = useState<ProAccessState>({ isLoading: true, user: null, isPro: false });
+  const [state, setState] = useState<ProAccessState>({ isLoading: true, user: null, isPro: false, subscription: null });
 
   useEffect(() => {
     let isMounted = true;
 
     const loadAccess = async (user: User | null) => {
       if (!user) {
-        if (isMounted) setState({ isLoading: false, user: null, isPro: false });
+        if (isMounted) setState({ isLoading: false, user: null, isPro: false, subscription: null });
         return;
       }
 
@@ -30,7 +35,7 @@ export const useProAccess = (): ProAccessState => {
       const isCurrent = periodEnd === null || periodEnd > Date.now();
       const isPro = data?.plan === "pro" && ["active", "trialing"].includes(data?.status) && isCurrent;
 
-      if (isMounted) setState({ isLoading: false, user, isPro });
+      if (isMounted) setState({ isLoading: false, user, isPro, subscription: data ?? null });
     };
 
     const { data: listener } = supabase.auth.onAuthStateChange((_, session) => {
