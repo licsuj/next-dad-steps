@@ -615,7 +615,11 @@ export const SeoClusterLinks = () => (
       <h2 className="mt-3 text-4xl font-bold tracking-tight">Start with the quiz, then read the guide for your stage.</h2>
       <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Link to="/father-readiness-quiz" className="rounded-2xl border border-primary/30 bg-primary p-5 font-bold text-primary-foreground"><Sparkles className="mb-3 h-5 w-5" />Father readiness quiz</Link>
+        <Link to="/blog" className="rounded-2xl border border-primary/30 bg-secondary p-5 font-bold text-secondary-foreground"><ClipboardList className="mb-3 h-5 w-5" />6-week blog rollout</Link>
         {topicPages.map((page) => <Link key={page.slug} to={page.path} className="rounded-2xl border border-border/80 bg-background p-5 font-bold hover:border-primary/80">{page.eyebrow}</Link>)}
+      </div>
+      <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        {blogRolloutPosts.slice(0, 4).map((post) => <Link key={post.slug} to={post.path} className="rounded-2xl border border-border/80 bg-background p-5 font-bold hover:border-primary/80">{post.week}: {post.stage}</Link>)}
       </div>
       <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {articles.map((article) => <Link key={article.slug} to={`/guides/${article.slug}`} className="rounded-2xl border border-border/80 bg-background p-5 font-bold hover:border-primary/80">{article.eyebrow}</Link>)}
