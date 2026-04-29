@@ -250,6 +250,7 @@ const blogRolloutPosts = [
 ];
 
 const quizStages = [
+  { value: "thinking_about_it", label: "Thinking about becoming a dad" },
   { value: "expecting", label: "Expecting dad" },
   { value: "newborn", label: "Newborn dad" },
   { value: "first_year", label: "Baby's first year" },
@@ -301,7 +302,7 @@ const ProCta = ({ children }: { children: string }) => (
 );
 
 export const FatherReadinessQuizHub = () => {
-  const [stage, setStage] = useState("expecting");
+  const [stage, setStage] = useState("thinking_about_it");
   const [answers, setAnswers] = useState([1, 1, 1, 1]);
   const score = useMemo(() => Math.round((answers.reduce((sum, answer) => sum + answer, 0) / 8) * 100), [answers]);
   const nextStep = score < 45 ? "Start with one calming routine you can own this week." : score < 75 ? "Add one partner check-in and one preparation task to your week." : "Keep the rhythm going with a more personalized weekly plan.";
@@ -318,7 +319,7 @@ export const FatherReadinessQuizHub = () => {
           <div>
             <p className="font-bold text-primary">Father readiness quiz hub</p>
             <h1 className="mt-3 text-5xl font-bold leading-tight tracking-tight sm:text-6xl">How ready do you feel for your next step as a dad?</h1>
-            <p className="mt-6 text-lg leading-8 text-muted-foreground">Take a short readiness quiz, get a stage-specific score, then explore practical guides for first-time dads, expecting fathers, and newborn routines.</p>
+            <p className="mt-6 text-lg leading-8 text-muted-foreground">Take a short readiness quiz, get a stage-specific score, then explore practical guides for pre-fatherhood planning, pregnancy, newborn routines, and the first year.</p>
             <div className="mt-8 grid gap-3 sm:grid-cols-2">
               {topicPages.map((page) => (
                 <Link key={page.slug} to={page.path} className="rounded-2xl border border-border/80 bg-card/90 p-4 font-bold hover:border-primary/80">
