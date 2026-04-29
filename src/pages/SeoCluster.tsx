@@ -62,6 +62,75 @@ const articles = [
   },
 ];
 
+const topicPages = [
+  {
+    slug: "first-time-dad",
+    path: "/first-time-dad",
+    title: "First-Time Dad Guide: Your Next Step Before Baby Arrives",
+    seoTitle: "First-Time Dad Guide for Expecting Fathers | NextRoutine",
+    description: "A reassuring first-time dad guide with practical weekly steps for pregnancy, partner support, newborn prep, and building confidence without overwhelm.",
+    eyebrow: "First-time dad guide",
+    intro: "You do not have to become a different person overnight. Start by knowing what matters this week, what your partner should not have to carry alone, and one small move you can repeat.",
+    focus: [
+      ["Know your current stage", "Pregnancy, birth week, and newborn life ask for different kinds of support. Start by naming the stage you are in so the next step feels clear."],
+      ["Own one useful routine", "Choose a repeatable task you can handle without reminders: appointments, groceries, laundry, meals, baby supplies, or the weekly home reset."],
+      ["Ask better questions", "A simple check-in can help more than a perfect speech: what would make this week lighter, what feels uncertain, and what can I take off your plate?"],
+    ],
+    stepsTitle: "Small weekly moves for first-time dads",
+    steps: [
+      ["This week", "Take the father readiness quiz, write down the next practical task, and choose one routine to own."],
+      ["Before birth", "Review appointments, money, hospital logistics, visitor boundaries, and the first 72 hours at home."],
+      ["After baby arrives", "Support recovery, protect sleep where possible, reset the home daily, and build one simple bonding ritual."],
+    ],
+    guides: ["first-time-dad-checklist", "pregnancy-guide-for-dads", "newborn-tips-for-dads"],
+    cta: "Build your first-time dad plan in PRO",
+  },
+  {
+    slug: "pregnancy-month-by-month",
+    path: "/pregnancy-month-by-month",
+    title: "Pregnancy Month by Month for Dads: What to Do Next",
+    seoTitle: "Pregnancy Month by Month for Dads | NextRoutine",
+    description: "A calm pregnancy month-by-month guide for dads with practical support steps from the first trimester through birth week.",
+    eyebrow: "Pregnancy month by month",
+    intro: "Pregnancy can move slowly and suddenly at the same time. A month-by-month view helps you show up without trying to solve everything at once.",
+    focus: [
+      ["Months 1–3", "Keep things steady while symptoms may be invisible. Listen first, track appointments, and take one household routine fully off your partner’s plate."],
+      ["Months 4–6", "Use the calmer window to plan: budget, home systems, baby basics, questions for appointments, and a weekly partner check-in."],
+      ["Months 7–9", "Reduce decisions before everyone is tired. Prepare birth logistics, visitor boundaries, hospital items, and the first days at home."],
+    ],
+    stepsTitle: "How dads can prepare by pregnancy stage",
+    steps: [
+      ["Early pregnancy", "Create a shared note for dates, questions, symptoms, tasks, and anything your partner wants you to remember."],
+      ["Mid pregnancy", "Pick one system to simplify before baby arrives: meals, money, laundry, appointments, or home restocking."],
+      ["Late pregnancy", "Build the birth-week plan and first 72-hour plan so your family has fewer choices to make under stress."],
+    ],
+    guides: ["pregnancy-guide-for-dads", "how-to-support-pregnant-partner", "first-time-dad-checklist"],
+    cta: "Get a month-by-month PRO plan",
+  },
+  {
+    slug: "newborn-readiness",
+    path: "/newborn-readiness",
+    title: "Newborn Readiness for Dads: Simple First-Weeks Prep",
+    seoTitle: "Newborn Readiness for Dads | NextRoutine",
+    description: "A newborn readiness guide for dads covering sleep support, feeding help, partner recovery, bonding, home resets, and the first weeks with baby.",
+    eyebrow: "Newborn readiness",
+    intro: "Newborn readiness is not about having every product or every answer. It is about a few calm systems that help when everyone is tired and learning.",
+    focus: [
+      ["Night support", "Know what you can own during nights: diapers, burping, bottle prep, water, snacks, logging, settling, or the next-morning reset."],
+      ["Partner recovery", "Make rest, food, hydration, reassurance, and fewer decisions part of the plan rather than something your partner has to ask for."],
+      ["Home rhythm", "A daily reset for bottles, laundry, dishes, trash, meals, or the changing station can make the whole house feel less overwhelmed."],
+    ],
+    stepsTitle: "What to prepare before the newborn stage",
+    steps: [
+      ["Before baby arrives", "Set up supply stations, visitor boundaries, food support, emergency contacts, and a simple night-shift handoff."],
+      ["First 72 hours", "Focus on recovery, feeding support, sleep protection, household basics, and helping your partner avoid unnecessary decisions."],
+      ["First month", "Repeat one bonding ritual, one home reset, and one partner recovery block until the routine starts to feel familiar."],
+    ],
+    guides: ["newborn-tips-for-dads", "first-time-dad-checklist", "how-to-support-pregnant-partner"],
+    cta: "Get newborn readiness steps in PRO",
+  },
+];
+
 const quizStages = [
   { value: "expecting", label: "Expecting dad" },
   { value: "newborn", label: "Newborn dad" },
