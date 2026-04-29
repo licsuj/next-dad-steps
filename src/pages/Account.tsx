@@ -8,6 +8,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { useProAccess } from "@/hooks/use-pro-access";
 import { supabase } from "@/integrations/supabase/client";
 
+const fatherhoodStages = [
+  { value: "thinking_about_it", label: "Thinking about becoming a dad" },
+  { value: "just_found_out", label: "Just got the news" },
+  { value: "pregnancy_months", label: "Pregnancy months" },
+  { value: "newborn", label: "Newborn" },
+  { value: "baby_months", label: "Baby months" },
+];
+
 const cancellationSchema = z.object({
   reason: z.string().trim().max(500, "Keep your cancellation note under 500 characters.").optional(),
 });
@@ -18,9 +26,31 @@ const formatDate = (value: string | null | undefined) => {
 };
 
 const Account = () => {
-  const { isLoading, user, isPro, subscription } = useProAccess();
+  const { isLoading, user, isPro, profile, subscription } = useProAccess();
   const [reason, setReason] = useState("");
+  const [stage, setStage] = useState("");
+  const activeStage = stage || profile?.current_fatherhood_stage || "thinking_about_it";
   const [isCancelling, setIsCancelling] = useState(false);
+
+  const handleStageSave = async () => {
+    if (!user) return;
+    if (!fatherhoodStages.some((item) => item.value === activeStage)) {
+      toast.error("Choose a valid fatherhood stage.");
+      return;
+    }
+
+    const { error } = await (supabase as any).from("profiles").upsert({
+      user_id: user.id,
+      current_fatherhood_stage: activeStage,
+    }, { onConflict: "user_id" });
+
+    if (error) {
+      toast.error("Could not save your fatherhood stage. Try again in a moment.");
+      return;
+    }
+
+    toast.success("Fatherhood stage saved for your PRO routines.");
+  };
 
   const handleGoogleSignIn = async () => {
     const { lovable } = await import("@/integrations/lovable");
@@ -101,6 +131,15 @@ const Account = () => {
               </article>
 
               <article className="rounded-3xl border border-border bg-gradient-card p-6 shadow-xl shadow-background/30">
+                <h2 className="text-3xl font-black">Personalization</h2>
+                <p className="mt-3 leading-7 text-muted-foreground">Save your current fatherhood stage. PRO uses this to serve your stage-matched routines after subscription is active.</p>
+                <select value={activeStage} onChange={(event) => setStage(event.target.value)} className="mt-5 h-12 w-full rounded-2xl border border-input bg-background/80 px-3 py-2 text-sm font-bold text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                  {fatherhoodStages.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
+                </select>
+                <Button type="button" onClick={handleStageSave} className="mt-4 w-full rounded-full font-black">Save stage</Button>
+              </article>
+
+              <article className="rounded-3xl border border-border bg-gradient-card p-6 shadow-xl shadow-background/30 lg:col-start-2">
                 <h2 className="text-3xl font-black">Manage subscription</h2>
                 <p className="mt-3 leading-7 text-muted-foreground">Request cancellation here. When live checkout is connected, this section can link directly to the billing portal.</p>
                 <Textarea value={reason} onChange={(event) => setReason(event.target.value)} maxLength={500} placeholder="Optional: tell us why you are cancelling" className="mt-5 min-h-28 rounded-2xl border-border bg-background/80 text-foreground placeholder:text-muted-foreground" />
