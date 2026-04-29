@@ -323,6 +323,11 @@ const Index = () => {
                 {isSubmitting ? "Joining" : "Join free"}
                 <ArrowRight className="h-4 w-4" />
               </Button>
+              {signupConfirmation && (
+                <p className="rounded-2xl border border-sage/50 bg-sage/15 p-3 text-sm font-bold leading-6 text-sage sm:col-span-3" role="status" aria-live="polite">
+                  {signupConfirmation}
+                </p>
+              )}
             </form>
           </div>
         </div>
