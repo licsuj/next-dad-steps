@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { ArrowRight, CreditCard, Lock, Target } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { ArrowRight, CheckCircle2, CreditCard, Lock, LogOut, Target, UserCircle } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -26,11 +26,27 @@ const formatDate = (value: string | null | undefined) => {
 };
 
 const Account = () => {
+  const navigate = useNavigate();
   const { isLoading, user, isPro, profile, subscription } = useProAccess();
   const [reason, setReason] = useState("");
   const [stage, setStage] = useState("");
   const activeStage = stage || profile?.current_fatherhood_stage || "thinking_about_it";
   const [isCancelling, setIsCancelling] = useState(false);
+  const [hasPendingCancellation, setHasPendingCancellation] = useState(false);
+  const activeStageLabel = fatherhoodStages.find((item) => item.value === activeStage)?.label ?? "Not set";
+
+  useEffect(() => {
+    if (!user) return;
+
+    (supabase as any)
+      .from("subscription_cancellation_requests")
+      .select("id")
+      .eq("user_id", user.id)
+      .eq("status", "requested")
+      .limit(1)
+      .maybeSingle()
+      .then(({ data }: { data: { id: string } | null }) => setHasPendingCancellation(Boolean(data)));
+  }, [user]);
 
   const handleStageSave = async () => {
     if (!user) return;
@@ -58,9 +74,20 @@ const Account = () => {
     if (result.error) toast.error("Could not start Google sign in. Try again in a moment.");
   };
 
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    toast.success("Signed out.");
+    navigate("/");
+  };
+
   const handleCancellationRequest = async () => {
     if (!user) {
       toast.error("Sign in to manage your subscription.");
+      return;
+    }
+
+    if (hasPendingCancellation) {
+      toast.success("Your cancellation request is already pending.");
       return;
     }
 
@@ -84,6 +111,7 @@ const Account = () => {
     }
 
     setReason("");
+    setHasPendingCancellation(true);
     toast.success("Cancellation request received. Billing status will update after processing.");
   };
 
@@ -114,20 +142,40 @@ const Account = () => {
               <Lock className="h-8 w-8 text-primary" />
               <h2 className="mt-4 text-3xl font-black">Sign in to view billing.</h2>
               <p className="mt-3 leading-7 text-muted-foreground">Your subscription status, cancellation options, and PRO access live inside your account.</p>
-              <Button type="button" onClick={handleGoogleSignIn} className="mt-5 rounded-full font-black">Sign in with Google</Button>
+              <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                <Button asChild className="rounded-full font-black"><Link to="/auth?redirect=/account">Log in or sign up</Link></Button>
+                <Button type="button" onClick={handleGoogleSignIn} variant="outline" className="rounded-full border-border bg-background/70 font-black text-foreground hover:bg-sky hover:text-sky-foreground">Continue with Google</Button>
+              </div>
             </div>
           ) : (
             <div className="mt-8 grid gap-5 lg:grid-cols-[0.85fr_1.15fr]">
+              <article className="rounded-3xl border border-border bg-gradient-card p-6 shadow-xl shadow-background/30 lg:col-span-2">
+                <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-sky text-sky-foreground"><UserCircle className="h-6 w-6" /></div>
+                    <div>
+                      <p className="text-sm font-black uppercase text-muted-foreground">Signed in as</p>
+                      <h2 className="mt-1 break-all text-2xl font-black">{user.email}</h2>
+                      <p className="mt-2 text-sm font-bold text-muted-foreground">Saved stage: {activeStageLabel}</p>
+                    </div>
+                  </div>
+                  <Button type="button" onClick={handleSignOut} variant="outline" className="rounded-full border-border bg-background/70 font-black text-foreground hover:bg-coral hover:text-coral-foreground">
+                    <LogOut className="h-4 w-4" /> Sign out
+                  </Button>
+                </div>
+              </article>
+
               <article className="rounded-3xl border border-border bg-card p-6 shadow-xl shadow-background/30">
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-primary-foreground"><CreditCard className="h-5 w-5" /></div>
                 <h2 className="mt-5 text-3xl font-black">Billing status</h2>
                 <div className="mt-5 space-y-3 text-sm font-bold">
                   <div className="flex justify-between gap-4 rounded-2xl bg-background/70 p-3"><span className="text-muted-foreground">Plan</span><span>{subscription?.plan?.toUpperCase() ?? "FREE"}</span></div>
                   <div className="flex justify-between gap-4 rounded-2xl bg-background/70 p-3"><span className="text-muted-foreground">Status</span><span>{subscription?.status ?? "inactive"}</span></div>
+                  <div className="flex justify-between gap-4 rounded-2xl bg-background/70 p-3"><span className="text-muted-foreground">Stage</span><span className="text-right">{activeStageLabel}</span></div>
                   <div className="flex justify-between gap-4 rounded-2xl bg-background/70 p-3"><span className="text-muted-foreground">Renews / access ends</span><span>{formatDate(subscription?.current_period_end)}</span></div>
                 </div>
                 <p className="mt-5 rounded-2xl bg-sage/15 p-4 text-sm font-bold leading-6 text-sage">{isPro ? "Your PRO routines and newsletters are unlocked." : "PRO is not active on this account yet."}</p>
-                {!isPro && <Button asChild className="mt-5 w-full rounded-full font-black"><Link to="/pricing">Upgrade to PRO<ArrowRight className="h-4 w-4" /></Link></Button>}
+                {isPro ? <Button asChild className="mt-5 w-full rounded-full font-black"><Link to="/pro">Open PRO routines<ArrowRight className="h-4 w-4" /></Link></Button> : <Button asChild className="mt-5 w-full rounded-full font-black"><Link to="/pricing">Upgrade to PRO<ArrowRight className="h-4 w-4" /></Link></Button>}
               </article>
 
               <article className="rounded-3xl border border-border bg-gradient-card p-6 shadow-xl shadow-background/30">
@@ -141,10 +189,11 @@ const Account = () => {
 
               <article className="rounded-3xl border border-border bg-gradient-card p-6 shadow-xl shadow-background/30 lg:col-start-2">
                 <h2 className="text-3xl font-black">Manage subscription</h2>
-                <p className="mt-3 leading-7 text-muted-foreground">Request cancellation here. When live checkout is connected, this section can link directly to the billing portal.</p>
+                <p className="mt-3 leading-7 text-muted-foreground">Request cancellation here. Your billing status will update once the request is processed.</p>
+                {hasPendingCancellation && <p className="mt-4 flex gap-2 rounded-2xl border border-sage/50 bg-sage/15 p-3 text-sm font-bold leading-6 text-sage"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />Cancellation request pending.</p>}
                 <Textarea value={reason} onChange={(event) => setReason(event.target.value)} maxLength={500} placeholder="Optional: tell us why you are cancelling" className="mt-5 min-h-28 rounded-2xl border-border bg-background/80 text-foreground placeholder:text-muted-foreground" />
-                <Button type="button" onClick={handleCancellationRequest} disabled={isCancelling} variant="outline" className="mt-4 w-full rounded-full border-border bg-background/70 font-black text-foreground hover:bg-coral hover:text-coral-foreground">
-                  {isCancelling ? "Submitting" : "Request cancellation"}
+                <Button type="button" onClick={handleCancellationRequest} disabled={isCancelling || hasPendingCancellation} variant="outline" className="mt-4 w-full rounded-full border-border bg-background/70 font-black text-foreground hover:bg-coral hover:text-coral-foreground">
+                  {hasPendingCancellation ? "Request pending" : isCancelling ? "Submitting" : "Request cancellation"}
                 </Button>
               </article>
             </div>

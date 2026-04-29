@@ -30,6 +30,29 @@ const proOnboardingSequences: Record<string, string[]> = {
   baby_months: ["Family rhythm reset", "Bonding step plan", "Work-life boundary check", "First-year routine upgrade"],
 };
 
+const proRoutineDetails: Record<string, Array<{ title: string; why: string; actions: string[]; partnerPrompt: string; checklist: string[] }>> = {
+  thinking_about_it: [
+    { title: "Money and leave snapshot", why: "A calm baseline makes future decisions feel less abstract.", actions: ["List fixed monthly costs", "Check leave policy basics", "Pick one savings question to answer"], partnerPrompt: "Ask: what money topic would help us feel more steady this month?", checklist: ["Costs listed", "Leave policy found", "One question assigned"] },
+    { title: "Support network map", why: "Knowing who can help before you need help lowers pressure later.", actions: ["Name three trusted helpers", "Mark practical vs emotional support", "Draft one low-pressure check-in text"], partnerPrompt: "Ask: who would you actually want around when things feel hard?", checklist: ["Helpers named", "Support types mapped", "Text drafted"] },
+  ],
+  just_found_out: [
+    { title: "First 24-hour reset", why: "Early news can feel huge; your job is to steady the room first.", actions: ["Pause big decisions", "Write down top questions", "Schedule one quiet check-in"], partnerPrompt: "Ask: do you want excitement, planning, or quiet support from me today?", checklist: ["No rushed decisions", "Questions captured", "Check-in planned"] },
+    { title: "Early appointment plan", why: "Appointments are easier when you know your role before walking in.", actions: ["Confirm date and location", "Add questions to notes", "Plan travel buffer"], partnerPrompt: "Ask: what do you want me to remember or ask at the appointment?", checklist: ["Appointment saved", "Questions ready", "Buffer planned"] },
+  ],
+  pregnancy_months: [
+    { title: "Weekly support routine", why: "Consistent small support beats occasional grand gestures.", actions: ["Pick one home task to own", "Add one appointment reminder", "Plan a 15-minute check-in"], partnerPrompt: "Ask: what would make this week feel lighter for you?", checklist: ["Task owned", "Reminder set", "Check-in complete"] },
+    { title: "Birth-readiness roadmap", why: "Preparing early keeps late pregnancy from becoming a scramble.", actions: ["Review birth preferences", "Start hospital bag list", "Confirm ride and contact plan"], partnerPrompt: "Ask: what part of birth prep feels most uncertain right now?", checklist: ["Preferences reviewed", "Bag list started", "Contact plan confirmed"] },
+  ],
+  newborn: [
+    { title: "Night shift support plan", why: "Clear roles protect sleep and reduce 3 a.m. confusion.", actions: ["Choose your night responsibilities", "Prep bottles/diapers station", "Set a morning recovery block"], partnerPrompt: "Ask: which night stretch do you most need protected?", checklist: ["Roles chosen", "Station stocked", "Recovery block set"] },
+    { title: "Partner recovery checklist", why: "Recovery support is practical, emotional, and easy to miss when tired.", actions: ["Track meals and water", "Handle one household reset", "Watch for mood or pain changes"], partnerPrompt: "Ask: what is one thing I can take off your plate today?", checklist: ["Meals covered", "Home reset done", "Recovery check noted"] },
+  ],
+  baby_months: [
+    { title: "Family rhythm reset", why: "Baby months change fast; routines need small resets, not total overhauls.", actions: ["Review sleep and feeding rhythm", "Protect one family anchor", "Cut one unnecessary commitment"], partnerPrompt: "Ask: what part of our week feels most chaotic right now?", checklist: ["Rhythm reviewed", "Anchor protected", "One commitment cut"] },
+    { title: "Bonding step plan", why: "Bonding grows through repeated small moments you can own.", actions: ["Pick one daily baby task", "Add a short play ritual", "Take one solo-care window"], partnerPrompt: "Ask: when would solo baby time help you most this week?", checklist: ["Task picked", "Ritual started", "Solo-care window planned"] },
+  ],
+};
+
 const readinessPlan = ["Know your role", "Build the support routine", "Money and home prep", "Partner check-in system", "Birth plan basics", "Newborn survival routine"];
 
 const proNewsletters = ["Money + leave reset", "Partner support script", "Stage-matched weekly checklist"];
@@ -43,6 +66,7 @@ const Pro = () => {
   const savedStage = profile?.current_fatherhood_stage ?? "thinking_about_it";
   const displayStage = isPro ? savedStage : proPreviewStage;
   const activeProSequence = useMemo(() => proOnboardingSequences[displayStage], [displayStage]);
+  const activeRoutineDetails = useMemo(() => proRoutineDetails[displayStage] ?? [], [displayStage]);
 
   const handleGoogleSignIn = async () => {
     const { lovable } = await import("@/integrations/lovable");
@@ -219,13 +243,37 @@ const Pro = () => {
                 <h4 className="mt-4 text-2xl font-bold">PRO routines are locked.</h4>
                 <p className="mt-3 leading-7 text-muted-foreground">{user ? "Upgrade to unlock stage-matched routines and PRO newsletters." : "Sign in, then upgrade to unlock stage-matched routines and PRO newsletters."}</p>
                 <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-                  {!user && <Button type="button" onClick={handleGoogleSignIn} variant="outline" className="rounded-xl font-bold">Sign in with Google</Button>}
+                  {!user && <Button asChild variant="outline" className="rounded-xl font-bold"><Link to="/auth?redirect=/pro">Sign in</Link></Button>}
+                  {!user && <Button type="button" onClick={handleGoogleSignIn} variant="outline" className="rounded-xl font-bold">Google</Button>}
                   <Button asChild className="rounded-xl font-bold"><Link to="/pricing">View pricing<ArrowRight className="h-4 w-4" /></Link></Button>
                 </div>
               </div>
             )}
           </div>
         </div>
+        {isPro && (
+          <div className="mx-auto mt-8 max-w-7xl">
+            <div className="grid gap-4 lg:grid-cols-2">
+              {activeRoutineDetails.map((routine) => (
+                <article key={routine.title} className="rounded-2xl border border-border/80 bg-card/90 p-6 shadow-lg shadow-foreground/5">
+                  <p className="text-sm font-bold text-primary">This week</p>
+                  <h3 className="mt-2 text-2xl font-bold">{routine.title}</h3>
+                  <p className="mt-3 leading-7 text-muted-foreground">{routine.why}</p>
+                  <div className="mt-5 rounded-2xl bg-background p-4">
+                    <p className="font-bold">Action steps</p>
+                    <ol className="mt-3 space-y-2">
+                      {routine.actions.map((action, index) => <li key={action} className="text-sm font-bold leading-6 text-muted-foreground">{index + 1}. {action}</li>)}
+                    </ol>
+                  </div>
+                  <p className="mt-4 rounded-2xl border border-primary/30 bg-primary/10 p-4 text-sm font-bold leading-6 text-primary">{routine.partnerPrompt}</p>
+                  <ul className="mt-4 grid gap-2 sm:grid-cols-3">
+                    {routine.checklist.map((item) => <li key={item} className="flex items-center gap-2 rounded-xl bg-background p-3 text-xs font-bold text-muted-foreground"><Check className="h-4 w-4 text-primary" />{item}</li>)}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </div>
+        )}
       </section>
     </main>
   );
