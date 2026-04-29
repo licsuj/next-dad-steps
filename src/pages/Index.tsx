@@ -27,16 +27,19 @@ const offerCards = [
     title: "Weekly dad guidance",
     copy: "A short free email with one useful step for your pregnancy, newborn, or first-year stage.",
     icon: Mail,
+    accent: "bg-sage text-sage-foreground",
   },
   {
     title: "Readiness quiz",
     copy: "A quick father readiness score with a recommended next step when you want more clarity.",
     icon: ClipboardList,
+    accent: "bg-sky text-sky-foreground",
   },
   {
     title: "PRO personal plan",
     copy: "A deeper fatherhood plan with checklists, trackers, and stage-specific routines.",
     icon: Trophy,
+    accent: "bg-coral text-coral-foreground",
   },
 ];
 
@@ -193,7 +196,7 @@ const Index = () => {
               const Icon = card.icon;
               return (
                 <article key={card.title} className="rounded-2xl border border-border/80 bg-gradient-card p-6 shadow-lg shadow-foreground/5">
-                  <Icon className="h-6 w-6 text-primary" />
+                  <div className={`flex h-11 w-11 items-center justify-center rounded-2xl ${card.accent}`}><Icon className="h-5 w-5" /></div>
                   <h3 className="mt-4 text-2xl font-bold">{card.title}</h3>
                   <p className="mt-3 leading-7 text-muted-foreground">{card.copy}</p>
                 </article>
