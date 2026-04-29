@@ -111,10 +111,10 @@ const Index = () => {
             </div>
             <span className="text-lg font-bold tracking-normal">NextRoutine</span>
           </Link>
-          <nav className="flex items-center gap-5 text-sm font-semibold text-muted-foreground">
-            <a href="#free" className="transition hover:text-foreground">FREE</a>
-            <Link to="/father-readiness-quiz" className="transition hover:text-foreground">Quiz</Link>
-            <Link to="/pro" className="text-primary transition hover:text-accent">PRO</Link>
+          <nav className="flex items-center gap-3 text-sm font-semibold text-muted-foreground">
+            <a href="#newsletter-signup" className="hidden transition hover:text-foreground sm:inline">FREE</a>
+            <Link to="/father-readiness-quiz" className="rounded-full bg-sky px-3 py-1.5 text-sky-foreground transition hover:border-primary/80">Quiz</Link>
+            <Link to="/pro" className="rounded-full bg-primary px-3 py-1.5 text-primary-foreground transition hover:bg-accent hover:text-accent-foreground">PRO</Link>
           </nav>
         </div>
 
@@ -130,6 +130,21 @@ const Index = () => {
             <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
               NextRoutine is a free weekly dad newsletter for pregnancy, birth, newborn life, and the first year. Join free for practical guidance, then upgrade to PRO when you want a personal fatherhood plan.
             </p>
+
+            <div className="mt-7 grid max-w-3xl gap-3 sm:grid-cols-3">
+              <a href="#newsletter-signup" className="rounded-2xl border border-border/80 bg-card/85 p-4 font-bold shadow-sm shadow-foreground/5 transition hover:border-primary/80">
+                <span className="mb-3 inline-flex rounded-full bg-sage px-3 py-1 text-xs font-extrabold text-sage-foreground">FREE</span>
+                <span className="block">Join the weekly brief</span>
+              </a>
+              <Link to="/father-readiness-quiz" className="rounded-2xl border border-border/80 bg-sky p-4 font-bold text-sky-foreground shadow-sm shadow-foreground/5 transition hover:border-primary/80">
+                <span className="mb-3 inline-flex rounded-full bg-background px-3 py-1 text-xs font-extrabold text-foreground">QUIZ</span>
+                <span className="block">Get your readiness score</span>
+              </Link>
+              <Link to="/pro" className="rounded-2xl border border-primary/60 bg-primary p-4 font-bold text-primary-foreground shadow-sm shadow-primary/15 transition hover:bg-accent hover:text-accent-foreground">
+                <span className="mb-3 inline-flex rounded-full bg-background px-3 py-1 text-xs font-extrabold text-foreground">PRO</span>
+                <span className="block">See the personal plan</span>
+              </Link>
+            </div>
 
             <form id="newsletter-signup" onSubmit={handleSubmit} className="mt-8 grid max-w-3xl gap-3 rounded-2xl border border-border/80 bg-card/85 p-3 shadow-xl shadow-foreground/5 backdrop-blur sm:grid-cols-[1fr_1fr_auto]">
               <Input
