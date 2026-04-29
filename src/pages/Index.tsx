@@ -44,17 +44,17 @@ const offerCards = [
 ];
 
 const freeFeatures = [
-  "Weekly Dad Brief by stage",
-  "One practical action each week",
-  "Pregnancy and newborn guidance",
-  "Free father readiness quiz",
+  "Free weekly Dad Brief for your selected stage",
+  "One practical action and partner-support prompt",
+  "Pregnancy, newborn, and first-year guidance",
+  "Access to the father readiness quiz",
 ];
 
 const proFeatures = [
-  "Personalized weekly fatherhood plan",
-  "Premium checklists and preparation guides",
+  "Personalized weekly fatherhood plan by stage",
+  "Premium preparation checklists and guides",
   "Readiness score, trackers, and progress prompts",
-  "Stage-specific routines for pregnancy, birth, newborn life, and the first year",
+  "Routines for pregnancy, birth, newborn life, and the first year",
 ];
 
 const Index = () => {
@@ -206,38 +206,46 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="border-y border-border/80 bg-card/90 px-5 py-20 sm:px-8 lg:px-12" id="pro">
+      <section className="border-y border-border/80 bg-gradient-warm px-5 py-20 sm:px-8 lg:px-12" id="pro">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-3xl">
             <p className="font-bold text-primary">FREE vs PRO</p>
-            <h2 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">Start free. Go PRO when you want the full plan.</h2>
+            <h2 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">Start with the free weekly brief. Upgrade when you want a plan built around you.</h2>
           </div>
-          <div className="mt-10 grid gap-5 lg:grid-cols-2">
-            <div className="rounded-2xl border border-border/80 bg-background p-6">
-              <p className="text-sm font-extrabold text-muted-foreground">FREE</p>
+          <div className="mt-10 grid gap-6 lg:grid-cols-2">
+            <div className="relative overflow-hidden rounded-3xl border border-sage/80 bg-gradient-card p-6 shadow-xl shadow-foreground/5">
+              <div className="absolute right-5 top-5 rounded-full bg-sage px-3 py-1 text-xs font-extrabold text-sage-foreground">FREE</div>
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sage text-sage-foreground">
+                <Mail className="h-5 w-5" />
+              </div>
+              <p className="mt-5 text-sm font-bold uppercase text-muted-foreground">Start here</p>
               <h3 className="mt-2 text-3xl font-bold">Weekly Dad Brief</h3>
-              <p className="mt-4 leading-7 text-muted-foreground">Best for quick weekly support and small next steps.</p>
+              <p className="mt-4 leading-7 text-muted-foreground">Best for getting one calm, useful next step each week without signing up for a full program.</p>
               <ul className="mt-5 space-y-3">
                 {freeFeatures.map((feature) => (
-                  <li key={feature} className="flex items-start gap-3 text-sm leading-6 text-muted-foreground"><Check className="mt-0.5 h-4 w-4 text-primary" />{feature}</li>
+                  <li key={feature} className="flex items-start gap-3 rounded-xl bg-background/70 p-3 text-sm font-semibold leading-6 text-muted-foreground"><Check className="mt-0.5 h-4 w-4 text-primary" />{feature}</li>
                 ))}
               </ul>
-              <Button asChild variant="outline" className="mt-6 w-full border-border/80 bg-card/90 text-foreground hover:bg-muted">
+              <Button asChild variant="outline" className="mt-6 w-full rounded-xl border-border/80 bg-card/90 text-foreground hover:bg-muted">
                 <a href="#newsletter-signup">Join free</a>
               </Button>
             </div>
 
-            <div className="rounded-2xl border border-primary/80 bg-primary p-6 text-primary-foreground">
-              <p className="text-sm font-extrabold">PRO</p>
+            <div className="relative overflow-hidden rounded-3xl border border-primary/70 bg-primary p-6 text-primary-foreground shadow-xl shadow-primary/15">
+              <div className="absolute right-5 top-5 rounded-full bg-background px-3 py-1 text-xs font-extrabold text-foreground">PRO</div>
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-background text-foreground">
+                <Trophy className="h-5 w-5" />
+              </div>
+              <p className="mt-5 text-sm font-bold uppercase text-primary-foreground/80">Full plan</p>
               <h3 className="mt-2 text-3xl font-bold">Personal Fatherhood Plan</h3>
-              <p className="mt-4 leading-7">Best for deeper preparation by pregnancy month, birth stage, newborn phase, or baby age.</p>
+              <p className="mt-4 leading-7">Best for deeper preparation with checklists, routines, and progress prompts matched to your stage.</p>
               <ul className="mt-5 space-y-3">
                 {proFeatures.map((feature) => (
-                  <li key={feature} className="flex items-start gap-3 text-sm leading-6"><Check className="mt-0.5 h-4 w-4" />{feature}</li>
+                  <li key={feature} className="flex items-start gap-3 rounded-xl bg-background/15 p-3 text-sm font-semibold leading-6"><Check className="mt-0.5 h-4 w-4" />{feature}</li>
                 ))}
               </ul>
               <Button asChild variant="secondary" className="mt-6 w-full rounded-xl bg-background text-foreground hover:bg-muted">
-                <Link to="/pro">See PRO</Link>
+                <Link to="/pro">See PRO details</Link>
               </Button>
             </div>
           </div>
