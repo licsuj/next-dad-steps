@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 
 const signupStages = [
+  { value: "thinking_about_it", label: "Thinking about becoming a dad" },
   { value: "just_found_out", label: "Just got the news" },
   { value: "pregnancy_months", label: "Pregnancy months" },
   { value: "newborn", label: "Newborn" },
@@ -14,6 +15,7 @@ const signupStages = [
 ];
 
 const stageSequences: Record<string, string[]> = {
+  thinking_about_it: ["Money and leave checklist", "Career and support planning", "Home routine prep"],
   just_found_out: ["Your first 24-hour reset", "Partner support script", "Early appointment plan"],
   pregnancy_months: ["Pregnancy stage check-in", "Weekly support routine", "Birth-readiness basics"],
   newborn: ["Night support plan", "Partner recovery checklist", "Newborn home reset"],
@@ -241,11 +243,11 @@ const Index = () => {
 
       <section className="px-5 py-16 sm:px-8 lg:px-12">
         <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-3">
+          <Link to="/pre-fatherhood" className="rounded-2xl border border-primary/30 bg-secondary p-5 font-bold text-secondary-foreground hover:border-primary/80">
+            Pre-fatherhood preparation checklist
+          </Link>
           <Link to="/father-readiness-quiz" className="rounded-2xl border border-border/80 bg-card/90 p-5 font-bold hover:border-primary/80">
             Take the free dad readiness quiz
-          </Link>
-          <Link to="/blog" className="rounded-2xl border border-border/80 bg-card/90 p-5 font-bold hover:border-primary/80">
-            Read the 6-week dad readiness series
           </Link>
           <Link to="/first-time-dad" className="rounded-2xl border border-border/80 bg-card/90 p-5 font-bold hover:border-primary/80">
             Explore the first-time dad guide

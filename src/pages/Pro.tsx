@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 
 const signupStages = [
+  { value: "thinking_about_it", label: "Thinking about becoming a dad" },
   { value: "just_found_out", label: "Just got the news" },
   { value: "pregnancy_months", label: "Pregnancy months" },
   { value: "newborn", label: "Newborn" },
@@ -21,6 +22,7 @@ const proFeatures = [
 ];
 
 const proOnboardingSequences: Record<string, string[]> = {
+  thinking_about_it: ["Pre-fatherhood money check", "Career and time-off prep", "Support network map", "Home routine baseline"],
   just_found_out: ["Your first 24-hour reset", "Partner support script", "Early appointment plan", "Dad readiness baseline"],
   pregnancy_months: ["Pregnancy stage audit", "Weekly support routine", "Home and money prep", "Birth-readiness roadmap"],
   newborn: ["Night shift support plan", "Partner recovery checklist", "Newborn supply station", "First 30-day routine score"],
