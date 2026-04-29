@@ -290,7 +290,7 @@ const Index = () => {
               ))}
             </div>
 
-            <form onSubmit={handleSubmit} className="mt-8 grid max-w-3xl gap-3 rounded-2xl border border-border/80 bg-card/90 p-3 shadow-lg shadow-foreground/5 sm:grid-cols-[1fr_1fr_auto]">
+            <form id="newsletter-signup" onSubmit={handleSubmit} className="mt-8 grid max-w-3xl gap-3 rounded-2xl border border-border/80 bg-card/90 p-3 shadow-lg shadow-foreground/5 sm:grid-cols-[1fr_1fr_auto]">
               <Input
                 type="email"
                 value={email}
