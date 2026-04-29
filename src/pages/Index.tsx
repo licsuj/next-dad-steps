@@ -52,10 +52,10 @@ const quickQuizStages = [
 ];
 
 const routinePreviews = [
-  { stage: "Thinking about it", routine: "Money, leave, and career prep without spiraling", accent: "bg-sage text-sage-foreground" },
-  { stage: "Pregnancy months", routine: "Weekly partner support, appointments, and home setup", accent: "bg-sky text-sky-foreground" },
-  { stage: "Newborn", routine: "Night support, recovery help, and tiny home resets", accent: "bg-coral text-coral-foreground" },
-  { stage: "Baby months", routine: "Family rhythm, bonding, and work-life boundaries", accent: "bg-primary text-primary-foreground" },
+  { stage: "Thinking about it", routine: "Money, leave, and career prep without spiraling", nextSeven: "Expect one calm money check, one leave question, and one partner conversation.", accent: "bg-sage text-sage-foreground" },
+  { stage: "Pregnancy months", routine: "Weekly partner support, appointments, and home setup", nextSeven: "Expect a support prompt, appointment prep, and one home setup task.", accent: "bg-sky text-sky-foreground" },
+  { stage: "Newborn", routine: "Night support, recovery help, and tiny home resets", nextSeven: "Expect a night-role plan, recovery reminder, and tiny reset routine.", accent: "bg-coral text-coral-foreground" },
+  { stage: "Baby months", routine: "Family rhythm, bonding, and work-life boundaries", nextSeven: "Expect a bonding move, rhythm check, and one boundary to protect energy.", accent: "bg-primary text-primary-foreground" },
 ];
 
 const proFeatures = [
@@ -223,6 +223,7 @@ const Index = () => {
               <article key={item.stage} className="rounded-3xl border border-border bg-gradient-card p-4 shadow-lg shadow-background/25">
                 <div className={`inline-flex rounded-full px-3 py-1 text-xs font-black ${item.accent}`}>{item.stage}</div>
                 <p className="mt-5 min-h-20 text-lg font-black leading-7 text-foreground">{item.routine}</p>
+                <p className="mt-3 border-t border-border pt-3 text-sm font-bold leading-6 text-muted-foreground">Next 7 days: {item.nextSeven}</p>
               </article>
             ))}
           </div>
