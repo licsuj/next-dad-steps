@@ -41,10 +41,11 @@ const Auth = () => {
       return;
     }
 
+    const credentials = { email: parsed.data.email, password: parsed.data.password };
     setIsSubmitting(true);
     const result = mode === "signin"
-      ? await supabase.auth.signInWithPassword(parsed.data)
-      : await supabase.auth.signUp({ ...parsed.data, options: { emailRedirectTo: `${window.location.origin}${redirectTo}` } });
+      ? await supabase.auth.signInWithPassword(credentials)
+      : await supabase.auth.signUp({ ...credentials, options: { emailRedirectTo: `${window.location.origin}${redirectTo}` } });
     setIsSubmitting(false);
 
     if (result.error) {
