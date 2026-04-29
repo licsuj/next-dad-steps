@@ -27,16 +27,19 @@ const offerCards = [
     title: "Weekly dad guidance",
     copy: "A short free email with one useful step for your pregnancy, newborn, or first-year stage.",
     icon: Mail,
+    accent: "bg-sage text-sage-foreground",
   },
   {
     title: "Readiness quiz",
     copy: "A quick father readiness score with a recommended next step when you want more clarity.",
     icon: ClipboardList,
+    accent: "bg-sky text-sky-foreground",
   },
   {
     title: "PRO personal plan",
     copy: "A deeper fatherhood plan with checklists, trackers, and stage-specific routines.",
     icon: Trophy,
+    accent: "bg-coral text-coral-foreground",
   },
 ];
 
@@ -100,7 +103,7 @@ const Index = () => {
 
   return (
     <main className="min-h-screen overflow-hidden bg-background text-foreground">
-      <section className="relative px-5 py-8 sm:px-8 lg:px-12">
+      <section className="relative bg-gradient-hero px-5 py-8 sm:px-8 lg:px-12">
         <div className="mx-auto flex max-w-7xl items-center justify-between border-b border-border/80 pb-5">
           <Link to="/" className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground">
@@ -117,7 +120,7 @@ const Index = () => {
 
         <div className="mx-auto grid max-w-7xl gap-12 py-20 lg:grid-cols-[1.05fr_0.95fr] lg:py-28">
           <div className="flex flex-col justify-center">
-            <div className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-border/80 bg-card/90 px-4 py-2 text-sm text-muted-foreground">
+            <div className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-border/80 bg-card/80 px-4 py-2 shadow-sm shadow-foreground/5 text-sm text-muted-foreground">
               <Sparkles className="h-4 w-4 text-primary" />
               Free weekly guidance for first-time dads
             </div>
@@ -128,7 +131,7 @@ const Index = () => {
               NextRoutine is a free weekly dad newsletter for pregnancy, birth, newborn life, and the first year. Join free for practical guidance, then upgrade to PRO when you want a personal fatherhood plan.
             </p>
 
-            <form id="newsletter-signup" onSubmit={handleSubmit} className="mt-8 grid max-w-3xl gap-3 rounded-2xl border border-border/80 bg-card/90 p-3 shadow-lg shadow-foreground/5 sm:grid-cols-[1fr_1fr_auto]">
+            <form id="newsletter-signup" onSubmit={handleSubmit} className="mt-8 grid max-w-3xl gap-3 rounded-2xl border border-border/80 bg-card/85 p-3 shadow-xl shadow-foreground/5 backdrop-blur sm:grid-cols-[1fr_1fr_auto]">
               <Input
                 type="email"
                 value={email}
@@ -159,7 +162,7 @@ const Index = () => {
           </div>
 
           <div className="relative">
-            <div className="rounded-2xl border border-border/80 bg-card/90 p-5 shadow-lg shadow-foreground/5">
+            <div className="rounded-2xl border border-border/80 bg-gradient-card p-5 shadow-lg shadow-foreground/5">
               <div className="border-b border-border/80 pb-4">
                 <p className="text-sm font-semibold text-primary">What lands in your inbox</p>
                 <h2 className="mt-1 text-2xl font-bold">One short dad brief for your current stage</h2>
@@ -173,7 +176,7 @@ const Index = () => {
                   </div>
                 ))}
               </div>
-              <div className="mt-5 rounded-xl bg-primary p-4 text-primary-foreground">
+              <div className="mt-5 rounded-xl bg-gradient-warm p-4 text-foreground">
                 <p className="text-sm font-bold uppercase">Start free</p>
                 <p className="mt-1 text-lg font-bold">Get the weekly dad newsletter</p>
               </div>
@@ -192,8 +195,8 @@ const Index = () => {
             {offerCards.map((card) => {
               const Icon = card.icon;
               return (
-                <article key={card.title} className="rounded-2xl border border-border/80 bg-card/90 p-6 shadow-lg shadow-foreground/5">
-                  <Icon className="h-6 w-6 text-primary" />
+                <article key={card.title} className="rounded-2xl border border-border/80 bg-gradient-card p-6 shadow-lg shadow-foreground/5">
+                  <div className={`flex h-11 w-11 items-center justify-center rounded-2xl ${card.accent}`}><Icon className="h-5 w-5" /></div>
                   <h3 className="mt-4 text-2xl font-bold">{card.title}</h3>
                   <p className="mt-3 leading-7 text-muted-foreground">{card.copy}</p>
                 </article>
@@ -243,20 +246,20 @@ const Index = () => {
 
       <section className="px-5 py-16 sm:px-8 lg:px-12">
         <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-3">
-          <Link to="/pre-fatherhood" className="rounded-2xl border border-primary/30 bg-secondary p-5 font-bold text-secondary-foreground hover:border-primary/80">
+          <Link to="/pre-fatherhood" className="rounded-2xl border border-primary/30 bg-sky p-5 font-bold text-sky-foreground hover:border-primary/80">
             Pre-fatherhood preparation checklist
           </Link>
-          <Link to="/father-readiness-quiz" className="rounded-2xl border border-border/80 bg-card/90 p-5 font-bold hover:border-primary/80">
+          <Link to="/father-readiness-quiz" className="rounded-2xl border border-border/80 bg-gradient-card p-5 font-bold hover:border-primary/80">
             Take the free dad readiness quiz
           </Link>
-          <Link to="/first-time-dad" className="rounded-2xl border border-border/80 bg-card/90 p-5 font-bold hover:border-primary/80">
+          <Link to="/first-time-dad" className="rounded-2xl border border-border/80 bg-gradient-card p-5 font-bold hover:border-primary/80">
             Explore the first-time dad guide
           </Link>
         </div>
       </section>
 
       <section className="px-5 pb-24 pt-10 sm:px-8 lg:px-12">
-        <div className="mx-auto max-w-7xl rounded-2xl border border-border/80 bg-card/90 p-8 text-center shadow-lg shadow-foreground/5 sm:p-12">
+        <div className="mx-auto max-w-7xl rounded-2xl border border-border/80 bg-gradient-warm p-8 text-center shadow-lg shadow-foreground/5 sm:p-12">
           <p className="font-bold text-primary">NextRoutine</p>
           <h2 className="mx-auto mt-3 max-w-4xl text-4xl font-bold tracking-tight sm:text-6xl">You do not need every answer today.</h2>
           <p className="mx-auto mt-5 max-w-2xl leading-7 text-muted-foreground">Start with one helpful weekly email for your stage.</p>
