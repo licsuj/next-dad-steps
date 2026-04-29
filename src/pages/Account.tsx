@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, CheckCircle2, CreditCard, Lock, LogOut, Target, UserCircle } from "lucide-react";
