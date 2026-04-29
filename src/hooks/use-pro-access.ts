@@ -6,6 +6,9 @@ type ProAccessState = {
   isLoading: boolean;
   user: User | null;
   isPro: boolean;
+  profile: {
+    current_fatherhood_stage: string;
+  } | null;
   subscription: {
     plan: string;
     status: string;
@@ -14,28 +17,37 @@ type ProAccessState = {
 };
 
 export const useProAccess = (): ProAccessState => {
-  const [state, setState] = useState<ProAccessState>({ isLoading: true, user: null, isPro: false, subscription: null });
+  const [state, setState] = useState<ProAccessState>({ isLoading: true, user: null, isPro: false, profile: null, subscription: null });
 
   useEffect(() => {
     let isMounted = true;
 
     const loadAccess = async (user: User | null) => {
       if (!user) {
-        if (isMounted) setState({ isLoading: false, user: null, isPro: false, subscription: null });
+        if (isMounted) setState({ isLoading: false, user: null, isPro: false, profile: null, subscription: null });
         return;
       }
 
-      const { data } = await (supabase as any)
+      const [{ data }, { data: profileData }] = await Promise.all([
+        (supabase as any)
         .from("user_subscriptions")
         .select("plan,status,current_period_end")
         .eq("user_id", user.id)
-        .maybeSingle();
+          .maybeSingle(),
+        (supabase as any)
+          .from("profiles")
+          .select("current_fatherhood_stage")
+          .eq("user_id", user.id)
+          .maybeSingle(),
+      ]);
+
+      const profile = profileData ?? { current_fatherhood_stage: "thinking_about_it" };
 
       const periodEnd = data?.current_period_end ? new Date(data.current_period_end).getTime() : null;
       const isCurrent = periodEnd === null || periodEnd > Date.now();
       const isPro = data?.plan === "pro" && ["active", "trialing"].includes(data?.status) && isCurrent;
 
-      if (isMounted) setState({ isLoading: false, user, isPro, subscription: data ?? null });
+      if (isMounted) setState({ isLoading: false, user, isPro, profile, subscription: data ?? null });
     };
 
     const { data: listener } = supabase.auth.onAuthStateChange((_, session) => {
