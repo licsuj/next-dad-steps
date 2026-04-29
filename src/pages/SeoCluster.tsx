@@ -481,6 +481,133 @@ export const TopicPage = ({ slug }: { slug: string }) => {
   );
 };
 
+
+const resolveResourceLink = (slug: string) => {
+  if (slug === "father-readiness-quiz") return { to: "/father-readiness-quiz", label: "Father readiness quiz" };
+  const article = articles.find((item) => item.slug === slug);
+  if (article) return { to: `/guides/${article.slug}`, label: article.eyebrow };
+  const topic = topicPages.find((item) => item.slug === slug);
+  if (topic) return { to: topic.path, label: topic.eyebrow };
+  return null;
+};
+
+const NewsletterCta = () => (
+  <div className="rounded-2xl border border-primary/30 bg-primary p-6 text-primary-foreground shadow-lg shadow-foreground/5">
+    <p className="font-bold">Free weekly newsletter</p>
+    <h2 className="mt-2 text-3xl font-bold tracking-tight">Get one calm next step each week.</h2>
+    <p className="mt-3 leading-7">Join the newsletter for stage-based dad prompts from pregnancy through the first year.</p>
+    <Button asChild variant="secondary" className="mt-5 rounded-xl font-bold">
+      <Link to="/#newsletter-signup">Join weekly<ArrowRight className="h-4 w-4" /></Link>
+    </Button>
+  </div>
+);
+
+export const BlogRolloutHub = () => {
+  useEffect(() => {
+    setSeo("6-Week SEO Blog Rollout for First-Time Dads | NextRoutine", "Follow a six-week stage-based blog series for first-time dads covering pregnancy, birth, newborn weeks 1-4, and baby months 2-3.", "/blog");
+  }, []);
+
+  return (
+    <main className="min-h-screen bg-background text-foreground">
+      <ClusterHeader />
+      <section className="px-5 py-20 sm:px-8 lg:px-12">
+        <div className="mx-auto max-w-7xl">
+          <div className="max-w-4xl">
+            <p className="font-bold text-primary">6-week dad readiness series</p>
+            <h1 className="mt-3 text-5xl font-bold leading-tight tracking-tight sm:text-6xl">One stage-based article each week, from pregnancy to months 2–3.</h1>
+            <p className="mt-6 text-lg leading-8 text-muted-foreground">This rollout gives first-time dads a calm path through the moments that usually feel most uncertain: pregnancy, birth, the first month, and the early family rhythm after that.</p>
+          </div>
+
+          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {blogRolloutPosts.map((post) => (
+              <Link key={post.slug} to={post.path} className="rounded-2xl border border-border/80 bg-card/90 p-6 shadow-lg shadow-foreground/5 hover:border-primary/80">
+                <p className="font-bold text-primary">{post.week} · {post.stage}</p>
+                <h2 className="mt-3 text-2xl font-bold tracking-tight">{post.title}</h2>
+                <p className="mt-3 leading-7 text-muted-foreground">{post.description}</p>
+              </Link>
+            ))}
+          </div>
+
+          <div className="mt-12 grid gap-5 lg:grid-cols-2">
+            <NewsletterCta />
+            <ProCta>See the PRO plan</ProCta>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+};
+
+export const BlogPost = ({ slug }: { slug: string }) => {
+  const post = blogRolloutPosts.find((item) => item.slug === slug) ?? blogRolloutPosts[0];
+  const relatedLinks = post.related.map(resolveResourceLink).filter(Boolean) as { to: string; label: string }[];
+  const otherPosts = blogRolloutPosts.filter((item) => item.slug !== post.slug).slice(0, 3);
+
+  useEffect(() => {
+    setSeo(post.seoTitle, post.description, post.path);
+  }, [post]);
+
+  return (
+    <main className="min-h-screen bg-background text-foreground">
+      <ClusterHeader />
+      <article className="px-5 py-20 sm:px-8 lg:px-12">
+        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1fr_22rem]">
+          <div>
+            <div className="flex flex-wrap gap-3">
+              <Link to="/blog" className="inline-flex items-center gap-2 rounded-full border border-border/80 bg-card/90 px-4 py-2 text-sm font-bold text-primary">{post.week} rollout</Link>
+              <Link to="/father-readiness-quiz" className="inline-flex items-center gap-2 rounded-full border border-border/80 bg-card/90 px-4 py-2 text-sm font-bold text-primary"><ClipboardList className="h-4 w-4" /> Father readiness quiz</Link>
+            </div>
+            <p className="mt-8 font-bold text-primary">{post.eyebrow}</p>
+            <h1 className="mt-3 text-5xl font-bold leading-tight tracking-tight sm:text-6xl">{post.title}</h1>
+            <p className="mt-6 text-lg leading-8 text-muted-foreground">{post.intro}</p>
+
+            <div className="mt-10 space-y-6">
+              {post.sections.map(([heading, body]) => (
+                <section key={heading} className="rounded-2xl border border-border/80 bg-card/90 p-6">
+                  <div className="flex items-start gap-3"><Check className="mt-1 h-5 w-5 text-primary" /><div><h2 className="text-2xl font-bold">{heading}</h2><p className="mt-3 leading-8 text-muted-foreground">{body}</p></div></div>
+                </section>
+              ))}
+            </div>
+
+            <section className="mt-8 rounded-2xl border border-border/80 bg-card/90 p-6">
+              <p className="font-bold text-primary">This week’s takeaway</p>
+              <div className="mt-4 grid gap-3 md:grid-cols-3">
+                {post.takeaways.map((takeaway) => (
+                  <div key={takeaway} className="rounded-xl border border-border/80 bg-background p-4 text-sm font-bold leading-6">{takeaway}</div>
+                ))}
+              </div>
+            </section>
+          </div>
+
+          <aside className="space-y-5 lg:sticky lg:top-8 lg:self-start">
+            <NewsletterCta />
+            <div className="rounded-2xl border border-border/80 bg-card/90 p-5">
+              <HeartHandshake className="h-6 w-6 text-primary" />
+              <h2 className="mt-3 text-xl font-bold">Next steps</h2>
+              <div className="mt-4 space-y-3">
+                <Link to="/father-readiness-quiz" className="block rounded-xl border border-primary/30 bg-background p-3 text-sm font-bold text-primary hover:border-primary/80">Take the readiness quiz</Link>
+                <Link to="/#newsletter-signup" className="block rounded-xl border border-primary/30 bg-background p-3 text-sm font-bold text-primary hover:border-primary/80">Join the weekly newsletter</Link>
+                {relatedLinks.map((link) => (
+                  <Link key={link.to} to={link.to} className="block rounded-xl border border-border/80 bg-background p-3 text-sm font-bold hover:border-primary/80">{link.label}</Link>
+                ))}
+              </div>
+            </div>
+            <div className="rounded-2xl border border-border/80 bg-card/90 p-5">
+              <h2 className="text-xl font-bold">More in the rollout</h2>
+              <div className="mt-4 space-y-3">
+                {otherPosts.map((item) => (
+                  <Link key={item.slug} to={item.path} className="block rounded-xl border border-border/80 bg-background p-3 text-sm font-bold hover:border-primary/80">{item.week}: {item.stage}</Link>
+                ))}
+              </div>
+            </div>
+          </aside>
+        </div>
+      </article>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "Article", headline: post.title, description: post.description, author: { "@type": "Organization", name: "NextRoutine" }, publisher: { "@type": "Organization", name: "NextRoutine" }, mainEntityOfPage: `https://nextroutine.com${post.path}` }) }} />
+    </main>
+  );
+};
+
 export const SeoClusterLinks = () => (
   <section className="px-5 py-20 sm:px-8 lg:px-12">
     <div className="mx-auto max-w-7xl rounded-2xl border border-border/80 bg-card/90 p-8">
