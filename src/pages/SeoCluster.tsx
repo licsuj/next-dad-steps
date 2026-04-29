@@ -62,6 +62,75 @@ const articles = [
   },
 ];
 
+const topicPages = [
+  {
+    slug: "first-time-dad",
+    path: "/first-time-dad",
+    title: "First-Time Dad Guide: Your Next Step Before Baby Arrives",
+    seoTitle: "First-Time Dad Guide for Expecting Fathers | NextRoutine",
+    description: "A reassuring first-time dad guide with practical weekly steps for pregnancy, partner support, newborn prep, and building confidence without overwhelm.",
+    eyebrow: "First-time dad guide",
+    intro: "You do not have to become a different person overnight. Start by knowing what matters this week, what your partner should not have to carry alone, and one small move you can repeat.",
+    focus: [
+      ["Know your current stage", "Pregnancy, birth week, and newborn life ask for different kinds of support. Start by naming the stage you are in so the next step feels clear."],
+      ["Own one useful routine", "Choose a repeatable task you can handle without reminders: appointments, groceries, laundry, meals, baby supplies, or the weekly home reset."],
+      ["Ask better questions", "A simple check-in can help more than a perfect speech: what would make this week lighter, what feels uncertain, and what can I take off your plate?"],
+    ],
+    stepsTitle: "Small weekly moves for first-time dads",
+    steps: [
+      ["This week", "Take the father readiness quiz, write down the next practical task, and choose one routine to own."],
+      ["Before birth", "Review appointments, money, hospital logistics, visitor boundaries, and the first 72 hours at home."],
+      ["After baby arrives", "Support recovery, protect sleep where possible, reset the home daily, and build one simple bonding ritual."],
+    ],
+    guides: ["first-time-dad-checklist", "pregnancy-guide-for-dads", "newborn-tips-for-dads"],
+    cta: "Build your first-time dad plan in PRO",
+  },
+  {
+    slug: "pregnancy-month-by-month",
+    path: "/pregnancy-month-by-month",
+    title: "Pregnancy Month by Month for Dads: What to Do Next",
+    seoTitle: "Pregnancy Month by Month for Dads | NextRoutine",
+    description: "A calm pregnancy month-by-month guide for dads with practical support steps from the first trimester through birth week.",
+    eyebrow: "Pregnancy month by month",
+    intro: "Pregnancy can move slowly and suddenly at the same time. A month-by-month view helps you show up without trying to solve everything at once.",
+    focus: [
+      ["Months 1–3", "Keep things steady while symptoms may be invisible. Listen first, track appointments, and take one household routine fully off your partner’s plate."],
+      ["Months 4–6", "Use the calmer window to plan: budget, home systems, baby basics, questions for appointments, and a weekly partner check-in."],
+      ["Months 7–9", "Reduce decisions before everyone is tired. Prepare birth logistics, visitor boundaries, hospital items, and the first days at home."],
+    ],
+    stepsTitle: "How dads can prepare by pregnancy stage",
+    steps: [
+      ["Early pregnancy", "Create a shared note for dates, questions, symptoms, tasks, and anything your partner wants you to remember."],
+      ["Mid pregnancy", "Pick one system to simplify before baby arrives: meals, money, laundry, appointments, or home restocking."],
+      ["Late pregnancy", "Build the birth-week plan and first 72-hour plan so your family has fewer choices to make under stress."],
+    ],
+    guides: ["pregnancy-guide-for-dads", "how-to-support-pregnant-partner", "first-time-dad-checklist"],
+    cta: "Get a month-by-month PRO plan",
+  },
+  {
+    slug: "newborn-readiness",
+    path: "/newborn-readiness",
+    title: "Newborn Readiness for Dads: Simple First-Weeks Prep",
+    seoTitle: "Newborn Readiness for Dads | NextRoutine",
+    description: "A newborn readiness guide for dads covering sleep support, feeding help, partner recovery, bonding, home resets, and the first weeks with baby.",
+    eyebrow: "Newborn readiness",
+    intro: "Newborn readiness is not about having every product or every answer. It is about a few calm systems that help when everyone is tired and learning.",
+    focus: [
+      ["Night support", "Know what you can own during nights: diapers, burping, bottle prep, water, snacks, logging, settling, or the next-morning reset."],
+      ["Partner recovery", "Make rest, food, hydration, reassurance, and fewer decisions part of the plan rather than something your partner has to ask for."],
+      ["Home rhythm", "A daily reset for bottles, laundry, dishes, trash, meals, or the changing station can make the whole house feel less overwhelmed."],
+    ],
+    stepsTitle: "What to prepare before the newborn stage",
+    steps: [
+      ["Before baby arrives", "Set up supply stations, visitor boundaries, food support, emergency contacts, and a simple night-shift handoff."],
+      ["First 72 hours", "Focus on recovery, feeding support, sleep protection, household basics, and helping your partner avoid unnecessary decisions."],
+      ["First month", "Repeat one bonding ritual, one home reset, and one partner recovery block until the routine starts to feel familiar."],
+    ],
+    guides: ["newborn-tips-for-dads", "first-time-dad-checklist", "how-to-support-pregnant-partner"],
+    cta: "Get newborn readiness steps in PRO",
+  },
+];
+
 const quizStages = [
   { value: "expecting", label: "Expecting dad" },
   { value: "newborn", label: "Newborn dad" },
@@ -95,6 +164,7 @@ const ClusterHeader = () => (
       <Link to="/" className="text-lg font-bold text-foreground">NextRoutine</Link>
       <nav className="flex items-center gap-5 text-sm font-semibold text-muted-foreground">
         <Link to="/father-readiness-quiz" className="hover:text-foreground">Quiz hub</Link>
+        <Link to="/first-time-dad" className="hidden hover:text-foreground sm:inline">Dad guide</Link>
         <Link to="/#pro" className="text-primary hover:text-foreground">PRO</Link>
       </nav>
     </div>
@@ -132,6 +202,11 @@ export const FatherReadinessQuizHub = () => {
             <h1 className="mt-3 text-5xl font-bold leading-tight tracking-tight sm:text-6xl">How ready do you feel for your next step as a dad?</h1>
             <p className="mt-6 text-lg leading-8 text-muted-foreground">Take a short readiness quiz, get a stage-specific score, then explore practical guides for first-time dads, expecting fathers, and newborn routines.</p>
             <div className="mt-8 grid gap-3 sm:grid-cols-2">
+              {topicPages.map((page) => (
+                <Link key={page.slug} to={page.path} className="rounded-2xl border border-border/80 bg-card/90 p-4 font-bold hover:border-primary/80">
+                  {page.eyebrow}
+                </Link>
+              ))}
               {articles.map((article) => (
                 <Link key={article.slug} to={`/guides/${article.slug}`} className="rounded-2xl border border-border/80 bg-card/90 p-4 font-bold hover:border-primary/80">
                   {article.eyebrow}
@@ -217,13 +292,87 @@ export const GuideArticle = () => {
   );
 };
 
+export const TopicPage = ({ slug }: { slug: string }) => {
+  const page = topicPages.find((item) => item.slug === slug) ?? topicPages[0];
+  const relatedGuides = page.guides.map((guideSlug) => articles.find((article) => article.slug === guideSlug)).filter(Boolean) as typeof articles;
+  const relatedTopics = topicPages.filter((item) => item.slug !== page.slug);
+
+  useEffect(() => {
+    setSeo(page.seoTitle, page.description, page.path);
+  }, [page]);
+
+  return (
+    <main className="min-h-screen bg-background text-foreground">
+      <ClusterHeader />
+      <article className="px-5 py-20 sm:px-8 lg:px-12">
+        <div className="mx-auto max-w-7xl">
+          <div className="max-w-4xl">
+            <Link to="/father-readiness-quiz" className="inline-flex items-center gap-2 rounded-full border border-border/80 bg-card/90 px-4 py-2 text-sm font-bold text-primary"><ClipboardList className="h-4 w-4" /> Father readiness quiz hub</Link>
+            <p className="mt-8 font-bold text-primary">{page.eyebrow}</p>
+            <h1 className="mt-3 text-5xl font-bold leading-tight tracking-tight sm:text-6xl">{page.title}</h1>
+            <p className="mt-6 text-lg leading-8 text-muted-foreground">{page.intro}</p>
+          </div>
+
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
+            {page.focus.map(([heading, body]) => (
+              <section key={heading} className="rounded-2xl border border-border/80 bg-card/90 p-6 shadow-lg shadow-foreground/5">
+                <Sparkles className="h-5 w-5 text-primary" />
+                <h2 className="mt-4 text-2xl font-bold">{heading}</h2>
+                <p className="mt-3 leading-7 text-muted-foreground">{body}</p>
+              </section>
+            ))}
+          </div>
+
+          <div className="mt-14 grid gap-10 lg:grid-cols-[1fr_22rem]">
+            <section className="rounded-2xl border border-border/80 bg-card/90 p-6 sm:p-8">
+              <p className="font-bold text-primary">What to focus on next</p>
+              <h2 className="mt-3 text-4xl font-bold tracking-tight">{page.stepsTitle}</h2>
+              <div className="mt-8 space-y-4">
+                {page.steps.map(([heading, body], index) => (
+                  <div key={heading} className="grid gap-4 rounded-2xl border border-border/80 bg-background p-5 sm:grid-cols-[3rem_1fr]">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-secondary font-bold text-secondary-foreground">{index + 1}</div>
+                    <div>
+                      <h3 className="text-xl font-bold">{heading}</h3>
+                      <p className="mt-2 leading-7 text-muted-foreground">{body}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <aside className="space-y-5 lg:sticky lg:top-8 lg:self-start">
+              <div className="rounded-2xl border border-border/80 bg-card/90 p-5">
+                <HeartHandshake className="h-6 w-6 text-primary" />
+                <h2 className="mt-3 text-xl font-bold">Related guides</h2>
+                <div className="mt-4 space-y-3">
+                  {relatedGuides.map((guide) => (
+                    <Link key={guide.slug} to={`/guides/${guide.slug}`} className="block rounded-xl border border-border/80 bg-background p-3 text-sm font-bold hover:border-primary/80">{guide.eyebrow}</Link>
+                  ))}
+                  {relatedTopics.map((topic) => (
+                    <Link key={topic.slug} to={topic.path} className="block rounded-xl border border-border/80 bg-background p-3 text-sm font-bold hover:border-primary/80">{topic.eyebrow}</Link>
+                  ))}
+                </div>
+              </div>
+              <ProCta>{page.cta}</ProCta>
+            </aside>
+          </div>
+        </div>
+      </article>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "WebPage", name: page.title, description: page.description, publisher: { "@type": "Organization", name: "NextRoutine" }, mainEntityOfPage: `https://nextroutine.com${page.path}` }) }} />
+    </main>
+  );
+};
+
 export const SeoClusterLinks = () => (
   <section className="px-5 py-20 sm:px-8 lg:px-12">
     <div className="mx-auto max-w-7xl rounded-2xl border border-border/80 bg-card/90 p-8">
       <p className="font-bold text-primary">Father readiness resources</p>
       <h2 className="mt-3 text-4xl font-bold tracking-tight">Start with the quiz, then read the guide for your stage.</h2>
-      <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+      <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Link to="/father-readiness-quiz" className="rounded-2xl border border-primary/30 bg-primary p-5 font-bold text-primary-foreground"><Sparkles className="mb-3 h-5 w-5" />Father readiness quiz</Link>
+        {topicPages.map((page) => <Link key={page.slug} to={page.path} className="rounded-2xl border border-border/80 bg-background p-5 font-bold hover:border-primary/80">{page.eyebrow}</Link>)}
+      </div>
+      <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {articles.map((article) => <Link key={article.slug} to={`/guides/${article.slug}`} className="rounded-2xl border border-border/80 bg-background p-5 font-bold hover:border-primary/80">{article.eyebrow}</Link>)}
       </div>
     </div>

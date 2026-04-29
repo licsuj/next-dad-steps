@@ -5,7 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
-import { FatherReadinessQuizHub, GuideArticle } from "./pages/SeoCluster.tsx";
+import { FatherReadinessQuizHub, GuideArticle, TopicPage } from "./pages/SeoCluster.tsx";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +18,9 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/father-readiness-quiz" element={<FatherReadinessQuizHub />} />
+          <Route path="/first-time-dad" element={<TopicPage slug="first-time-dad" />} />
+          <Route path="/pregnancy-month-by-month" element={<TopicPage slug="pregnancy-month-by-month" />} />
+          <Route path="/newborn-readiness" element={<TopicPage slug="newborn-readiness" />} />
           <Route path="/guides/:slug" element={<GuideArticle />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
