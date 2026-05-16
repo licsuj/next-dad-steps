@@ -4,7 +4,9 @@ import { ArrowRight, Check, Lock, Shield, Sparkles, Target, Trophy } from "lucid
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Progress } from "@/components/ui/progress";
 import { useProAccess } from "@/hooks/use-pro-access";
+import { useRoutineProgress, slugify, makeKey } from "@/hooks/use-routine-progress";
 import { supabase } from "@/integrations/supabase/client";
 
 const signupStages = [
