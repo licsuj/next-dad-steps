@@ -95,6 +95,45 @@ export type Database = {
         }
         Relationships: []
       }
+      user_routine_progress: {
+        Row: {
+          completed_at: string
+          created_at: string
+          id: string
+          routine_key: string
+          stage: string
+          step_key: string
+          step_label: string
+          updated_at: string
+          user_id: string
+          week_number: number
+        }
+        Insert: {
+          completed_at?: string
+          created_at?: string
+          id?: string
+          routine_key: string
+          stage: string
+          step_key: string
+          step_label: string
+          updated_at?: string
+          user_id: string
+          week_number: number
+        }
+        Update: {
+          completed_at?: string
+          created_at?: string
+          id?: string
+          routine_key?: string
+          stage?: string
+          step_key?: string
+          step_label?: string
+          updated_at?: string
+          user_id?: string
+          week_number?: number
+        }
+        Relationships: []
+      }
       user_subscriptions: {
         Row: {
           created_at: string

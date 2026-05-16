@@ -4,7 +4,9 @@ import { ArrowRight, Check, Lock, Shield, Sparkles, Target, Trophy } from "lucid
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Progress } from "@/components/ui/progress";
 import { useProAccess } from "@/hooks/use-pro-access";
+import { useRoutineProgress, slugify, makeKey } from "@/hooks/use-routine-progress";
 import { supabase } from "@/integrations/supabase/client";
 
 const signupStages = [
@@ -67,6 +69,27 @@ const Pro = () => {
   const displayStage = isPro ? savedStage : proPreviewStage;
   const activeProSequence = useMemo(() => proOnboardingSequences[displayStage], [displayStage]);
   const activeRoutineDetails = useMemo(() => proRoutineDetails[displayStage] ?? [], [displayStage]);
+  const progress = useRoutineProgress(user?.id ?? null, isPro ? savedStage : null, isPro);
+
+  const routineSteps = useMemo(
+    () =>
+      activeRoutineDetails.map((routine, weekIndex) => {
+        const routineKey = slugify(routine.title);
+        const steps = [
+          ...routine.actions.map((label, i) => ({ stepKey: `action-${i}`, label, group: "action" as const })),
+          ...routine.checklist.map((label, i) => ({ stepKey: `check-${i}`, label, group: "check" as const })),
+        ];
+        return { routine, routineKey, weekNumber: weekIndex + 1, steps };
+      }),
+    [activeRoutineDetails],
+  );
+
+  const totalSteps = routineSteps.reduce((sum, w) => sum + w.steps.length, 0);
+  const completedTotal = routineSteps.reduce(
+    (sum, w) => sum + w.steps.filter((s) => progress.completedSet.has(makeKey(w.routineKey, s.stepKey))).length,
+    0,
+  );
+  const overallPct = totalSteps ? Math.round((completedTotal / totalSteps) * 100) : 0;
 
   const handleGoogleSignIn = async () => {
     const { lovable } = await import("@/integrations/lovable");
@@ -252,23 +275,111 @@ const Pro = () => {
           </div>
         </div>
         {isPro && (
-          <div className="mx-auto mt-8 max-w-7xl">
+          <div className="mx-auto mt-8 max-w-7xl space-y-6">
+            <div className="rounded-2xl border border-primary/30 bg-primary/5 p-6">
+              <div className="flex flex-wrap items-end justify-between gap-4">
+                <div>
+                  <p className="text-sm font-bold text-primary">Progress dashboard</p>
+                  <h3 className="mt-1 text-2xl font-bold">{completedTotal} of {totalSteps} steps complete</h3>
+                  <p className="mt-1 text-sm text-muted-foreground">Synced to your PRO account. Toggle any step to update.</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-4xl font-bold text-primary">{overallPct}%</p>
+                  <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">Overall</p>
+                </div>
+              </div>
+              <Progress value={overallPct} className="mt-4 h-3" />
+              <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                {routineSteps.map((w) => {
+                  const done = w.steps.filter((s) => progress.completedSet.has(makeKey(w.routineKey, s.stepKey))).length;
+                  const pct = w.steps.length ? Math.round((done / w.steps.length) * 100) : 0;
+                  return (
+                    <div key={w.routineKey} className="rounded-xl border border-border/80 bg-background p-4">
+                      <div className="flex items-center justify-between gap-3">
+                        <div>
+                          <p className="text-xs font-bold uppercase tracking-wide text-primary">Week {w.weekNumber}</p>
+                          <p className="text-sm font-bold">{w.routine.title}</p>
+                        </div>
+                        <p className="text-sm font-bold text-muted-foreground">{done}/{w.steps.length}</p>
+                      </div>
+                      <Progress value={pct} className="mt-3 h-2" />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
             <div className="grid gap-4 lg:grid-cols-2">
-              {activeRoutineDetails.map((routine) => (
-                <article key={routine.title} className="rounded-2xl border border-border/80 bg-card/90 p-6 shadow-lg shadow-foreground/5">
-                  <p className="text-sm font-bold text-primary">This week</p>
-                  <h3 className="mt-2 text-2xl font-bold">{routine.title}</h3>
-                  <p className="mt-3 leading-7 text-muted-foreground">{routine.why}</p>
+              {routineSteps.map((w) => (
+                <article key={w.routineKey} className="rounded-2xl border border-border/80 bg-card/90 p-6 shadow-lg shadow-foreground/5">
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="text-sm font-bold text-primary">Week {w.weekNumber}</p>
+                    <p className="text-xs font-bold text-muted-foreground">
+                      {w.steps.filter((s) => progress.completedSet.has(makeKey(w.routineKey, s.stepKey))).length}/{w.steps.length} done
+                    </p>
+                  </div>
+                  <h3 className="mt-2 text-2xl font-bold">{w.routine.title}</h3>
+                  <p className="mt-3 leading-7 text-muted-foreground">{w.routine.why}</p>
+
                   <div className="mt-5 rounded-2xl bg-background p-4">
                     <p className="font-bold">Action steps</p>
-                    <ol className="mt-3 space-y-2">
-                      {routine.actions.map((action, index) => <li key={action} className="text-sm font-bold leading-6 text-muted-foreground">{index + 1}. {action}</li>)}
-                    </ol>
+                    <ul className="mt-3 space-y-2">
+                      {w.routine.actions.map((action, index) => {
+                        const stepKey = `action-${index}`;
+                        const key = makeKey(w.routineKey, stepKey);
+                        const isDone = progress.completedSet.has(key);
+                        const isBusy = progress.busyKey === key;
+                        return (
+                          <li key={action}>
+                            <button
+                              type="button"
+                              disabled={isBusy}
+                              onClick={() => progress.toggle({ weekNumber: w.weekNumber, routineKey: w.routineKey, stepKey, stepLabel: action })}
+                              className={`flex w-full items-center gap-3 rounded-xl border px-3 py-2 text-left text-sm font-bold transition ${isDone ? "border-primary/50 bg-primary/10 text-foreground" : "border-border/80 bg-background text-muted-foreground hover:border-primary/50"}`}
+                            >
+                              <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md border ${isDone ? "border-primary bg-primary text-primary-foreground" : "border-muted-foreground/40"}`}>
+                                {isDone && <Check className="h-3.5 w-3.5" />}
+                              </span>
+                              <span className={isDone ? "line-through" : ""}>{action}</span>
+                            </button>
+                          </li>
+                        );
+                      })}
+                    </ul>
                   </div>
-                  <p className="mt-4 rounded-2xl border border-primary/30 bg-primary/10 p-4 text-sm font-bold leading-6 text-primary">{routine.partnerPrompt}</p>
-                  <ul className="mt-4 grid gap-2 sm:grid-cols-3">
-                    {routine.checklist.map((item) => <li key={item} className="flex items-center gap-2 rounded-xl bg-background p-3 text-xs font-bold text-muted-foreground"><Check className="h-4 w-4 text-primary" />{item}</li>)}
-                  </ul>
+
+                  <p className="mt-4 rounded-2xl border border-primary/30 bg-primary/10 p-4 text-sm font-bold leading-6 text-primary">{w.routine.partnerPrompt}</p>
+
+                  <div className="mt-4">
+                    <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">Checklist</p>
+                    <ul className="mt-2 grid gap-2 sm:grid-cols-3">
+                      {w.routine.checklist.map((item, index) => {
+                        const stepKey = `check-${index}`;
+                        const key = makeKey(w.routineKey, stepKey);
+                        const isDone = progress.completedSet.has(key);
+                        const isBusy = progress.busyKey === key;
+                        return (
+                          <li key={item}>
+                            <button
+                              type="button"
+                              disabled={isBusy}
+                              onClick={() => progress.toggle({ weekNumber: w.weekNumber, routineKey: w.routineKey, stepKey, stepLabel: item })}
+                              className={`flex w-full items-center gap-2 rounded-xl p-3 text-left text-xs font-bold transition ${isDone ? "bg-primary/15 text-foreground" : "bg-background text-muted-foreground hover:bg-primary/5"}`}
+                            >
+                              <span className={`flex h-4 w-4 shrink-0 items-center justify-center rounded border ${isDone ? "border-primary bg-primary text-primary-foreground" : "border-muted-foreground/40"}`}>
+                                {isDone && <Check className="h-3 w-3" />}
+                              </span>
+                              <span className={isDone ? "line-through" : ""}>{item}</span>
+                            </button>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+
+                  <p className="mt-4 text-xs font-bold text-muted-foreground">
+                    {progress.isLoading ? "Syncing your progress…" : "Mark as done — synced to your account."}
+                  </p>
                 </article>
               ))}
             </div>
