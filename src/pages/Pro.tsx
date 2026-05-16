@@ -69,8 +69,28 @@ const Pro = () => {
   const displayStage = isPro ? savedStage : proPreviewStage;
   const activeProSequence = useMemo(() => proOnboardingSequences[displayStage], [displayStage]);
   const activeRoutineDetails = useMemo(() => proRoutineDetails[displayStage] ?? [], [displayStage]);
+  const progress = useRoutineProgress(user?.id ?? null, isPro ? savedStage : null, isPro);
 
-  const handleGoogleSignIn = async () => {
+  const routineSteps = useMemo(
+    () =>
+      activeRoutineDetails.map((routine, weekIndex) => {
+        const routineKey = slugify(routine.title);
+        const steps = [
+          ...routine.actions.map((label, i) => ({ stepKey: `action-${i}`, label, group: "action" as const })),
+          ...routine.checklist.map((label, i) => ({ stepKey: `check-${i}`, label, group: "check" as const })),
+        ];
+        return { routine, routineKey, weekNumber: weekIndex + 1, steps };
+      }),
+    [activeRoutineDetails],
+  );
+
+  const totalSteps = routineSteps.reduce((sum, w) => sum + w.steps.length, 0);
+  const completedTotal = routineSteps.reduce(
+    (sum, w) => sum + w.steps.filter((s) => progress.completedSet.has(makeKey(w.routineKey, s.stepKey))).length,
+    0,
+  );
+  const overallPct = totalSteps ? Math.round((completedTotal / totalSteps) * 100) : 0;
+
     const { lovable } = await import("@/integrations/lovable");
     const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.href });
     if (result.error) toast.error("Could not start Google sign in. Try again in a moment.");
