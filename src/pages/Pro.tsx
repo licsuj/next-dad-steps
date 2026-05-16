@@ -91,6 +91,7 @@ const Pro = () => {
   );
   const overallPct = totalSteps ? Math.round((completedTotal / totalSteps) * 100) : 0;
 
+  const handleGoogleSignIn = async () => {
     const { lovable } = await import("@/integrations/lovable");
     const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.href });
     if (result.error) toast.error("Could not start Google sign in. Try again in a moment.");
